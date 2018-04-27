@@ -9,6 +9,7 @@ namespace Invector.CharacterController
 
         protected virtual void Start()
         {
+            if (spine == null) return;
 #if !UNITY_EDITOR
                 Cursor.visible = false;
 #endif
@@ -46,11 +47,13 @@ namespace Invector.CharacterController
             var newRotation = new Vector3(transform.eulerAngles.x, referenceTransform.eulerAngles.y, transform.eulerAngles.z);
             var newSpineRotation = new Vector3(referenceTransform.eulerAngles.x, spine.transform.eulerAngles.y, spine.transform.eulerAngles.z);
 
-            Debug.Log("Spine: " + spine.transform.rotation.ToString());
-
+            //Rotate the spine of the biped
             spine.transform.rotation = Quaternion.Lerp(Quaternion.Euler(newSpineRotation),spine.transform.rotation, strafeRotationSpeed * Time.fixedDeltaTime);
+            
+            //Rotate the whole character for looking left and right
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(newRotation), strafeRotationSpeed * Time.fixedDeltaTime);
-
+            
+            //Update rotations for smooth updating
             targetRotation = transform.rotation;
             spine.transform.rotation = Quaternion.Euler(newSpineRotation);
 
