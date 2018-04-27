@@ -11,6 +11,7 @@ public class RayCastShoot : MonoBehaviour {
     public GameObject explosion; // drag your explosion prefab here
     private float bulletOffset ;
     private bool fire = true;
+    private float radius = 20f;
     public AudioSource firingAudio;
 
     void Start () {
@@ -21,8 +22,19 @@ public class RayCastShoot : MonoBehaviour {
     
     private void Explosion(Vector3 hitPos)
     {
-        
         GameObject expl = Instantiate(explosion, hitPos, Quaternion.identity) as GameObject;
+
+        Collider[] colliders = Physics.OverlapSphere(expl.transform.position, radius);
+        BasicDeath deathScript;
+        foreach (Collider nearbyObject in colliders)
+        {
+            Debug.Log("Explosion Nearby Object: " + nearbyObject.name);
+            deathScript = nearbyObject.transform.root.GetComponent<BasicDeath>();
+            if (deathScript != null)
+            {
+                deathScript.Die();
+            }
+        }
         Destroy(expl, 3); // delete the explosion after 3 seconds
     }
 
