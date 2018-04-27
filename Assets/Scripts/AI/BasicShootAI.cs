@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BasicShootAI : MonoBehaviour {
 
-    public float damge = 10f;
+    public float damage = 10f;
     public float range = 5000f;
     
     public AudioClip fire;
@@ -32,7 +32,7 @@ public class BasicShootAI : MonoBehaviour {
     {
         RaycastHit cast;
         //Fire the gun, and allow fire only after slight delay + animator is not bolting the gun on attack layer
-        if (Time.time >= timeToNextFire && Physics.Raycast(firespot.transform.position, firespot.transform.forward, out cast) && cast.transform.root.name.Contains(enemyString))
+        if (Time.time >= timeToNextFire && Physics.Raycast(firespot.transform.position, firespot.transform.forward, out cast,range) && cast.transform.root.name.Contains(enemyString))
         {
             //Calculate minimal delay and disable crosshair
             timeToNextFire = Time.time + 1f / fireAnimDelay;
