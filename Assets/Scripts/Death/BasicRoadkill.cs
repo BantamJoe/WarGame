@@ -8,7 +8,7 @@ public class BasicRoadkill : MonoBehaviour {
     {
         if(obj.gameObject.name.Contains("MarkV"))
         {
-            transform.root.GetComponent<BasicDeath>().Die();
+            transform.root.GetComponent<BasicDeathAI>().Die();
         }
     }
 }

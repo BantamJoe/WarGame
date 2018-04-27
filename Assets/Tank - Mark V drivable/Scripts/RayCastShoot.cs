@@ -25,11 +25,11 @@ public class RayCastShoot : MonoBehaviour {
         GameObject expl = Instantiate(explosion, hitPos, Quaternion.identity) as GameObject;
 
         Collider[] colliders = Physics.OverlapSphere(expl.transform.position, radius);
-        BasicDeath deathScript;
+        BasicDeathAI deathScript;
         foreach (Collider nearbyObject in colliders)
         {
             Debug.Log("Explosion Nearby Object: " + nearbyObject.name);
-            deathScript = nearbyObject.transform.root.GetComponent<BasicDeath>();
+            deathScript = nearbyObject.transform.root.GetComponent<BasicDeathAI>();
             if (deathScript != null)
             {
                 deathScript.Die();
