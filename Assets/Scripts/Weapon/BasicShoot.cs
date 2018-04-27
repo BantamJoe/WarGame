@@ -33,10 +33,20 @@ public class BasicShoot : MonoBehaviour {
         Physics.Raycast(firespot.transform.position, firespot.transform.forward, out cast);
         crosshair.transform.position = cast.point;
 
-        //Fire the gun, and allow fire only after slight delay + animator is not bolting the gun on attack layer
-        if (Input.GetButtonDown("Fire1") && anim.GetCurrentAnimatorStateInfo(1).IsName("none") && Time.time >= timeToNextFire)
+        //Reenable the crosshair after delay and bolting animation complete
+        if(anim.GetCurrentAnimatorStateInfo(1).IsName("none") && Time.time >= timeToNextFire && !crosshair.gameObject.activeSelf)
         {
+            crosshair.gameObject.SetActive(true);
+        }
+
+        //Fire the gun, and allow fire only after slight delay + animator is not bolting the gun on attack layer
+        if (Input.GetButtonDown("Fire1") && crosshair.gameObject.activeSelf)
+        {
+            //Calculate minimal delay and disable crosshair
             timeToNextFire = Time.time + 1f / fireAnimDelay;
+            crosshair.gameObject.SetActive(false);
+
+            //Fire the raycast
             Shoot();
         }
 	}
@@ -45,6 +55,7 @@ public class BasicShoot : MonoBehaviour {
         RaycastHit hit;
         Instantiate(muzzleFlash, firespot.transform.position, Quaternion.Euler(firespot.transform.forward));
         weaponAudio.Play();
+        
 
         //Did we hit something?
         if (Physics.Raycast(firespot.transform.position, firespot.transform.forward, out hit, range))
