@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 114793270402373412}
   - component: {fileID: 54858106565839082}
   - component: {fileID: 136395752934691362}
-  - component: {fileID: 114606546673978838}
+  - component: {fileID: 114552288783554064}
   m_Layer: 8
   m_Name: vThirdPersonControllerBritish
   m_TagString: Player
@@ -457,6 +457,21 @@ GameObject:
   - component: {fileID: 4301102406554546}
   m_Layer: 8
   m_Name: Bip001 L Forearm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1788260711468160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4885383649244458}
+  m_Layer: 8
+  m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -657,7 +672,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4548514543877238}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4139056381423238
 Transform:
@@ -684,7 +699,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4548514543877238}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4192445037293118
 Transform:
@@ -890,7 +905,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4548514543877238}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4543544883158130
 Transform:
@@ -913,18 +928,19 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1653652575243174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.02, y: 0.57, z: -20.348}
+  m_LocalPosition: {x: 305.7, y: 8.844534, z: 81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4885383649244458}
   - {fileID: 4670365862602148}
   - {fileID: 4055046067238558}
   - {fileID: 4867651596103568}
+  - {fileID: 4490136180710432}
   - {fileID: 4712491471609694}
   - {fileID: 4184175112257140}
-  - {fileID: 4490136180710432}
   - {fileID: 4548550652900992}
-  - {fileID: 4601787354288244}
   - {fileID: 4956780195688042}
+  - {fileID: 4601787354288244}
   - {fileID: 4986472409357166}
   - {fileID: 4780520908455948}
   m_Father: {fileID: 0}
@@ -941,7 +957,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4548514543877238}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4598187055218750
 Transform:
@@ -968,7 +984,7 @@ Transform:
   m_LocalScale: {x: 1.081761, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4548514543877238}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4666568247687484
 Transform:
@@ -997,7 +1013,7 @@ Transform:
   - {fileID: 4407894126329542}
   - {fileID: 4027352227248436}
   m_Father: {fileID: 4548514543877238}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4707463545282078
 Transform:
@@ -1024,7 +1040,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4548514543877238}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4761293767457008
 Transform:
@@ -1064,7 +1080,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4548514543877238}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4783398262965276
 Transform:
@@ -1135,7 +1151,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4548514543877238}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4885016378251900
 Transform:
@@ -1149,6 +1165,19 @@ Transform:
   m_Children:
   - {fileID: 4301102406554546}
   m_Father: {fileID: 4919196939741132}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4885383649244458
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1788260711468160}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.304, y: 1.717, z: 1.816}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4548514543877238}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4919196939741132
@@ -1189,7 +1218,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4548514543877238}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23300365784491682
 MeshRenderer:
@@ -1273,7 +1302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e235a05445e5542aae61ca9737298a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damge: 10
+  damage: 10
   range: 5000
   crosshair: {fileID: 0}
   fire: {fileID: 8300000, guid: a05640d14d03800449d82b075dc55457, type: 3}
@@ -1283,7 +1312,8 @@ MonoBehaviour:
   bloodEffect: {fileID: 166404, guid: 78e1c8c5b281b8b439229473779ac9aa, type: 2}
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4,
     type: 2}
---- !u!114 &114606546673978838
+  bulletSpawnPoint: {fileID: 1788260711468160}
+--- !u!114 &114552288783554064
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1291,9 +1321,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1653652575243174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c01e33867e3dfdf4c8f1b5520477f0c1, type: 3}
+  m_Script: {fileID: 11500000, guid: c56e4160c8dfb334e8d0f2272506e8e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 10
 --- !u!114 &114793270402373412
 MonoBehaviour:
   m_ObjectHideFlags: 1

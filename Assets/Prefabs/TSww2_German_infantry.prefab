@@ -254,9 +254,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4679416898943560}
   - component: {fileID: 95761953115410846}
-  - component: {fileID: 114853204528536014}
   - component: {fileID: 114098479784516954}
   - component: {fileID: 195439453824815634}
+  - component: {fileID: 114746972041245648}
   m_Layer: 0
   m_Name: TSww2_German_infantry
   m_TagString: Untagged
@@ -434,6 +434,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &1699215834531112
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4566527842695886}
+  m_Layer: 0
+  m_Name: BulletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1726492085669054
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,7 +675,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4679416898943560}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4107198235968558
 Transform:
@@ -756,7 +771,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4679416898943560}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4341374705438662
 Transform:
@@ -785,7 +800,7 @@ Transform:
   - {fileID: 4964644930447790}
   - {fileID: 4780642758414408}
   m_Father: {fileID: 4679416898943560}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4360628582629506
 Transform:
@@ -798,7 +813,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4679416898943560}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4395088248429408
 Transform:
@@ -869,7 +884,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4679416898943560}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4476394742257320
 Transform:
@@ -940,6 +955,19 @@ Transform:
   m_Father: {fileID: 4497155249368914}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4566527842695886
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1699215834531112}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.193, y: 1.996, z: 2.106}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4679416898943560}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4596985687286320
 Transform:
   m_ObjectHideFlags: 1
@@ -964,7 +992,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4679416898943560}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4613446094256386
 Transform:
@@ -977,7 +1005,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4679416898943560}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4657251240260378
 Transform:
@@ -999,24 +1027,25 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1370202349750006}
-  m_LocalRotation: {x: -0, y: 0.99199605, z: -0, w: 0.12626907}
-  m_LocalPosition: {x: -14.14, y: 0.37820706, z: 114.65}
+  m_LocalRotation: {x: -0, y: 0.9985603, z: -0, w: -0.053641506}
+  m_LocalPosition: {x: 292.4198, y: 0, z: 193.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4566527842695886}
   - {fileID: 4355011328604642}
   - {fileID: 4604996958032518}
   - {fileID: 4360628582629506}
   - {fileID: 4757312632475080}
   - {fileID: 4613446094256386}
   - {fileID: 4829237985745866}
-  - {fileID: 4450795376556006}
   - {fileID: 4959982368491538}
-  - {fileID: 4054934394317182}
+  - {fileID: 4450795376556006}
   - {fileID: 4596985687286320}
+  - {fileID: 4054934394317182}
   - {fileID: 4292844175364656}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 165.492, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 186.15, z: 0}
 --- !u!4 &4692740668560218
 Transform:
   m_ObjectHideFlags: 1
@@ -1070,7 +1099,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4679416898943560}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4766219973244820
 Transform:
@@ -1126,7 +1155,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4679416898943560}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4894112334258244
 Transform:
@@ -1336,7 +1365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   stoppingDistance: 3
---- !u!114 &114853204528536014
+--- !u!114 &114746972041245648
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1344,9 +1373,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1370202349750006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c002e0194bc325e45a8523a2f39f0e25, type: 3}
+  m_Script: {fileID: 11500000, guid: c56e4160c8dfb334e8d0f2272506e8e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 5
 --- !u!114 &114890975811135312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1371,6 +1401,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   range: 50
+  enemyString: British
+  crosshair: {fileID: 0}
   fire: {fileID: 8300000, guid: 51b725db740a08d49b57c827b0d0a971, type: 3}
   firespot: {fileID: 1332045921680442}
   impactEffect: {fileID: 1614572127005044, guid: 4a049bbef79ee7845b541e2d0d83b4cc,
@@ -1379,7 +1411,7 @@ MonoBehaviour:
     type: 2}
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4,
     type: 2}
-  enemyString: British
+  bulletSpawnPoint: {fileID: 1699215834531112}
 --- !u!137 &137170372591711694
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
