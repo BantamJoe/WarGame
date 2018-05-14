@@ -7,12 +7,29 @@ namespace Invector.CharacterController
     {
         public GameObject spine;
 
+        /*
+         *Come up with a cleaner way of getting to the shooting script. This is better than before - keep access to the script here. 
+         */
+        public GameObject weapon;
+
+        private BasicShoot basicShoot;
+
         protected virtual void Start()
         {
+            basicShoot = weapon.GetComponent<BasicShoot>();
+
             if (spine == null) return;
+            if (weapon != null && basicShoot == null) return;
+            
 #if !UNITY_EDITOR
                 Cursor.visible = false;
 #endif
+        }
+
+        public virtual void Shoot()
+        {
+            if(!isSprinting)
+                basicShoot.Shoot();
         }
 
         public virtual void Sprint(bool value)

@@ -16,6 +16,7 @@ namespace Invector.CharacterController
         public KeyCode strafeInput = KeyCode.Tab;
         public KeyCode sprintInput = KeyCode.LeftShift;
         public KeyCode walkInput = KeyCode.CapsLock;
+        public KeyCode shootInput = KeyCode.Mouse0;
 
         [Header("Camera Settings")]
         public string rotateCameraXInput ="Mouse X";
@@ -86,10 +87,19 @@ namespace Invector.CharacterController
                 WalkInput();
                 StrafeInput();
                 JumpInput();
+                ShootInput();
             }
         }
 
         #region Basic Locomotion Inputs      
+
+        protected virtual void ShootInput()
+        {
+            if(Input.GetKeyDown(shootInput))
+            {
+                cc.Shoot();
+            }
+        }
 
         protected virtual void MoveCharacter()
         {            

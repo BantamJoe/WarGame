@@ -2424,6 +2424,7 @@ MonoBehaviour:
   strafeInput: 324
   sprintInput: 304
   walkInput: 324
+  shootInput: 323
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   customCameraState: 
@@ -2492,6 +2493,7 @@ MonoBehaviour:
   verticalVelocity: 0
   velocity: 0
   spine: {fileID: 1145359549}
+  weapon: {fileID: 573803039}
 --- !u!95 &351912093
 Animator:
   serializedVersion: 3
