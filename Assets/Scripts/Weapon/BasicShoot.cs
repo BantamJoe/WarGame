@@ -8,8 +8,6 @@ public class BasicShoot : MonoBehaviour
     public float damage = 10f;
     public float range = 5000f;
 
-    public Transform crosshair;
-
     public AudioClip fire;
     public GameObject firespot;
     public GameObject muzzlespot;
