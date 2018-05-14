@@ -5,6 +5,8 @@ using Invector;
 
 public class vThirdPersonCamera : MonoBehaviour
 {
+    public Transform crosshair;
+
     private static vThirdPersonCamera _instance;
     public static vThirdPersonCamera instance
     {

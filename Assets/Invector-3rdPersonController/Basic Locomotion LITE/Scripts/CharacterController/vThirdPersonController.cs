@@ -20,12 +20,16 @@ namespace Invector.CharacterController
             isSprinting = value;            
         }
 
+        public virtual void Walk(bool value)
+        {
+            isWalking = value;
+        }
+
         public virtual void Strafe()
         {
             if (locomotionType == LocomotionType.OnlyFree) return;
             isStrafing = !isStrafing;
         }
-
         public virtual void Jump()
         {
             // conditions to do this action

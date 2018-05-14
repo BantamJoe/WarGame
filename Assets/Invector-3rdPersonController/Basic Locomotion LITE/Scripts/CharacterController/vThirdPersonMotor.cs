@@ -98,6 +98,7 @@ namespace Invector.CharacterController
             isGrounded,
             isStrafing,
             isSprinting,
+            isWalking,
             isSliding;
 
         // action bools
@@ -226,6 +227,8 @@ namespace Invector.CharacterController
             speed = _speed;
             direction = _direction;
             if (isSprinting) speed += 0.5f;
+            if (isWalking) speed -= 0.5f;
+            if (speed <= 0.1 || speed > 0.51) isWalking = false;
             if (direction >= 0.7 || direction <= -0.7 || speed <= 0.1) isSprinting = false;
         }
 

@@ -7,8 +7,10 @@ public class BasicShoot : MonoBehaviour {
     public float range = 5000f;
 
     public Transform crosshair;
+
     public AudioClip fire;
     public GameObject firespot;
+    public GameObject muzzlespot;
     public GameObject impactEffect;
     public GameObject bloodEffect;
     public GameObject muzzleFlash;
@@ -29,15 +31,16 @@ public class BasicShoot : MonoBehaviour {
 	void Update () {
 
         //Update the 3D crosshair by casting a point and updating the draw position. Ray is casted from gun's muzzle
-        RaycastHit cast;
-        Physics.Raycast(firespot.transform.position, firespot.transform.forward, out cast);
-        crosshair.transform.position = cast.point;
+        //RaycastHit cast;
+        //Physics.Raycast(firespot.transform.position, firespot.transform.forward, out cast);
+        //crosshair.transform.position = cast.point;
 
         //Reenable the crosshair after delay and bolting animation complete
         if(anim.GetCurrentAnimatorStateInfo(1).IsName("none") && Time.time >= timeToNextFire && !crosshair.gameObject.activeSelf)
         {
             crosshair.gameObject.SetActive(true);
         }
+
 
         //Fire the gun, and allow fire only after slight delay + animator is not bolting the gun on attack layer
         if (Input.GetButtonDown("Fire1") && crosshair.gameObject.activeSelf)
@@ -53,7 +56,7 @@ public class BasicShoot : MonoBehaviour {
     void Shoot()
     {
         RaycastHit hit;
-        Instantiate(muzzleFlash, firespot.transform.position, Quaternion.Euler(firespot.transform.forward));
+        Instantiate(muzzleFlash, muzzlespot.transform.position, Quaternion.Euler(muzzlespot.transform.forward));
         weaponAudio.Play();
         
 
