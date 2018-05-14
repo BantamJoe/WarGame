@@ -116,6 +116,7 @@ public class vThirdPersonCamera : MonoBehaviour
         heightOriginal = height;
         distanceOriginal = distance;
         cameraFovOriginal = _camera.fieldOfView;
+        
     }
 
     void FixedUpdate()
@@ -305,4 +306,11 @@ public class vThirdPersonCamera : MonoBehaviour
             _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, cameraFovOriginal, 0.5f);
         }
     }
+
+    public void CrosshairActive(bool value)
+    {
+        crosshair.gameObject.SetActive(value);
+    }
+
+    public bool IsCrosshairActive() { return crosshair.gameObject.activeSelf; }
 }

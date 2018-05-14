@@ -109,7 +109,7 @@ namespace Invector.CharacterController
         {
             if (Input.GetKeyDown(sprintInput))
                 cc.Sprint(true);
-            else if(Input.GetKeyUp(sprintInput))
+            else if (Input.GetKeyUp(sprintInput))
                 cc.Sprint(false);
         }
 
@@ -167,6 +167,14 @@ namespace Invector.CharacterController
                 tpCamera.ChangeCameraMode(true);
             else
                 tpCamera.ChangeCameraMode(false);
+
+            //If character is sprint, turn off crosshair to disable shooting
+            /*
+            if (cc.isSprinting)
+                tpCamera.CrosshairActive(false);
+            else
+                tpCamera.CrosshairActive(true);
+            */
         }
 
         protected virtual void UpdateCameraStates()

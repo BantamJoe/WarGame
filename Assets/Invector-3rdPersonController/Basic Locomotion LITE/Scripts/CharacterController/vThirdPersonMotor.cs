@@ -99,13 +99,13 @@ namespace Invector.CharacterController
             isStrafing,
             isSprinting,
             isWalking,
-            isAiming,
             isSliding;
 
         // action bools
         [HideInInspector]
         public bool
-            isJumping;
+            isJumping,
+            isAiming;
 
         protected void RemoveComponents()
         {
