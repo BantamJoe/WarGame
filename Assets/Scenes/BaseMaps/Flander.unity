@@ -2117,7 +2117,7 @@ MonoBehaviour:
   jumpInput: 32
   strafeInput: 324
   sprintInput: 304
-  walkInput: 301
+  walkInput: 324
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   customCameraState: 

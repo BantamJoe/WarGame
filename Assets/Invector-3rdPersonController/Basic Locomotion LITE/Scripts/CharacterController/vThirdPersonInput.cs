@@ -122,9 +122,13 @@ namespace Invector.CharacterController
         protected virtual void WalkInput()
         {
             if (Input.GetKeyDown(walkInput))
+            {
                 cc.Walk(true);
+            }
             else if (Input.GetKeyUp(walkInput))
+            {
                 cc.Walk(false);
+            }
         }
 
         protected virtual void ExitGameInput()
@@ -156,7 +160,13 @@ namespace Invector.CharacterController
             if (!keepDirection)
                 cc.UpdateTargetDirection(tpCamera != null ? tpCamera.transform : null);
             // rotate the character with the camera while strafing        
-            RotateWithCamera(tpCamera != null ? tpCamera.transform : null);            
+            RotateWithCamera(tpCamera != null ? tpCamera.transform : null);
+
+            //If the character is aiming (potentially through walking), adjust the cameras position
+            if (cc.isAiming)
+                tpCamera.ChangeCameraMode(true);
+            else
+                tpCamera.ChangeCameraMode(false);
         }
 
         protected virtual void UpdateCameraStates()

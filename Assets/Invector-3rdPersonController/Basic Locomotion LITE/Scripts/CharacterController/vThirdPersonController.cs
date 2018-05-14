@@ -22,6 +22,7 @@ namespace Invector.CharacterController
 
         public virtual void Walk(bool value)
         {
+            isAiming = value;
             isWalking = value;
         }
 

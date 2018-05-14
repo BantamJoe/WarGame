@@ -41,7 +41,12 @@ public class vThirdPersonCamera : MonoBehaviour
     public float xMouseSensitivity = 3f;
     public float yMouseSensitivity = 3f;
     public float yMinLimit = -40f;
-    public float yMaxLimit = 80f; 
+    public float yMaxLimit = 80f;
+
+    public float rightOffsetAimed = 0.2f;
+    public float heightAimed = 2.3f;
+    public float cameraFovAimed = 50f;
+
     #endregion
 
     #region hide properties    
@@ -75,6 +80,9 @@ public class vThirdPersonCamera : MonoBehaviour
     private float xMaxLimit = 360f;
     private float cullingHeight = 0.2f;
     private float cullingMinDist = 0.1f;
+    private float rightOffsetOriginal;
+    private float heightOriginal;
+    private float cameraFovOriginal;
 
     #endregion
 
@@ -102,6 +110,10 @@ public class vThirdPersonCamera : MonoBehaviour
 
         distance = defaultDistance;
         currentHeight = height;
+
+        rightOffsetOriginal = rightOffset;
+        heightOriginal = height;
+        cameraFovOriginal = _camera.fieldOfView;
     }
 
     void FixedUpdate()
@@ -272,5 +284,21 @@ public class vThirdPersonCamera : MonoBehaviour
         }
 
         return value;
+    }
+
+    public void ChangeCameraMode(bool isWalking)
+    {
+        if(isWalking)
+        {
+            height = Mathf.Lerp(height,heightAimed, 0.5f);
+            rightOffset = Mathf.Lerp(rightOffset,rightOffsetAimed, 0.5f);
+            _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView,cameraFovAimed,0.5f);
+        }
+        else
+        {
+            height = Mathf.Lerp(height, heightOriginal, 0.5f);
+            rightOffset = Mathf.Lerp(rightOffset, rightOffsetOriginal, 0.5f);
+            _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, cameraFovOriginal, 0.5f);
+        }
     }
 }
