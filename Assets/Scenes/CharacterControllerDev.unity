@@ -559,11 +559,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.37745208, y: -0.26932308, z: 0.07173979}
     m_Extent: {x: 0.3184176, y: 0.17295122, z: 0.287492}
   m_DirtyAABB: 0
---- !u!1 &456334372 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1471828600036192, guid: 1cc8536ba5556354cb170254b8d67841,
-    type: 2}
-  m_PrefabInternal: {fileID: 1604686119}
 --- !u!1 &487493807
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,13 +849,15 @@ GameObject:
   - component: {fileID: 740875029}
   - component: {fileID: 740875028}
   - component: {fileID: 740875034}
+  - component: {fileID: 740875035}
+  - component: {fileID: 740875036}
   m_Layer: 8
   m_Name: Bot_German
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &740875028
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -931,7 +928,7 @@ MonoBehaviour:
     m_Bits: 1
   groundMinDistance: 0.2
   groundMaxDistance: 0.5
-  locomotionType: 1
+  locomotionType: 0
   lockMovement: 0
   freeRotationSpeed: 10
   strafeRotationSpeed: 10
@@ -976,6 +973,7 @@ MonoBehaviour:
   direction: 0
   verticalVelocity: 0
   velocity: 0
+  Team: Axis
   spine: {fileID: 1998293561}
   bloodEffect: {fileID: 1000012909287652, guid: abb9f519b142e304d9c45b56afa768bc,
     type: 2}
@@ -1004,7 +1002,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 740875027}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.9, y: 0, z: 14.59}
+  m_LocalPosition: {x: -8.31, y: 0, z: 24.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1088723396}
@@ -1032,8 +1030,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a301a588de66d52469b8191a3fceaf82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 456334372}
+  target: {fileID: 2044676805}
+  shootRange: 30
   stoppingDistance: 3
+--- !u!195 &740875035
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 740875027}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: -0.1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &740875036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 740875027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c01e33867e3dfdf4c8f1b5520477f0c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &780749898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,6 +1832,16 @@ Prefab:
       propertyPath: locomotionType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114606493084263652, guid: 1cc8536ba5556354cb170254b8d67841,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114235567746696854, guid: 1cc8536ba5556354cb170254b8d67841,
+        type: 2}
+      propertyPath: Team
+      value: Allied
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1cc8536ba5556354cb170254b8d67841, type: 2}
   m_IsPrefabParent: 0
@@ -2186,6 +2227,11 @@ MonoBehaviour:
     type: 2}
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4,
     type: 2}
+--- !u!1 &2044676805 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1614133336947394, guid: 1cc8536ba5556354cb170254b8d67841,
+    type: 2}
+  m_PrefabInternal: {fileID: 1604686119}
 --- !u!1 &2086569418
 GameObject:
   m_ObjectHideFlags: 0

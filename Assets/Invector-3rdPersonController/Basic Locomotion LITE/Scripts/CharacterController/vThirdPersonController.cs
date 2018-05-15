@@ -5,6 +5,7 @@ namespace Invector.CharacterController
 {
     public class vThirdPersonController : vThirdPersonAnimator
     {
+        public string Team;
         public GameObject spine;
         public GameObject bloodEffect;
 
@@ -14,10 +15,12 @@ namespace Invector.CharacterController
         public GameObject weapon;
 
         private BasicShoot basicShoot;
+        private BasicDeath basicDeath;
 
         protected virtual void Start()
         {
             basicShoot = weapon.GetComponent<BasicShoot>();
+            basicDeath = GetComponent<BasicDeath>();
 
             if (spine == null) return;
             if (weapon != null && basicShoot == null) return;
@@ -45,6 +48,7 @@ namespace Invector.CharacterController
         public virtual void Die(bool value)
         {
             isDead = value;
+            basicDeath.Die();
         }
 
         public virtual void Strafe()

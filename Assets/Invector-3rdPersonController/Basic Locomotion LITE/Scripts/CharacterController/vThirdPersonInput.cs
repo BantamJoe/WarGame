@@ -51,7 +51,7 @@ namespace Invector.CharacterController
 
             if (cc != null)
                 cc.Init();
-            
+
             tpCamera = this.gameObject.GetComponentInChildren<vThirdPersonCamera>();
             if (tpCamera) tpCamera.SetMainTarget(this.transform);
 
@@ -86,15 +86,11 @@ namespace Invector.CharacterController
             if (!cc.lockMovement && !cc.isDead)
             {
                 MoveCharacter();
-
-                //if(!cc.isBot)
-                //{
-                    SprintInput();
-                    WalkInput();
-                    StrafeInput();
-                    JumpInput();
-                    ShootInput();
-               // }
+                SprintInput();
+                WalkInput();
+                StrafeInput();
+                JumpInput();
+                ShootInput();
             }
 
         }
@@ -210,7 +206,6 @@ namespace Invector.CharacterController
                 cc.RotateWithAnotherTransform(cameraTransform);
             }
         }
-
         #endregion     
     }
 }

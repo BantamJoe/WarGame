@@ -13,7 +13,6 @@ namespace Invector.CharacterController
         public GameObject firespot;
         public GameObject muzzlespot;
         public GameObject impactEffect;
-        //public GameObject bloodEffect;
         public GameObject muzzleFlash;
 
         private AudioSource weaponAudio;
@@ -25,7 +24,6 @@ namespace Invector.CharacterController
         {
             weaponAudio = this.gameObject.AddComponent<AudioSource>();
             weaponAudio.clip = fire;
-            //bloodEffect.GetComponent<ParticleSystem>().loop = false;
             anim = transform.root.gameObject.GetComponent<Animator>();
         }
 
