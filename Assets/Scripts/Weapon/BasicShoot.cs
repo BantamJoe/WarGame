@@ -2,57 +2,63 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class BasicShoot : MonoBehaviour
+namespace Invector.CharacterController
 {
-    public float damage = 10f;
-    public float range = 5000f;
-
-    public AudioClip fire;
-    public GameObject firespot;
-    public GameObject muzzlespot;
-    public GameObject impactEffect;
-    public GameObject bloodEffect;
-    public GameObject muzzleFlash;
-
-    private AudioSource weaponAudio;
-    private Animator anim;
-    private float fireAnimDelay = 1f;
-    private float timeToNextFire = 0f;
-
-    void Start()
+    public class BasicShoot : MonoBehaviour
     {
-        weaponAudio = this.gameObject.AddComponent<AudioSource>();
-        weaponAudio.clip = fire;
-        bloodEffect.GetComponent<ParticleSystem>().loop = false;
-        anim = transform.root.gameObject.GetComponent<Animator>();
-    }
+        public float damage = 10f;
+        public float range = 5000f;
 
-    public void Shoot()
-    {
-        //If next time to fire has been reached and animator is reset
-        if (Time.time >= timeToNextFire && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
+        public AudioClip fire;
+        public GameObject firespot;
+        public GameObject muzzlespot;
+        public GameObject impactEffect;
+        //public GameObject bloodEffect;
+        public GameObject muzzleFlash;
+
+        private AudioSource weaponAudio;
+        private Animator anim;
+        private float fireAnimDelay = 1f;
+        private float timeToNextFire = 0f;
+
+        void Start()
         {
-            RaycastHit hit;
-            Instantiate(muzzleFlash, muzzlespot.transform.position, Quaternion.Euler(muzzlespot.transform.forward));
-            weaponAudio.Play();
+            weaponAudio = this.gameObject.AddComponent<AudioSource>();
+            weaponAudio.clip = fire;
+            //bloodEffect.GetComponent<ParticleSystem>().loop = false;
+            anim = transform.root.gameObject.GetComponent<Animator>();
+        }
 
-
-            //Did we hit something?
-            if (Physics.Raycast(firespot.transform.position, firespot.transform.forward, out hit, range))
+        public void Shoot()
+        {
+            //If next time to fire has been reached and animator is reset
+            if (Time.time >= timeToNextFire && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
             {
-                Debug.Log(hit.transform.root.name);
-                if (hit.transform.root.name.Contains("German"))
+                RaycastHit hit;
+                Destroy(Instantiate(muzzleFlash, muzzlespot.transform.position, Quaternion.Euler(muzzlespot.transform.forward)),1f);
+                weaponAudio.Play();
+
+
+                //Did we hit something?
+                if (Physics.Raycast(firespot.transform.position, firespot.transform.forward, out hit, range))
                 {
-                    GameObject bloodhit = Instantiate(bloodEffect, hit.point, Quaternion.LookRotation(hit.normal));
-                    bloodhit.transform.parent = hit.transform.root.gameObject.transform;
-                    hit.transform.root.GetComponent<BasicDeathAI>().Die();
+                    Debug.Log(hit.transform.root.name);
+                    Component ccComponent = hit.transform.gameObject.GetComponentInParent(typeof(vThirdPersonController));
+
+                    if(ccComponent != null)
+                    {
+                        vThirdPersonController cc = ccComponent.GetComponent<vThirdPersonController>();
+                        cc.Die(true);
+                        Instantiate(cc.bloodEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                    }
+
+                    Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
                 }
-                Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                timeToNextFire = Time.time + 1f / fireAnimDelay;
+                //Animation
+                anim.SetTrigger("IsFiringBolt");
             }
-            timeToNextFire = Time.time + 1f / fireAnimDelay;
-            //Animation
-            anim.SetTrigger("IsFiringBolt");
         }
     }
 }
+

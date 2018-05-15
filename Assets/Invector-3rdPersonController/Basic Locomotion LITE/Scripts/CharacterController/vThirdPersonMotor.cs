@@ -104,8 +104,10 @@ namespace Invector.CharacterController
         // action bools
         [HideInInspector]
         public bool
+            isBot,
             isJumping,
-            isAiming;
+            isAiming,
+            isDead;
 
         protected void RemoveComponents()
         {

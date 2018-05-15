@@ -6,6 +6,7 @@ namespace Invector.CharacterController
     public class vThirdPersonController : vThirdPersonAnimator
     {
         public GameObject spine;
+        public GameObject bloodEffect;
 
         /*
          *Come up with a cleaner way of getting to the shooting script. This is better than before - keep access to the script here. 
@@ -25,7 +26,6 @@ namespace Invector.CharacterController
                 Cursor.visible = false;
 #endif
         }
-
         public virtual void Shoot()
         {
             if(!isSprinting)
@@ -41,6 +41,10 @@ namespace Invector.CharacterController
         {
             isAiming = value;
             isWalking = value;
+        }
+        public virtual void Die(bool value)
+        {
+            isDead = value;
         }
 
         public virtual void Strafe()

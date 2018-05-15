@@ -10,6 +10,7 @@ namespace Invector.CharacterController
         #region variables
 
         [Header("Default Inputs")]
+        public bool isBot = false;
         public string horizontalInput = "Horizontal";
         public string verticallInput = "Vertical";
         public KeyCode jumpInput = KeyCode.Space;
@@ -19,7 +20,7 @@ namespace Invector.CharacterController
         public KeyCode shootInput = KeyCode.Mouse0;
 
         [Header("Camera Settings")]
-        public string rotateCameraXInput ="Mouse X";
+        public string rotateCameraXInput = "Mouse X";
         public string rotateCameraYInput = "Mouse Y";
 
         protected vThirdPersonCamera tpCamera;                // acess camera info        
@@ -46,6 +47,8 @@ namespace Invector.CharacterController
         protected virtual void CharacterInit()
         {
             cc = GetComponent<vThirdPersonController>();
+            cc.isBot = isBot;
+
             if (cc != null)
                 cc.Init();
 
@@ -80,7 +83,7 @@ namespace Invector.CharacterController
             ExitGameInput();
             CameraInput();
 
-            if (!cc.lockMovement)
+            if (!cc.lockMovement && !cc.isDead && !cc.isBot)
             {
                 MoveCharacter();
                 SprintInput();
@@ -89,20 +92,21 @@ namespace Invector.CharacterController
                 JumpInput();
                 ShootInput();
             }
+
         }
 
         #region Basic Locomotion Inputs      
 
         protected virtual void ShootInput()
         {
-            if(Input.GetKeyDown(shootInput))
+            if (Input.GetKeyDown(shootInput))
             {
                 cc.Shoot();
             }
         }
 
         protected virtual void MoveCharacter()
-        {            
+        {
             cc.input.x = Input.GetAxis(horizontalInput);
             cc.input.y = Input.GetAxis(verticallInput);
         }
@@ -200,14 +204,14 @@ namespace Invector.CharacterController
                     tpCamera.SetMainTarget(this.transform);
                     tpCamera.Init();
                 }
-            }            
+            }
         }
 
         protected virtual void RotateWithCamera(Transform cameraTransform)
         {
             if (cc.isStrafing && !cc.lockMovement && !cc.lockMovement)
-            {                
-                cc.RotateWithAnotherTransform(cameraTransform);                
+            {
+                cc.RotateWithAnotherTransform(cameraTransform);
             }
         }
 
