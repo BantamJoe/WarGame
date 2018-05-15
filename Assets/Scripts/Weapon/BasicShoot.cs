@@ -31,31 +31,42 @@ namespace Invector.CharacterController
 
         public void Shoot()
         {
+            GameObject weaponContainer = this.transform.parent.gameObject;
+
             //If next time to fire has been reached and animator is reset
             if (Time.time >= timeToNextFire && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
             {
-                RaycastHit hit;
-                Destroy(Instantiate(muzzleFlash, muzzlespot.transform.position, Quaternion.Euler(muzzlespot.transform.forward)),1f);
-                weaponAudio.Play();
-
-
-                //Did we hit something?
-                if (Physics.Raycast(firespot.transform.position, firespot.transform.forward, out hit, range))
+                RaycastHit firespotHit, muzzlespotHit;
+                Transform originalMuzzlespotTransform = muzzlespot.transform;
+                
+                //Fire a ray from the camera. This is the ideal hit position
+                if (Physics.Raycast(firespot.transform.position, firespot.transform.forward, out firespotHit, range))
                 {
-                    Debug.Log(hit.transform.root.name);
-                    Component ccComponent = hit.transform.gameObject.GetComponentInParent(typeof(vThirdPersonController));
+                    //Point the gun's muzzle ray at where the cameras crosshair is
+                    muzzlespot.transform.LookAt(firespotHit.point);
 
-                    if(ccComponent != null)
+                    //Fire a ray from the guns muzzle to the cameras crosshair
+                    if (Physics.Raycast(muzzlespot.transform.position, muzzlespot.transform.forward, out muzzlespotHit, range))
                     {
-                        vThirdPersonController cc = ccComponent.GetComponent<vThirdPersonController>();
-                        cc.Die(true);
-                        Instantiate(cc.bloodEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                        Component ccComponent = muzzlespotHit.transform.gameObject.GetComponentInParent(typeof(vThirdPersonController));
+
+                        if (ccComponent != null)
+                        {
+                            vThirdPersonController cc = ccComponent.GetComponent<vThirdPersonController>();
+                            cc.Die(true);
+                            Instantiate(cc.bloodEffect, muzzlespotHit.point, Quaternion.LookRotation(muzzlespotHit.normal));
+                        }
+                        Instantiate(impactEffect, muzzlespotHit.point, Quaternion.LookRotation(muzzlespotHit.normal));
                     }
 
-                    Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                    //Restore muzzlespots original orientation
+                    muzzlespot.transform.SetPositionAndRotation(originalMuzzlespotTransform.position, originalMuzzlespotTransform.rotation);
                 }
+                
+                //Play sound and effects regardless of hit
+                weaponAudio.Play();
                 timeToNextFire = Time.time + 1f / fireAnimDelay;
-                //Animation
+                Destroy(Instantiate(muzzleFlash, muzzlespot.transform.position, Quaternion.Euler(muzzlespot.transform.forward)), 1f);
                 anim.SetTrigger("IsFiringBolt");
             }
         }

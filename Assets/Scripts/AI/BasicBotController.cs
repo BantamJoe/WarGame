@@ -18,7 +18,7 @@ namespace Invector.CharacterController
         void Start()
         {
             //anim = GetComponent<Animator>();
-            agent = GetComponent<NavMeshAgent>();
+            agent = (this.gameObject.GetComponent<NavMeshAgent>()) != null ? this.gameObject.GetComponent<NavMeshAgent>() : this.gameObject.AddComponent<NavMeshAgent>();
             agent.SetDestination(target.transform.position);
             cc = GetComponent<vThirdPersonController>();
         }

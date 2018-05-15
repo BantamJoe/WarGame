@@ -559,6 +559,11 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.37745208, y: -0.26932308, z: 0.07173979}
     m_Extent: {x: 0.3184176, y: 0.17295122, z: 0.287492}
   m_DirtyAABB: 0
+--- !u!1 &456334372 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1471828600036192, guid: 1cc8536ba5556354cb170254b8d67841,
+    type: 2}
+  m_PrefabInternal: {fileID: 1604686119}
 --- !u!1 &487493807
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,13 +853,14 @@ GameObject:
   - component: {fileID: 740875030}
   - component: {fileID: 740875029}
   - component: {fileID: 740875028}
+  - component: {fileID: 740875034}
   m_Layer: 8
   m_Name: Bot_German
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &740875028
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -889,7 +895,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 740875027}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5deb9ff5611cb9d4596d397ac57ee8c7, type: 3}
   m_Name: 
@@ -1015,6 +1021,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &740875034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 740875027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a301a588de66d52469b8191a3fceaf82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 456334372}
+  stoppingDistance: 3
 --- !u!1 &780749898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1775,6 +1794,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4239438902335770, guid: 1cc8536ba5556354cb170254b8d67841, type: 2}
       propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114235567746696854, guid: 1cc8536ba5556354cb170254b8d67841,
+        type: 2}
+      propertyPath: locomotionType
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

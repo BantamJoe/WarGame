@@ -51,8 +51,8 @@ namespace Invector.CharacterController
 
             if (cc != null)
                 cc.Init();
-
-            tpCamera = FindObjectOfType<vThirdPersonCamera>();
+            
+            tpCamera = this.gameObject.GetComponentInChildren<vThirdPersonCamera>();
             if (tpCamera) tpCamera.SetMainTarget(this.transform);
 
             Cursor.visible = false;
@@ -83,14 +83,18 @@ namespace Invector.CharacterController
             ExitGameInput();
             CameraInput();
 
-            if (!cc.lockMovement && !cc.isDead && !cc.isBot)
+            if (!cc.lockMovement && !cc.isDead)
             {
                 MoveCharacter();
-                SprintInput();
-                WalkInput();
-                StrafeInput();
-                JumpInput();
-                ShootInput();
+
+                //if(!cc.isBot)
+                //{
+                    SprintInput();
+                    WalkInput();
+                    StrafeInput();
+                    JumpInput();
+                    ShootInput();
+               // }
             }
 
         }
@@ -181,14 +185,6 @@ namespace Invector.CharacterController
                 tpCamera.ChangeCameraMode(true);
             else
                 tpCamera.ChangeCameraMode(false);
-
-            //If character is sprint, turn off crosshair to disable shooting
-            /*
-            if (cc.isSprinting)
-                tpCamera.CrosshairActive(false);
-            else
-                tpCamera.CrosshairActive(true);
-            */
         }
 
         protected virtual void UpdateCameraStates()
