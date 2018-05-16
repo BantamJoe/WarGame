@@ -54,6 +54,7 @@ namespace Invector.CharacterController
 
             input.x = 0f;
             input.y = 0f;
+            speed = 0f;
 
             basicDeath.Die();
         }

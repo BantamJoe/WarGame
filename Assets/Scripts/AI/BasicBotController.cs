@@ -35,8 +35,8 @@ namespace Invector.CharacterController
             {
                 isDead = true;
                 cc.input.y = 0f;
-                cc.Walk(false);
-                cc.UpdateMotor();
+                cc.Walk(false);   
+                //cc.UpdateMotor();
 
                 agent.enabled = false;
                 
