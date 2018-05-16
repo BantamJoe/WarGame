@@ -32,7 +32,12 @@ namespace Invector.CharacterController
         {
             if(cc.isDead)
             {
+                cc.input.y = 0f;
+                cc.Walk(false);
                 agent.enabled = false;
+                cc.UpdateAnimator();
+                cc.UpdateMotor();
+
             }
             if (agent.enabled)
             {
@@ -46,6 +51,8 @@ namespace Invector.CharacterController
             agent.SetDestination(target.transform.position);
 
             cc.Walk(true);
+            cc.input.y = 1f;
+
             cc.UpdateAnimator();
             cc.UpdateMotor();
         }

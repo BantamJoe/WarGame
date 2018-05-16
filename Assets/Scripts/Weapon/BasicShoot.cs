@@ -29,8 +29,6 @@ namespace Invector.CharacterController
 
         public void Shoot()
         {
-            GameObject weaponContainer = this.transform.parent.gameObject;
-
             //If next time to fire has been reached and animator is reset
             if (Time.time >= timeToNextFire && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
             {
