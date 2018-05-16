@@ -25,7 +25,8 @@ namespace Invector.CharacterController
                 cc.Init();
             if (agent == null)
                 Debug.LogError("Navmesh agent missing on bot");
-           
+            agent.SetDestination(target.transform.position);
+
         }
 
         // Update is called once per frame
@@ -52,8 +53,6 @@ namespace Invector.CharacterController
 
         void AgentMove()
         {
-            agent.SetDestination(target.transform.position);
-
             cc.Walk(true);
             cc.input.y = 1f;
 
