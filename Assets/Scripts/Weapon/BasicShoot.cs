@@ -49,10 +49,10 @@ namespace Invector.CharacterController
                         if (ccComponent != null)
                         {
                             vThirdPersonController cc = ccComponent.GetComponent<vThirdPersonController>();
-                            cc.Die(true);
-                            Instantiate(cc.bloodEffect, muzzlespotHit.point, Quaternion.LookRotation(muzzlespotHit.normal));
+                            cc.Die();
+                            Destroy(Instantiate(cc.bloodEffect, muzzlespotHit.point, Quaternion.LookRotation(muzzlespotHit.normal)),1f);
                         }
-                        Instantiate(impactEffect, muzzlespotHit.point, Quaternion.LookRotation(muzzlespotHit.normal));
+                        Destroy(Instantiate(impactEffect, muzzlespotHit.point, Quaternion.LookRotation(muzzlespotHit.normal)),1f);
                     }
 
                     //Restore muzzlespots original orientation
@@ -62,7 +62,10 @@ namespace Invector.CharacterController
                 //Play sound and effects regardless of hit
                 weaponAudio.Play();
                 timeToNextFire = Time.time + 1f / fireAnimDelay;
-                Destroy(Instantiate(muzzleFlash, muzzlespot.transform.position, Quaternion.Euler(muzzlespot.transform.forward)), 1f);
+                GameObject _muzzleflash = Instantiate(muzzleFlash, muzzlespot.transform.position, Quaternion.Euler(muzzlespot.transform.forward));
+                _muzzleflash.transform.parent = muzzlespot.transform;
+                Destroy(_muzzleflash, 1f);
+
                 anim.SetTrigger("IsFiringBolt");
             }
         }

@@ -13,6 +13,7 @@ namespace Invector.CharacterController
         
         private NavMeshAgent agent;
         private vThirdPersonController cc;
+        private bool isDead = false;
 
         // Use this for initialization
         void Start()
@@ -30,16 +31,19 @@ namespace Invector.CharacterController
         // Update is called once per frame
         void Update()
         {
-            if(cc.isDead)
+            if(cc.isDead && !isDead)
             {
+                isDead = true;
                 cc.input.y = 0f;
                 cc.Walk(false);
-                agent.enabled = false;
-                cc.UpdateAnimator();
                 cc.UpdateMotor();
 
+                agent.enabled = false;
+                
+                //Look into removing the capsule a better way.
+                cc._capsuleCollider.enabled = false;
             }
-            if (agent.enabled)
+            if (!isDead && agent.enabled)
             {
                 AgentMove();
                 AgentShoot();

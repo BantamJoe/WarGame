@@ -45,9 +45,16 @@ namespace Invector.CharacterController
             isAiming = value;
             isWalking = value;
         }
-        public virtual void Die(bool value)
+        public virtual void Die()
         {
-            isDead = value;
+            isDead = true;
+            isWalking = false;
+            isSprinting = false;
+            isAiming = false;
+
+            input.x = 0f;
+            input.y = 0f;
+
             basicDeath.Die();
         }
 

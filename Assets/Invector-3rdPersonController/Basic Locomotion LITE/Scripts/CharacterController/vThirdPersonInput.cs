@@ -61,26 +61,35 @@ namespace Invector.CharacterController
 
         protected virtual void LateUpdate()
         {
-            if (cc == null) return;             // returns if didn't find the controller		    
-            InputHandle();                      // update input methods
+            if (cc == null) return;             // returns if didn't find the controller
+            if(!cc.isDead)
+            {
+                InputHandle();                      // update input methods
+            }
+            ExitGameInput();
             UpdateCameraStates();               // update camera states
         }
 
         protected virtual void FixedUpdate()
         {
-            cc.AirControl();
+            if(!cc.isDead)
+            {
+                cc.AirControl();
+            }
             CameraInput();
         }
 
         protected virtual void Update()
         {
-            cc.UpdateMotor();                   // call ThirdPersonMotor methods               
-            cc.UpdateAnimator();                // call ThirdPersonAnimator methods		               
+            if(!cc.isDead)
+            {
+                cc.UpdateMotor();                   // call ThirdPersonMotor methods               
+                cc.UpdateAnimator();                // call ThirdPersonAnimator methods	
+            }               
         }
 
         protected virtual void InputHandle()
         {
-            ExitGameInput();
             CameraInput();
 
             if (!cc.lockMovement && !cc.isDead)
@@ -171,10 +180,12 @@ namespace Invector.CharacterController
             tpCamera.RotateCamera(X, Y);
 
             // tranform Character direction from camera if not KeepDirection
-            if (!keepDirection)
+            if (!keepDirection && !cc.isDead)
                 cc.UpdateTargetDirection(tpCamera != null ? tpCamera.transform : null);
-            // rotate the character with the camera while strafing        
-            RotateWithCamera(tpCamera != null ? tpCamera.transform : null);
+            // rotate the character with the camera while strafing    
+            
+            if(!cc.isDead)
+                RotateWithCamera(tpCamera != null ? tpCamera.transform : null);
 
             //If the character is aiming (potentially through walking), adjust the cameras position
             if (cc.isAiming)
