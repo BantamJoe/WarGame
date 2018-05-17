@@ -42,8 +42,11 @@ namespace Invector.CharacterController
 
         public virtual void Walk(bool value)
         {
-            isAiming = value;
             isWalking = value;
+        }
+        public virtual void Aim(bool value)
+        {
+            isAiming = value;
         }
         public virtual void Die()
         {

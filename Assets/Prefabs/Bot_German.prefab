@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 114376536127769958}
   - component: {fileID: 64096693669572332}
   - component: {fileID: 114489957133842710}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Viewcone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2136,6 +2136,7 @@ MonoBehaviour:
   sprintInput: 304
   walkInput: 301
   shootInput: 323
+  aimInput: 324
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   customCameraState: 

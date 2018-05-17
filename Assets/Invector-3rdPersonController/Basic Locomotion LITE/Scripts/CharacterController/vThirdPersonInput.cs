@@ -18,6 +18,7 @@ namespace Invector.CharacterController
         public KeyCode sprintInput = KeyCode.LeftShift;
         public KeyCode walkInput = KeyCode.CapsLock;
         public KeyCode shootInput = KeyCode.Mouse0;
+        public KeyCode aimInput = KeyCode.Mouse1;
 
         [Header("Camera Settings")]
         public string rotateCameraXInput = "Mouse X";
@@ -76,7 +77,7 @@ namespace Invector.CharacterController
             {
                 cc.AirControl();
             }
-            CameraInput();
+            //CameraInput();
         }
 
         protected virtual void Update()
@@ -99,13 +100,24 @@ namespace Invector.CharacterController
                 WalkInput();
                 StrafeInput();
                 JumpInput();
+                AimInput();
                 ShootInput();
             }
 
         }
 
         #region Basic Locomotion Inputs      
-
+        protected virtual void AimInput()
+        {
+            if(Input.GetKeyDown(aimInput) && !cc.isAiming)
+            {
+                cc.Aim(true);
+            }
+            else if(Input.GetKeyDown(aimInput) && cc.isAiming)
+            {
+                cc.Aim(false);
+            }
+        }
         protected virtual void ShootInput()
         {
             if (Input.GetKeyDown(shootInput))
@@ -188,10 +200,7 @@ namespace Invector.CharacterController
                 RotateWithCamera(tpCamera != null ? tpCamera.transform : null);
 
             //If the character is aiming (potentially through walking), adjust the cameras position
-            if (cc.isAiming)
-                tpCamera.ChangeCameraMode(true);
-            else
-                tpCamera.ChangeCameraMode(false);
+            tpCamera.ChangeCameraMode(cc.isAiming);
         }
 
         protected virtual void UpdateCameraStates()

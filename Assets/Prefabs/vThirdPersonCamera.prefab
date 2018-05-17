@@ -88,7 +88,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1063309509455000}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 312.53076, y: 8.844534, z: 83.85387}
+  m_LocalPosition: {x: 24.872684, y: -2.4150914e-17, z: 10.876604}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4890392752035240}
@@ -184,7 +184,7 @@ MonoBehaviour:
   rightOffsetAimed: 0.2
   heightAimed: 2.3
   cameraFovAimed: 50
-  smoothFollow: 10
+  smoothFollow: 0
   xMouseSensitivity: 3
   yMouseSensitivity: 3
   yMinLimit: -30
