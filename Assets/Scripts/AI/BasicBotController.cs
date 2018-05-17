@@ -25,7 +25,8 @@ namespace Invector.CharacterController
                 cc.Init();
             if (agent == null)
                 Debug.LogError("Navmesh agent missing on bot");
-            agent.SetDestination(target.transform.position);
+            if(target)
+                agent.SetDestination(target.transform.position);
 
         }
 
@@ -44,7 +45,7 @@ namespace Invector.CharacterController
                 //Look into removing the capsule a better way.
                 cc._capsuleCollider.enabled = false;
             }
-            if (!isDead && agent.enabled)
+            if (!isDead && agent.enabled && target)
             {
                 AgentMove();
                 AgentShoot();
@@ -66,10 +67,19 @@ namespace Invector.CharacterController
             if(Physics.Raycast(cc.weapon.transform.GetChild(0).transform.position, cc.weapon.transform.GetChild(0).transform.forward, out hit, shootRange))
             {
                 vThirdPersonController ccHit = hit.transform.gameObject.GetComponentInParent<vThirdPersonController>();
-                if (ccHit != null && ccHit.Team != cc.Team)
+                if (ccHit != null && !ccHit.isDead && ccHit.Team != cc.Team)
                 {
                     cc.Shoot();
                 }
+            }
+        }
+        public void AgentViewConeTarget(GameObject target)
+        {
+            if(agent.enabled)
+            {
+                this.target = target;
+                agent.SetDestination(this.target.transform.position);
+                Debug.Log("New target is " + target.name);
             }
         }
     }
