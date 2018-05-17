@@ -79,7 +79,7 @@ namespace Invector.CharacterController
             {
                 this.target = target;
                 agent.SetDestination(this.target.transform.position);
-                Debug.Log("New target is " + target.name);
+                //Debug.Log("New target is " + target.name);
             }
         }
     }

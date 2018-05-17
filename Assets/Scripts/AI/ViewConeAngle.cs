@@ -19,12 +19,16 @@ namespace Invector.CharacterController
 
         private void OnTriggerEnter(Collider other)
         {
-            vThirdPersonController targetcc = other.gameObject.GetComponentInParent<vThirdPersonController>();
-            
-            if (targetcc != null)
+            if(!cc.isDead)
             {
-                if(botController != null && cc.Team != targetcc.Team && !targetcc.isDead)
-                    botController.SendMessage("AgentViewConeTarget", targetcc.gameObject, SendMessageOptions.DontRequireReceiver);
+                vThirdPersonController targetcc = other.gameObject.GetComponentInParent<vThirdPersonController>();
+                Debug.Log("Viewcone other: " + other.gameObject.name);
+
+                if (targetcc != null)
+                {
+                    if (botController != null && cc.Team != targetcc.Team && !targetcc.isDead)
+                        botController.SendMessage("AgentViewConeTarget", targetcc.gameObject, SendMessageOptions.DontRequireReceiver);
+                }
             }
         }
     }

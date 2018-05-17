@@ -24,6 +24,8 @@ namespace Invector.CharacterController
         {
             weaponAudio = this.gameObject.AddComponent<AudioSource>();
             weaponAudio.clip = fire;
+            weaponAudio.spatialBlend = 1f;
+            weaponAudio.panStereo = 1f;
             anim = transform.root.gameObject.GetComponent<Animator>();
         }
 
@@ -42,7 +44,7 @@ namespace Invector.CharacterController
                     muzzlespot.transform.LookAt(firespotHit.point);
 
                     //Fire a ray from the guns muzzle to the cameras crosshair
-                    if (Physics.Raycast(muzzlespot.transform.position, muzzlespot.transform.forward, out muzzlespotHit, range, -1, QueryTriggerInteraction.Ignore))
+                    if (Physics.Raycast(muzzlespot.transform.position, muzzlespot.transform.forward, out muzzlespotHit, range))
                     {
                         Component ccComponent = muzzlespotHit.transform.gameObject.GetComponentInParent(typeof(vThirdPersonController));
 
