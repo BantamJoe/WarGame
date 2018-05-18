@@ -20,6 +20,7 @@ namespace Invector.CharacterController
         public KeyCode shootInput = KeyCode.Mouse0;
         public KeyCode aimInput = KeyCode.Mouse1;
         public KeyCode crouchInput = KeyCode.C;
+        public KeyCode proneInput = KeyCode.Z;
 
         [Header("Camera Settings")]
         public string rotateCameraXInput = "Mouse X";
@@ -101,6 +102,7 @@ namespace Invector.CharacterController
                 WalkInput();
                 StrafeInput();
                 CrouchInput();
+                ProneInput();
                 JumpInput();
                 AimInput();
                 ShootInput();
@@ -124,10 +126,17 @@ namespace Invector.CharacterController
         }
         protected virtual void CrouchInput()
         {
-            if (Input.GetKeyDown(crouchInput) && !cc.isCrouching)
+            if (Input.GetKeyDown(crouchInput) && !cc.isCrouching && !cc.isSprinting)
                 cc.Crouch(true);
             else if (Input.GetKeyDown(crouchInput) && cc.isCrouching)
                 cc.Crouch(false);
+        }
+        protected virtual void ProneInput()
+        {
+            if (Input.GetKeyDown(proneInput) && !cc.isProning && !cc.isSprinting)
+                cc.Prone(true);
+            else if (Input.GetKeyDown(proneInput) && cc.isProning)
+                cc.Prone(false);
         }
         protected virtual void ShootInput()
         {

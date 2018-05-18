@@ -29,6 +29,14 @@ namespace Invector.CharacterController
                 Cursor.visible = false;
 #endif
         }
+        public virtual void Prone(bool value)
+        {
+            isProning = value;
+            isCrouching = false;
+
+            animator.SetBool("IsCrouching", false);
+            animator.SetBool("IsProning", value);
+        }
         public virtual void Shoot()
         {
             if(!isSprinting)
@@ -36,8 +44,9 @@ namespace Invector.CharacterController
         }
 
         public virtual void Sprint(bool value)
-        {                                   
-            isSprinting = value;            
+        {                 
+            if(!isCrouching && !isProning)
+                isSprinting = value;            
         }
 
         public virtual void Walk(bool value)
@@ -63,9 +72,10 @@ namespace Invector.CharacterController
         }
         public virtual void Crouch(bool value)
         {
-            Debug.Log("Crouching");
             isCrouching = value;
-            animator.StopPlayback();
+            isProning = false;
+
+            animator.SetBool("IsProning", false);
             animator.SetBool("IsCrouching", value);
         }
 

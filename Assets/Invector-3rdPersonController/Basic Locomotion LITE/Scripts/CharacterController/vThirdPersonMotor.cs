@@ -100,7 +100,8 @@ namespace Invector.CharacterController
             isSprinting,
             isWalking,
             isSliding,
-            isCrouching;
+            isCrouching,
+            isProning;
 
         // action bools
         [HideInInspector]
@@ -232,6 +233,7 @@ namespace Invector.CharacterController
             direction = _direction;
             if (isSprinting) speed += 0.5f;
             if (isWalking) speed -= 0.5f;
+            //if (isCrouching || isProning) speed -= 0.5f;
             if (speed <= 0.1f || speed > 0.51f) isWalking = false;
             if (direction >= 0.7f || direction <= -0.7f || speed <= 0.1f) isSprinting = false;
         }
