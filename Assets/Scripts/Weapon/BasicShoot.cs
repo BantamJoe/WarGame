@@ -6,6 +6,10 @@ namespace Invector.CharacterController
 {
     public class BasicShoot : MonoBehaviour
     {
+        [Tooltip("1 = bolt rifle, 2 = semi rifle, 3 = shotgun, 4 = handgun")]
+        public int weaponType = 1;
+        [Tooltip("1/firerate in seconds is delay between shots")]
+        public float fireRate = 1f;
         public float damage = 10f;
         public float range = 5000f;
 
@@ -17,7 +21,6 @@ namespace Invector.CharacterController
 
         private AudioSource weaponAudio;
         private Animator anim;
-        private float fireAnimDelay = 1f;
         private float timeToNextFire = 0f;
 
         void Start()
@@ -26,7 +29,7 @@ namespace Invector.CharacterController
             weaponAudio.clip = fire;
             weaponAudio.spatialBlend = 1f;
             weaponAudio.panStereo = 1f;
-            anim = transform.root.gameObject.GetComponent<Animator>();
+            anim = transform.root.gameObject.GetComponent<Animator>();  //TODO: remove the root dependency
         }
 
         public void Shoot()
@@ -36,7 +39,8 @@ namespace Invector.CharacterController
             {
                 RaycastHit firespotHit, muzzlespotHit;
                 Transform originalMuzzlespotTransform = muzzlespot.transform;
-                
+                timeToNextFire = Time.time + 1f / fireRate;
+
                 //Fire a ray from the camera. This is the ideal hit position
                 if (Physics.Raycast(firespot.transform.position, firespot.transform.forward, out firespotHit, range))
                 {
@@ -63,12 +67,28 @@ namespace Invector.CharacterController
                 
                 //Play sound and effects regardless of hit
                 weaponAudio.Play();
-                timeToNextFire = Time.time + 1f / fireAnimDelay;
                 GameObject _muzzleflash = Instantiate(muzzleFlash, muzzlespot.transform.position, Quaternion.Euler(muzzlespot.transform.forward));
                 _muzzleflash.transform.parent = muzzlespot.transform;
                 Destroy(_muzzleflash, 1f);
 
-                anim.SetTrigger("IsFiringBolt");
+
+                //Play shooting anim
+                switch(weaponType)
+                { 
+                    case 1:
+                        anim.SetTrigger("IsFiringBolt");
+                        break;
+                    case 2:
+                        anim.SetTrigger("IsFiringSemi");
+                        break;
+                    case 3:
+                        anim.SetTrigger("IsFiringShotgun");
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                }
             }
         }
     }

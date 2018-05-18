@@ -99,7 +99,8 @@ namespace Invector.CharacterController
             isStrafing,
             isSprinting,
             isWalking,
-            isSliding;
+            isSliding,
+            isCrouching;
 
         // action bools
         [HideInInspector]

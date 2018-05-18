@@ -19,6 +19,7 @@ namespace Invector.CharacterController
         public KeyCode walkInput = KeyCode.CapsLock;
         public KeyCode shootInput = KeyCode.Mouse0;
         public KeyCode aimInput = KeyCode.Mouse1;
+        public KeyCode crouchInput = KeyCode.C;
 
         [Header("Camera Settings")]
         public string rotateCameraXInput = "Mouse X";
@@ -99,6 +100,7 @@ namespace Invector.CharacterController
                 SprintInput();
                 WalkInput();
                 StrafeInput();
+                CrouchInput();
                 JumpInput();
                 AimInput();
                 ShootInput();
@@ -112,11 +114,20 @@ namespace Invector.CharacterController
             if(Input.GetKeyDown(aimInput) && !cc.isAiming)
             {
                 cc.Aim(true);
+                cc.Walk(true);
             }
             else if(Input.GetKeyDown(aimInput) && cc.isAiming)
             {
                 cc.Aim(false);
+                cc.Walk(false);
             }
+        }
+        protected virtual void CrouchInput()
+        {
+            if (Input.GetKeyDown(crouchInput) && !cc.isCrouching)
+                cc.Crouch(true);
+            else if (Input.GetKeyDown(crouchInput) && cc.isCrouching)
+                cc.Crouch(false);
         }
         protected virtual void ShootInput()
         {
@@ -199,7 +210,6 @@ namespace Invector.CharacterController
             if(!cc.isDead)
                 RotateWithCamera(tpCamera != null ? tpCamera.transform : null);
 
-            //If the character is aiming (potentially through walking), adjust the cameras position
             tpCamera.ChangeCameraMode(cc.isAiming);
         }
 

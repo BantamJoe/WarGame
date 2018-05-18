@@ -61,6 +61,13 @@ namespace Invector.CharacterController
 
             basicDeath.Die();
         }
+        public virtual void Crouch(bool value)
+        {
+            Debug.Log("Crouching");
+            isCrouching = value;
+            animator.StopPlayback();
+            animator.SetBool("IsCrouching", value);
+        }
 
         public virtual void Strafe()
         {

@@ -8,7 +8,7 @@ public class vThirdPersonCamera : MonoBehaviour
     public Transform crosshair;
 
     private static vThirdPersonCamera _instance;
-    private bool aimMode;
+    private bool aimed;
 
     public static vThirdPersonCamera instance
     {
@@ -294,12 +294,12 @@ public class vThirdPersonCamera : MonoBehaviour
 
     public void ChangeCameraMode(bool zoom)
     {
-        if(zoom)
+        if (zoom)
         {
-            height = Mathf.Lerp(height,heightAimed, 0.5f);
-            rightOffset = Mathf.Lerp(rightOffset,rightOffsetAimed, 0.5f);
+            height = Mathf.Lerp(height, heightAimed, 0.5f);
+            rightOffset = Mathf.Lerp(rightOffset, rightOffsetAimed, 0.5f);
             distance = Mathf.Lerp(distance, distanceAimed, 0.5f);
-            _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView,cameraFovAimed,0.5f);
+            _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, cameraFovAimed, 0.5f);
         }
         else
         {
