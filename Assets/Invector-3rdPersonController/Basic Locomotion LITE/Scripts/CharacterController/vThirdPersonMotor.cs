@@ -72,7 +72,10 @@ namespace Invector.CharacterController
         public float strafeSprintSpeed = 4f;
 
         [Header("--- Grounded Setup ---")]
-
+        [Tooltip("Percentage change of capsule collider when crouched")]
+        public float capsuleCrouchPercentage = 0.75f;
+        [Tooltip("Percentage change of capsule collider when proned")]
+        public float capsulePronePercentage = 0.75f;
         [Tooltip("ADJUST IN PLAY MODE - Offset height limit for sters - GREY Raycast in front of the legs")]
         public float stepOffsetEnd = 0.45f;
         [Tooltip("ADJUST IN PLAY MODE - Offset height origin for sters, make sure to keep slight above the floor - GREY Raycast in front of the legs")]
@@ -146,6 +149,12 @@ namespace Invector.CharacterController
         public PhysicMaterial maxFrictionPhysics, frictionPhysics, slippyPhysics;       // create PhysicMaterial for the Rigidbody
         [HideInInspector]
         public CapsuleCollider _capsuleCollider;                    // access CapsuleCollider information
+        [HideInInspector]
+        public Vector3 originalCapsuleCenter;
+        [HideInInspector]
+        public float originalCapsuleHeight;
+        [HideInInspector]
+        public float originalCapsuleRadius;
 
         #endregion
 
@@ -196,7 +205,10 @@ namespace Invector.CharacterController
             _rigidbody = GetComponent<Rigidbody>();
 
             // capsule collider info
-            _capsuleCollider = GetComponent<CapsuleCollider>();
+            _capsuleCollider = GetComponentInChildren<CapsuleCollider>();
+            originalCapsuleCenter = _capsuleCollider.center;
+            originalCapsuleHeight = _capsuleCollider.height;
+            originalCapsuleRadius = _capsuleCollider.radius;
         }
 
         public virtual void UpdateMotor()
@@ -236,6 +248,30 @@ namespace Invector.CharacterController
             //if (isCrouching || isProning) speed -= 0.5f;
             if (speed <= 0.1f || speed > 0.51f) isWalking = false;
             if (direction >= 0.7f || direction <= -0.7f || speed <= 0.1f) isSprinting = false;
+        }
+
+        public virtual void AdjustCapsule()
+        {
+            if(isCrouching)
+            {
+                _capsuleCollider.direction = 1;
+                _capsuleCollider.center = new Vector3(_capsuleCollider.center.x, (_capsuleCollider.height * capsuleCrouchPercentage) / 2f, _capsuleCollider.center.z);
+                _capsuleCollider.height *= capsuleCrouchPercentage;
+            }
+            else if(isProning)
+            {
+                _capsuleCollider.direction = 2;
+                _capsuleCollider.center = new Vector3(originalCapsuleCenter.x,originalCapsuleCenter.y - originalCapsuleRadius * capsuleCrouchPercentage, originalCapsuleCenter.z);
+                _capsuleCollider.height = originalCapsuleHeight;
+            }
+            else // Must be standing or dead
+            {
+                Debug.Log("Resetting capsule");
+                _capsuleCollider.direction = 1;
+                _capsuleCollider.center = originalCapsuleCenter;
+                _capsuleCollider.height = originalCapsuleHeight;
+                _capsuleCollider.radius = originalCapsuleRadius;
+            }
         }
 
         public virtual void FreeMovement()

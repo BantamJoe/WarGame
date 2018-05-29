@@ -140,7 +140,7 @@ namespace Invector.CharacterController
         }
         protected virtual void ShootInput()
         {
-            if (Input.GetKeyDown(shootInput))
+            if (Input.GetKey(shootInput))
             {
                 cc.Shoot();
             }

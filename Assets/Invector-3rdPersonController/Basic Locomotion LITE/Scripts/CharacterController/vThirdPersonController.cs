@@ -34,8 +34,20 @@ namespace Invector.CharacterController
             isProning = value;
             isCrouching = false;
 
-            animator.SetBool("IsCrouching", false);
             animator.SetBool("IsProning", value);
+            animator.SetBool("IsCrouching", false);
+            
+            AdjustCapsule();
+        }
+        public virtual void Crouch(bool value)
+        {
+            isCrouching = value;
+            isProning = false;
+
+            animator.SetBool("IsProning", false);
+            animator.SetBool("IsCrouching", value);
+
+            AdjustCapsule();
         }
         public virtual void Shoot()
         {
@@ -70,14 +82,7 @@ namespace Invector.CharacterController
 
             basicDeath.Die();
         }
-        public virtual void Crouch(bool value)
-        {
-            isCrouching = value;
-            isProning = false;
-
-            animator.SetBool("IsProning", false);
-            animator.SetBool("IsCrouching", value);
-        }
+        
 
         public virtual void Strafe()
         {

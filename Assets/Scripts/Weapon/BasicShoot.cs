@@ -29,13 +29,13 @@ namespace Invector.CharacterController
             weaponAudio.clip = fire;
             weaponAudio.spatialBlend = 1f;
             weaponAudio.panStereo = 1f;
-            anim = transform.root.gameObject.GetComponent<Animator>();  //TODO: remove the root dependency
+            anim = transform.GetComponentInParent<Animator>();  //TODO: remove the root dependency
         }
 
         public void Shoot()
         {
             //If next time to fire has been reached and animator is reset
-            if (Time.time >= timeToNextFire && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
+            if (Time.time >= timeToNextFire)// && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
             {
                 RaycastHit firespotHit, muzzlespotHit;
                 Transform originalMuzzlespotTransform = muzzlespot.transform;
