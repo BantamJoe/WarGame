@@ -21,6 +21,7 @@ namespace Invector.CharacterController
         public KeyCode aimInput = KeyCode.Mouse1;
         public KeyCode crouchInput = KeyCode.C;
         public KeyCode proneInput = KeyCode.Z;
+        public KeyCode reloadInput = KeyCode.R;
 
         [Header("Camera Settings")]
         public string rotateCameraXInput = "Mouse X";
@@ -106,6 +107,7 @@ namespace Invector.CharacterController
                 JumpInput();
                 AimInput();
                 ShootInput();
+                ReloadInput();
             }
 
         }
@@ -143,6 +145,13 @@ namespace Invector.CharacterController
             if (Input.GetKey(shootInput))
             {
                 cc.Shoot();
+            }
+        }
+        protected virtual void ReloadInput()
+        {
+            if (Input.GetKey(reloadInput))
+            {
+                cc.Reload();
             }
         }
 

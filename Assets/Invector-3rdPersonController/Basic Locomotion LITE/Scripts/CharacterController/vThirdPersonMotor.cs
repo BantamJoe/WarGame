@@ -112,6 +112,7 @@ namespace Invector.CharacterController
             isBot,
             isJumping,
             isAiming,
+            isReloading,
             isDead;
 
         protected void RemoveComponents()

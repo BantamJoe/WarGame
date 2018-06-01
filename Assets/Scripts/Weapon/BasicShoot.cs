@@ -12,6 +12,8 @@ namespace Invector.CharacterController
         public float fireRate = 1f;
         public float damage = 10f;
         public float range = 5000f;
+        [Tooltip("Magazine capacity")]
+        public int capacity = 5;
 
         public AudioClip fire;
         public GameObject firespot;
@@ -22,6 +24,7 @@ namespace Invector.CharacterController
         private AudioSource weaponAudio;
         private Animator anim;
         private float timeToNextFire = 0f;
+        private int currentAmmo;
 
         void Start()
         {
@@ -30,12 +33,20 @@ namespace Invector.CharacterController
             weaponAudio.spatialBlend = 1f;
             weaponAudio.panStereo = 1f;
             anim = transform.GetComponentInParent<Animator>();  //TODO: remove the root dependency
+            currentAmmo = capacity;
+        }
+
+        public void Reload()
+        {
+            //Play reloading anim
+            anim.SetTrigger("IsReloading");
+            currentAmmo = capacity;
         }
 
         public void Shoot()
         {
             //If next time to fire has been reached and animator is reset
-            if (Time.time >= timeToNextFire)// && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
+            if (Time.time >= timeToNextFire && currentAmmo != 0)// && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
             {
                 RaycastHit firespotHit, muzzlespotHit;
                 Transform originalMuzzlespotTransform = muzzlespot.transform;
@@ -67,6 +78,9 @@ namespace Invector.CharacterController
                 
                 //Play sound and effects regardless of hit
                 weaponAudio.Play();
+
+                currentAmmo -= 1;
+
                 GameObject _muzzleflash = Instantiate(muzzleFlash, muzzlespot.transform.position, Quaternion.Euler(muzzlespot.transform.forward));
                 _muzzleflash.transform.parent = muzzlespot.transform;
                 Destroy(_muzzleflash, 1f);

@@ -51,8 +51,17 @@ namespace Invector.CharacterController
         }
         public virtual void Shoot()
         {
-            if(!isSprinting)
+            if (!isSprinting)
+            {
                 basicShoot.Shoot();
+            }
+        }
+        public virtual void Reload()
+        {
+            if (!isSprinting)
+            {
+                basicShoot.Reload();
+            }
         }
 
         public virtual void Sprint(bool value)
@@ -111,20 +120,14 @@ namespace Invector.CharacterController
             var newSpineRotation = new Vector3(referenceTransform.eulerAngles.x, spine.transform.eulerAngles.y, spine.transform.eulerAngles.z);
 
             //Rotate the spine of the biped
-            spine.transform.rotation = Quaternion.Lerp(Quaternion.Euler(newSpineRotation),spine.transform.rotation, strafeRotationSpeed * Time.fixedDeltaTime);
-            
+            spine.transform.rotation = Quaternion.Lerp(Quaternion.Euler(newSpineRotation), spine.transform.rotation, strafeRotationSpeed * Time.fixedDeltaTime);
+
             //Rotate the whole character for looking left and right
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(newRotation), strafeRotationSpeed * Time.fixedDeltaTime);
-            
+
             //Update rotations for smooth updating
             targetRotation = transform.rotation;
             spine.transform.rotation = Quaternion.Euler(newSpineRotation);
-
-            /* Original version
-            var newRotation = new Vector3(transform.eulerAngles.x, referenceTransform.eulerAngles.y, transform.eulerAngles.z);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(newRotation), strafeRotationSpeed * Time.fixedDeltaTime);
-            targetRotation = transform.rotation;
-            */
         }
     }
 }

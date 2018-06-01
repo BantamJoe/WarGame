@@ -22,7 +22,6 @@ namespace Invector.CharacterController
             if(!cc.isDead)
             {
                 vThirdPersonController targetcc = other.gameObject.GetComponentInParent<vThirdPersonController>();
-                Debug.Log("Viewcone other: " + other.gameObject.name);
 
                 if (targetcc != null)
                 {
@@ -31,5 +30,20 @@ namespace Invector.CharacterController
                 }
             }
         }
+        /*
+        private void OnTriggerExit(Collider other)
+        {
+            if(!cc.isDead)
+            {
+                vThirdPersonController targetcc = other.gameObject.GetComponentInParent<vThirdPersonController>();
+
+                if (targetcc != null)
+                {
+                    if (botController != null && cc.Team != targetcc.Team && !targetcc.isDead)
+                        botController.SendMessage("AgentViewConeTargetLost", targetcc.gameObject, SendMessageOptions.DontRequireReceiver);
+                }
+            }
+        }
+        */
     }
 }
