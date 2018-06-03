@@ -292,7 +292,7 @@ public class vThirdPersonCamera : MonoBehaviour
         return value;
     }
 
-    public void ChangeCameraMode(bool zoom)
+    public void ChangeCameraMode(bool zoom, bool crouch, bool prone)
     {
         if (zoom)
         {

@@ -228,7 +228,7 @@ namespace Invector.CharacterController
             if(!cc.isDead)
                 RotateWithCamera(tpCamera != null ? tpCamera.transform : null);
 
-            tpCamera.ChangeCameraMode(cc.isAiming);
+            tpCamera.ChangeCameraMode(cc.isAiming, cc.isCrouching, cc.isProning);
         }
 
         protected virtual void UpdateCameraStates()

@@ -41,6 +41,15 @@ namespace Invector.CharacterController
         }
         public virtual void Crouch(bool value)
         {
+            //if attempting to stand
+            if(!value)
+            {
+                if(!CanStandFromCrouch())
+                {
+                    return;
+                }
+            }
+
             isCrouching = value;
             isProning = false;
 

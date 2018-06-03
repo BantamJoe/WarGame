@@ -560,8 +560,26 @@ namespace Invector.CharacterController
             else
                 targetDirection = keepDirection ? targetDirection : new Vector3(input.x, 0, input.y);
         }
+        /// <summary>
+        /// Check the area above the capsule to see if character can move from crouching to standing
+        /// </summary>
+        public virtual bool CanStandFromCrouch()
+        {
+            RaycastHit rayHit;
+            float distance = _capsuleCollider.height / 2f + (originalCapsuleHeight - _capsuleCollider.height);
 
+            Debug.DrawRay(transform.TransformPoint(_capsuleCollider.center), _capsuleCollider.transform.up * distance, Color.red, 3f, false);
+            if(Physics.Raycast(transform.TransformPoint(_capsuleCollider.center), _capsuleCollider.transform.up, out rayHit, distance))
+            {
+                Debug.Log("Raycast hit, can't stand");
+                return false;
+            }
+            else
+            {
+                Debug.Log("Clear above, standing");
+                return true;
+            }
+        }
         #endregion
-
     }
 }
