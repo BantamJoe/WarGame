@@ -31,6 +31,14 @@ namespace Invector.CharacterController
         }
         public virtual void Prone(bool value)
         {
+            //if attempting to stand, check for clearance
+            /*
+            if (!value && !CanStandFromProne())
+            {
+                return;
+            }
+            */
+
             isProning = value;
             isCrouching = false;
 
@@ -41,13 +49,14 @@ namespace Invector.CharacterController
         }
         public virtual void Crouch(bool value)
         {
-            //if attempting to stand
-            if(!value)
+            //if attempting to stand, check for clearance
+            if(!value && isCrouching && !CanStandFromCrouch())
             {
-                if(!CanStandFromCrouch())
-                {
-                    return;
-                }
+                return;
+            }
+            if(value && isProning && !CanCrouchFromProne())
+            {
+                return;
             }
 
             isCrouching = value;
