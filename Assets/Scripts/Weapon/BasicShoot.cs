@@ -15,6 +15,8 @@ namespace Invector.CharacterController
         public float reloadDelay = 1f;
         [Tooltip("Magazine capacity")]
         public int capacity = 5;
+        //[HideInInspector]
+        public int currentAmmo;
 
         public AudioClip fire;
         public GameObject firespot;
@@ -25,7 +27,7 @@ namespace Invector.CharacterController
         private AudioSource weaponAudio;
         private Animator anim;
         private float timeToNextFire = 0f;
-        private int currentAmmo;
+        private bool reloading = false;
 
         void Start()
         {
@@ -37,18 +39,25 @@ namespace Invector.CharacterController
             currentAmmo = capacity;
         }
 
-        public void Reload()
+        public IEnumerator Reload()
         {
-            //Play reloading anim
-            anim.SetTrigger("IsReloading");
-            currentAmmo = capacity;
-            timeToNextFire += reloadDelay;
+            if(!reloading)//This was done to prevent multiple entries into reloading loop. Consider moving all weapon code to the guns themselves instead of on cc
+            {
+                reloading = true;
+                anim.SetTrigger("IsReloading");
+                currentAmmo = 0;
+
+                yield return new WaitForSeconds(reloadDelay);
+
+                currentAmmo = capacity;
+                reloading = false;
+            }
         }
 
         public void Shoot()
         {
             //If next time to fire has been reached and animator is reset
-            if (Time.time >= timeToNextFire && currentAmmo != 0)// && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
+            if (Time.time >= timeToNextFire && currentAmmo != 0 && !reloading)// && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
             {
                 RaycastHit firespotHit, muzzlespotHit;
                 Transform originalMuzzlespotTransform = muzzlespot.transform;

@@ -94,7 +94,8 @@ namespace Invector.CharacterController
 
         void AgentShoot()
         {
-            if(canShoot)
+            cc.BotNeedToReload();
+            if (canShoot)
             {
                 RaycastHit hit;
                 if (Physics.Raycast(cc.weapon.transform.GetChild(0).transform.position, cc.weapon.transform.GetChild(0).transform.forward, out hit, shootRange))

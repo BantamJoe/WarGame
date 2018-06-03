@@ -67,7 +67,7 @@ namespace Invector.CharacterController
         }
         public virtual void Shoot()
         {
-            if (!isSprinting)
+            if (!isSprinting && !isReloading)
             {
                 basicShoot.Shoot();
             }
@@ -76,7 +76,7 @@ namespace Invector.CharacterController
         {
             if (!isSprinting)
             {
-                basicShoot.Reload();
+                StartCoroutine(basicShoot.Reload());
             }
         }
 
@@ -106,6 +106,14 @@ namespace Invector.CharacterController
             speed = 0f;
 
             basicDeath.Die();
+        }
+        public void BotNeedToReload()
+        {
+            if(basicShoot.currentAmmo <= 0)
+            {
+                Debug.Log("Bot reloading");
+                StartCoroutine(basicShoot.Reload());
+            }
         }
         
 
