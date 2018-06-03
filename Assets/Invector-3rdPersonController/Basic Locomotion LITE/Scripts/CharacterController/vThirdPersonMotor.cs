@@ -577,7 +577,24 @@ namespace Invector.CharacterController
                 return true;
             }
         }
+        /// <summary>
+        /// Check the area above the capsule to see if character can jump from crouching
+        /// </summary>
+        public virtual bool CanJumpFromCrouch()
+        {
+            RaycastHit rayHit;
+            float distance = _capsuleCollider.height + (originalCapsuleHeight - _capsuleCollider.height);
 
+            Debug.DrawRay(transform.TransformPoint(_capsuleCollider.center), _capsuleCollider.transform.up * distance, Color.red, 3f, false);
+            if (Physics.Raycast(transform.TransformPoint(_capsuleCollider.center), _capsuleCollider.transform.up, out rayHit, distance))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         /// <summary>
         /// Check the area above the capsule to see if character can move from proning to crouching
         /// </summary>
@@ -585,6 +602,26 @@ namespace Invector.CharacterController
         {
             RaycastHit rayHit;
             float distance = originalCapsuleHeight * capsuleCrouchPercentage;
+
+            Debug.DrawRay(transform.TransformPoint(_capsuleCollider.center + (Vector3.down * _capsuleCollider.radius)), _capsuleCollider.transform.up * distance, Color.red, 3f, false);
+
+            if (Physics.Raycast(transform.TransformPoint(_capsuleCollider.center + (Vector3.down * _capsuleCollider.radius * 0.99f)), _capsuleCollider.transform.up, out rayHit, distance))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Check the area above the capsule to see if character can move from proning to crouching
+        /// </summary>
+        public virtual bool CanStandFromProne()
+        {
+            RaycastHit rayHit;
+            float distance = originalCapsuleHeight;
 
             Debug.DrawRay(transform.TransformPoint(_capsuleCollider.center + (Vector3.down * _capsuleCollider.radius)), _capsuleCollider.transform.up * distance, Color.red, 3f, false);
 

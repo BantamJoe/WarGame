@@ -179,7 +179,7 @@ namespace Invector.CharacterController
 
         protected virtual void JumpInput()
         {
-            if (Input.GetKeyDown(jumpInput))
+            if (Input.GetKeyDown(jumpInput) && !cc.isProning && cc.CanJumpFromCrouch())
                 cc.Jump();
         }
 

@@ -11,9 +11,9 @@ namespace Invector.CharacterController
         public bool canShoot = true;
         [Tooltip("Raycast length from gun when determing to shoot")]
         public float shootRange = 30f;
-
+        [HideInInspector]
         public GameObject target;
-
+        
         private NavMeshAgent agent;
         private vThirdPersonController cc;
         private bool isDead = false;
@@ -50,7 +50,7 @@ namespace Invector.CharacterController
             if (!isDead && agent.enabled && target)
             {
                 AgentMoveToTarget();
-                AgentRotate();
+                //AgentRotate();
                 AgentShoot();
             }
         }

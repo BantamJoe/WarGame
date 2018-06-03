@@ -32,12 +32,10 @@ namespace Invector.CharacterController
         public virtual void Prone(bool value)
         {
             //if attempting to stand, check for clearance
-            /*
-            if (!value && !CanStandFromProne())
+            if (!value && isProning && !CanStandFromProne())
             {
                 return;
             }
-            */
 
             isProning = value;
             isCrouching = false;
