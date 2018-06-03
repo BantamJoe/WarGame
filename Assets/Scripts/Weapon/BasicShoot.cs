@@ -12,6 +12,7 @@ namespace Invector.CharacterController
         public float fireRate = 1f;
         public float damage = 10f;
         public float range = 5000f;
+        public float reloadDelay = 1f;
         [Tooltip("Magazine capacity")]
         public int capacity = 5;
 
@@ -41,6 +42,7 @@ namespace Invector.CharacterController
             //Play reloading anim
             anim.SetTrigger("IsReloading");
             currentAmmo = capacity;
+            timeToNextFire += reloadDelay;
         }
 
         public void Shoot()
