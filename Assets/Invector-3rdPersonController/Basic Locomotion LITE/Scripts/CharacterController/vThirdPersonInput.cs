@@ -110,7 +110,7 @@ namespace Invector.CharacterController
                 ReloadInput();
 
                 //DEBUGGING ONLY. REMOVE ASAP
-                cc.animator.SetInteger("WeaponType", cc.weapon.GetComponent<BasicShoot>().weaponType);
+                cc.animator.SetInteger("WeaponType", cc.weaponContainer.transform.GetChild(0).GetComponent<BasicShoot>().weaponType);
             }
 
         }

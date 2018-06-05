@@ -6,12 +6,13 @@ namespace Invector.CharacterController
     public class vThirdPersonController : vThirdPersonAnimator
     {
         public string Team;
-        public GameObject spine;
         public GameObject bloodEffect;
 
-        /*
-         *Come up with a cleaner way of getting to the shooting script. This is better than before - keep access to the script here. 
-         */
+        [HideInInspector]
+        public GameObject spine;
+        [HideInInspector]
+        public GameObject weaponContainer;
+        [HideInInspector]
         public GameObject weapon;
 
         private BasicShoot basicShoot;
@@ -19,11 +20,26 @@ namespace Invector.CharacterController
 
         protected virtual void Start()
         {
-            basicShoot = weapon.GetComponent<BasicShoot>();
+            //Prepare the weapon and weapon container
+            weaponContainer = gameObject.transform.FindDeepChild("WeaponContainer").gameObject;
+            if (weaponContainer == null) Debug.LogError("Weapon container NOT FOUND on " + gameObject.name);
+            if (weaponContainer.transform.childCount > 0)
+            {
+                weapon = weaponContainer.transform.GetChild(0).gameObject;
+                basicShoot = weapon.GetComponent<BasicShoot>();
+                if(basicShoot == null) Debug.LogError("WeaponContainer contained gameObject that did NOT have a BasicShoot script.");
+            }
+            else
+                Debug.LogWarning("Weapon container on " + gameObject.name + " is empty. Was this intentional?");
+
+
+            //Prepare the death script
             basicDeath = GetComponent<BasicDeath>();
 
-            if (spine == null) return;
-            if (weapon != null && basicShoot == null) return;
+            //Prepare the spine
+            spine = gameObject.transform.FindDeepChild("Bip001 Spine").gameObject;
+            if (spine == null) Debug.LogError("Spine was not found for " + gameObject.name);
+                
 #if !UNITY_EDITOR
                 Cursor.visible = false;
 #endif
@@ -152,5 +168,24 @@ namespace Invector.CharacterController
             targetRotation = transform.rotation;
             spine.transform.rotation = Quaternion.Euler(newSpineRotation);
         }
+    }
+}
+
+//Use this for finding grandchild by name at Start, extension class for Transforms
+public static class TransformDeepChildExtension
+{
+    //Breadth-first search
+    public static Transform FindDeepChild(this Transform aParent, string aName)
+    {
+        var result = aParent.Find(aName);
+        if (result != null)
+            return result;
+        foreach (Transform child in aParent)
+        {
+            result = child.FindDeepChild(aName);
+            if (result != null)
+                return result;
+        }
+        return null;
     }
 }

@@ -98,7 +98,7 @@ namespace Invector.CharacterController
             if (canShoot)
             {
                 RaycastHit hit;
-                if (Physics.Raycast(cc.weapon.transform.GetChild(0).transform.position, cc.weapon.transform.GetChild(0).transform.forward, out hit, shootRange))
+                if (Physics.Raycast(cc.weaponContainer.transform.GetChild(0).transform.GetChild(0).transform.position, cc.weaponContainer.transform.GetChild(0).transform.GetChild(0).transform.forward, out hit, shootRange))
                 {
                     vThirdPersonController ccHit = hit.transform.gameObject.GetComponentInParent<vThirdPersonController>();
                     if (ccHit != null && !ccHit.isDead && ccHit.Team != cc.Team)
