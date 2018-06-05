@@ -24,10 +24,6 @@ namespace Invector.CharacterController
 
             if (spine == null) return;
             if (weapon != null && basicShoot == null) return;
-
-            Debug.Log("WeaponType: " + basicShoot.weaponType);
-            animator.SetInteger("WeaponType", basicShoot.weaponType);
-
 #if !UNITY_EDITOR
                 Cursor.visible = false;
 #endif
