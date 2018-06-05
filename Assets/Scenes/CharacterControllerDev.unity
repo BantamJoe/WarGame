@@ -2429,7 +2429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponType: 4
   fireRate: 4
-  damage: 10
+  damage: 45
   range: 5000
   reloadDelay: 1
   capacity: 5

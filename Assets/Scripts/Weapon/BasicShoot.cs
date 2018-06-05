@@ -77,7 +77,7 @@ namespace Invector.CharacterController
                         if (ccComponent != null)
                         {
                             vThirdPersonController cc = ccComponent.GetComponent<vThirdPersonController>();
-                            cc.Die();
+                            cc.TakeDamage(damage);
                             Destroy(Instantiate(cc.bloodEffect, muzzlespotHit.point, Quaternion.LookRotation(muzzlespotHit.normal)),1f);
                         }
                         Destroy(Instantiate(impactEffect, muzzlespotHit.point, Quaternion.LookRotation(muzzlespotHit.normal)),1f);

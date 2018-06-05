@@ -5,6 +5,7 @@ namespace Invector.CharacterController
 {
     public class vThirdPersonController : vThirdPersonAnimator
     {
+        public float health = 100f;
         public string Team;
         public GameObject bloodEffect;
 
@@ -121,6 +122,18 @@ namespace Invector.CharacterController
             speed = 0f;
 
             basicDeath.Die();
+        }
+        public virtual void TakeDamage(float damage)
+        {
+            health -= damage;
+            if(health <= 0)
+            {
+                Die();
+            }
+            else
+            {
+                animator.SetTrigger("IsHurt");
+            }
         }
         public void BotNeedToReload()
         {
