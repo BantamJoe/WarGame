@@ -110,6 +110,7 @@ namespace Invector.CharacterController
                         anim.SetTrigger("IsFiringShotgun");
                         break;
                     case 4:
+                        anim.SetTrigger("IsFiringHandgun");
                         break;
                     case 5:
                         break;

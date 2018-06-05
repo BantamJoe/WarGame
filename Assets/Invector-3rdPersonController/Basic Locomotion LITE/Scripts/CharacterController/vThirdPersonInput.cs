@@ -108,6 +108,9 @@ namespace Invector.CharacterController
                 AimInput();
                 ShootInput();
                 ReloadInput();
+
+                //DEBUGGING ONLY. REMOVE ASAP
+                cc.animator.SetInteger("WeaponType", cc.weapon.GetComponent<BasicShoot>().weaponType);
             }
 
         }
