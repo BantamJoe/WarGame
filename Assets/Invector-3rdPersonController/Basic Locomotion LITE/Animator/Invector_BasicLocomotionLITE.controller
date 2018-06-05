@@ -8509,7 +8509,7 @@ AnimatorStateMachine:
     m_Position: {x: 1164, y: 72, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102802228518252740}
-    m_Position: {x: -96, y: 336, z: 0}
+    m_Position: {x: 228, y: 336, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102909369379464778}
     m_Position: {x: 1164, y: 216, z: 0}
@@ -8530,13 +8530,13 @@ AnimatorStateMachine:
     m_Position: {x: 876, y: 528, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102804179024842472}
-    m_Position: {x: 1668, y: 456, z: 0}
+    m_Position: {x: 1668, y: 432, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102707975813787626}
-    m_Position: {x: 1344, y: 528, z: 0}
+    m_Position: {x: 1308, y: 528, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102520328553910128}
-    m_Position: {x: 1344, y: 360, z: 0}
+    m_Position: {x: 1308, y: 360, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -8546,9 +8546,9 @@ AnimatorStateMachine:
     - {fileID: 110940832}
     - {fileID: 110927894}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 180, y: 336, z: 0}
+  m_AnyStatePosition: {x: 504, y: 336, z: 0}
   m_EntryPosition: {x: 108, y: 204, z: 0}
-  m_ExitPosition: {x: 180, y: 396, z: 0}
+  m_ExitPosition: {x: 504, y: 396, z: 0}
   m_ParentStateMachinePosition: {x: 84, y: 96, z: 0}
   m_DefaultState: {fileID: 110255802}
 --- !u!1107 &110775618
@@ -11210,7 +11210,7 @@ AnimatorState:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: handgun_prone_standup 0
+  m_Name: handgun_prone_standup
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -11266,7 +11266,7 @@ AnimatorState:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: handgun_prone_goto 0
+  m_Name: handgun_prone_goto
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

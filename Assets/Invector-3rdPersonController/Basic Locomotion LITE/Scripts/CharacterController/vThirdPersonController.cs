@@ -156,7 +156,7 @@ namespace Invector.CharacterController
         public virtual void RotateWithAnotherTransform(Transform referenceTransform)
         {
             var newRotation = new Vector3(transform.eulerAngles.x, referenceTransform.eulerAngles.y, transform.eulerAngles.z);
-            var newSpineRotation = new Vector3(referenceTransform.eulerAngles.x, spine.transform.eulerAngles.y, spine.transform.eulerAngles.z);
+            var newSpineRotation = new Vector3(spine.transform.eulerAngles.x, spine.transform.eulerAngles.y, spine.transform.eulerAngles.z - referenceTransform.eulerAngles.x);
 
             //Rotate the spine of the biped
             spine.transform.rotation = Quaternion.Lerp(Quaternion.Euler(newSpineRotation), spine.transform.rotation, strafeRotationSpeed * Time.fixedDeltaTime);
@@ -166,7 +166,7 @@ namespace Invector.CharacterController
 
             //Update rotations for smooth updating
             targetRotation = transform.rotation;
-            spine.transform.rotation = Quaternion.Euler(newSpineRotation);
+            //spine.transform.rotation = Quaternion.Euler(newSpineRotation);
         }
     }
 }
