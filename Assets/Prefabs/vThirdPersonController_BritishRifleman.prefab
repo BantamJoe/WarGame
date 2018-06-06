@@ -938,7 +938,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1738585774378048}
-  m_LocalRotation: {x: -0.0000020895977, y: 0.00000070293004, z: -0.013839609, w: 0.9999043}
+  m_LocalRotation: {x: -0.000002216805, y: 0.0000007457219, z: -0.014682114, w: 0.99989223}
   m_LocalPosition: {x: -0.16117437, y: -0.00047135568, z: 0.0000002241702}
   m_LocalScale: {x: 1, y: 1, z: 0.99999994}
   m_Children:
@@ -1064,8 +1064,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1213686127166576}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 310.85974, y: 8.844534, z: 81.97755}
+  m_LocalRotation: {x: -0, y: -0.46382388, z: -0, w: 0.88592744}
+  m_LocalPosition: {x: -13.553364, y: 0, z: -40.80838}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4873571604800344}
@@ -1081,7 +1081,7 @@ Transform:
   - {fileID: 4726189375479456}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -55.268, z: 0}
 --- !u!4 &4860429573584884
 Transform:
   m_ObjectHideFlags: 1
@@ -1204,6 +1204,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 85ec83fa4049f7f4c9110ca563372e66, type: 2}
   m_StaticBatchInfo:
@@ -1264,6 +1265,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114143665349442706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1281,8 +1283,12 @@ MonoBehaviour:
   jumpInput: 32
   strafeInput: 324
   sprintInput: 304
-  walkInput: 324
+  walkInput: 308
   shootInput: 323
+  aimInput: 324
+  crouchInput: 99
+  proneInput: 122
+  reloadInput: 114
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   customCameraState: 
@@ -1301,8 +1307,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e235a05445e5542aae61ca9737298a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  weaponType: 1
+  fireRate: 1
+  damage: 80
   range: 5000
+  reloadDelay: 3
+  capacity: 5
+  currentAmmo: 0
   fire: {fileID: 8300000, guid: a05640d14d03800449d82b075dc55457, type: 3}
   firespot: {fileID: 0}
   muzzlespot: {fileID: 1421368510075032}
@@ -1342,9 +1353,11 @@ MonoBehaviour:
   strafeWalkSpeed: 2
   strafeRunningSpeed: 4
   strafeSprintSpeed: 6
+  capsuleCrouchPercentage: 0.75
+  capsulePronePercentage: 0.75
   stepOffsetEnd: 0.45
   stepOffsetStart: 0.05
-  stepSmooth: 4
+  stepSmooth: 6
   slopeLimit: 45
   extraGravity: -10
   isGrounded: 0
@@ -1352,9 +1365,12 @@ MonoBehaviour:
   isSprinting: 0
   isWalking: 0
   isSliding: 0
+  isCrouching: 0
+  isProning: 0
   isBot: 0
   isJumping: 0
   isAiming: 0
+  isReloading: 0
   isDead: 0
   targetDirection: {x: 0, y: 0, z: 0}
   freeRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -1365,16 +1381,21 @@ MonoBehaviour:
   frictionPhysics: {fileID: 0}
   slippyPhysics: {fileID: 0}
   _capsuleCollider: {fileID: 0}
+  originalCapsuleCenter: {x: 0, y: 0, z: 0}
+  originalCapsuleHeight: 0
+  originalCapsuleRadius: 0
   colliderHeight: 0
   input: {x: 0, y: 0}
   speed: 0
   direction: 0
   verticalVelocity: 0
   velocity: 0
-  Team: 
-  spine: {fileID: 1738585774378048}
+  health: 100
+  Team: Allied
   bloodEffect: {fileID: 166404, guid: 78e1c8c5b281b8b439229473779ac9aa, type: 2}
-  weapon: {fileID: 1752651402245752}
+  spine: {fileID: 1738585774378048}
+  weaponContainer: {fileID: 0}
+  weapon: {fileID: 0}
 --- !u!114 &114961485168796110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1412,6 +1433,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: b784c826526e1ee4e92c07bd990c24e5, type: 2}
   m_StaticBatchInfo:
@@ -1468,6 +1490,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 85ec83fa4049f7f4c9110ca563372e66, type: 2}
   - {fileID: 2100000, guid: b784c826526e1ee4e92c07bd990c24e5, type: 2}
@@ -1517,6 +1540,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: b784c826526e1ee4e92c07bd990c24e5, type: 2}
   m_StaticBatchInfo:
@@ -1565,6 +1589,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: b784c826526e1ee4e92c07bd990c24e5, type: 2}
   m_StaticBatchInfo:
@@ -1619,6 +1644,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: b784c826526e1ee4e92c07bd990c24e5, type: 2}
   m_StaticBatchInfo:
@@ -1685,6 +1711,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: b784c826526e1ee4e92c07bd990c24e5, type: 2}
   m_StaticBatchInfo:
@@ -1733,6 +1760,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: b784c826526e1ee4e92c07bd990c24e5, type: 2}
   m_StaticBatchInfo:
@@ -1799,6 +1827,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: b784c826526e1ee4e92c07bd990c24e5, type: 2}
   m_StaticBatchInfo:
@@ -1855,6 +1884,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: b784c826526e1ee4e92c07bd990c24e5, type: 2}
   m_StaticBatchInfo:
@@ -1909,6 +1939,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: b784c826526e1ee4e92c07bd990c24e5, type: 2}
   m_StaticBatchInfo:

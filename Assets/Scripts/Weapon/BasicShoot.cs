@@ -72,6 +72,9 @@ namespace Invector.CharacterController
                     //Fire a ray from the guns muzzle to the cameras crosshair
                     if (Physics.Raycast(muzzlespot.transform.position, muzzlespot.transform.forward, out muzzlespotHit, range))
                     {
+                        //Look towards this sort of solution to remove cc dependency
+                        //muzzlespotHit.transform.gameObject.SendMessageUpwards("TakeDamage",damage);
+                        
                         Component ccComponent = muzzlespotHit.transform.gameObject.GetComponentInParent(typeof(vThirdPersonController));
 
                         if (ccComponent != null)

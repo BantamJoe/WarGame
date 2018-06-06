@@ -11,10 +11,11 @@ namespace Invector.CharacterController
         public bool canShoot = true;
         [Tooltip("Raycast length from gun when determing to shoot")]
         public float shootRange = 30f;
-        [HideInInspector]
+        
         public GameObject target;
         
         private NavMeshAgent agent;
+        private GameObject originalTarget;
         private vThirdPersonController cc;
         private bool isDead = false;
 
@@ -30,6 +31,8 @@ namespace Invector.CharacterController
                 Debug.LogError("Navmesh agent missing on bot");
             if(target)
                 agent.SetDestination(target.transform.position);
+
+            originalTarget = target;
         }
 
         // Update is called once per frame
@@ -49,6 +52,11 @@ namespace Invector.CharacterController
             }
             if (!isDead && agent.enabled && target)
             {
+                //Get rid of this loop immediately
+                if(target.GetComponent<vThirdPersonController>() != null && target.GetComponent<vThirdPersonController>().isDead)
+                {
+                    target = originalTarget;
+                }
                 AgentMoveToTarget();
                 //AgentRotate();
                 AgentShoot();
