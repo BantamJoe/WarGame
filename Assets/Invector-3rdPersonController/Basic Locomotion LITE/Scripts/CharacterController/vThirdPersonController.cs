@@ -15,8 +15,9 @@ namespace Invector.CharacterController
         public GameObject weaponContainer;
         [HideInInspector]
         public GameObject weapon;
+        [HideInInspector]
+        public BasicShoot basicShoot;
 
-        private BasicShoot basicShoot;
         private BasicDeath basicDeath;
 
         protected virtual void Start()
@@ -135,16 +136,6 @@ namespace Invector.CharacterController
                 animator.SetTrigger("IsHurt");
             }
         }
-        public void BotNeedToReload()
-        {
-            if(basicShoot.currentAmmo <= 0)
-            {
-                Debug.Log("Bot reloading");
-                StartCoroutine(basicShoot.Reload());
-            }
-        }
-        
-
         public virtual void Strafe()
         {
             if (locomotionType == LocomotionType.OnlyFree) return;

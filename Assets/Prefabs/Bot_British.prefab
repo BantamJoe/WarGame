@@ -1362,8 +1362,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: -0.33, y: 0.56, z: 0.29}
-  m_Center: {x: 0, y: 0.12, z: 0}
+  m_Size: {x: 0.33, y: 0.55, z: 0.34}
+  m_Center: {x: 0.02, y: 0.09, z: -0.02}
 --- !u!65 &65032706127142310
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1374,8 +1374,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: -0.33, y: 0.32, z: 0.29}
-  m_Center: {x: -0.07, y: 0, z: 0}
+  m_Size: {x: 0.48, y: 0.29, z: 0.3297574}
+  m_Center: {x: -0.01, y: 0.03, z: -0.04251434}
 --- !u!65 &65226147868509788
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1386,8 +1386,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.33, z: 0.36}
-  m_Center: {x: -0.29, y: 0, z: 0}
+  m_Size: {x: 0.42, y: 0.39, z: 0.3}
+  m_Center: {x: -0.19, y: 0, z: 0}
 --- !u!65 &65466637126284300
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1422,8 +1422,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: -0.33, y: 0.32, z: 0.29}
-  m_Center: {x: -0.07, y: 0, z: 0}
+  m_Size: {x: 0.48, y: 0.29, z: 0.3297574}
+  m_Center: {x: -0.01, y: 0.03, z: -0.04251434}
 --- !u!65 &65665195766942908
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1434,8 +1434,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.54, y: 0.33, z: 0.36}
-  m_Center: {x: -0.29, y: 0, z: 0}
+  m_Size: {x: 0.42, y: 0.39, z: 0.3}
+  m_Center: {x: -0.19, y: 0, z: 0}
 --- !u!65 &65734319929470120
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1446,8 +1446,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: -0.33, y: 0.56, z: 0.29}
-  m_Center: {x: 0, y: 0.12, z: 0}
+  m_Size: {x: 0.33, y: 0.55, z: 0.34}
+  m_Center: {x: 0.02, y: 0.09, z: -0.02}
 --- !u!65 &65745198244293840
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2110,6 +2110,7 @@ MonoBehaviour:
   spine: {fileID: 0}
   weaponContainer: {fileID: 0}
   weapon: {fileID: 0}
+  basicShoot: {fileID: 0}
 --- !u!114 &114714147595116404
 MonoBehaviour:
   m_ObjectHideFlags: 1

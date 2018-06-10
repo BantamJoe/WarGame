@@ -19,7 +19,6 @@ namespace Invector.CharacterController
         private Transform spine;
 
         private vThirdPersonController cc;
-        private BasicShoot bs;
 
         private bool isDead = false;
 
@@ -28,17 +27,21 @@ namespace Invector.CharacterController
         {
             agent = GetComponentInChildren<NavMeshAgent>();
             cc = GetComponent<vThirdPersonController>();
-            bs = cc.weapon.GetComponent<BasicShoot>();
 
             if (cc != null)
+            {
                 cc.Init();
+                spine = cc.animator.GetBoneTransform(HumanBodyBones.Spine);
+            }
             if (agent == null)
                 Debug.LogError("Navmesh agent missing on bot");
             if(target)
                 agent.SetDestination(target.transform.position);
 
-            spine = cc.animator.GetBoneTransform(HumanBodyBones.Spine);
-            originalTarget = target;
+            if(target != null)
+            {
+                originalTarget = target;
+            }
         }
         
         void LateUpdate()
@@ -106,18 +109,16 @@ namespace Invector.CharacterController
             spine.LookAt(target.transform.position);
             spine.rotation *= Quaternion.Euler(Offset);
 
-            bs.firespot.transform.LookAt(target.transform.position);
-            Debug.DrawRay(bs.firespot.transform.position, bs.firespot.transform.forward * 100f,Color.black);
-            
-        }
-        void AgentRotate()
-        {
-            cc.gameObject.transform.LookAt(target.transform );
+            cc.basicShoot.firespot.transform.LookAt(target.transform.position);
+            Debug.DrawRay(cc.basicShoot.firespot.transform.position, cc.basicShoot.firespot.transform.forward * 100f, Color.black);
         }
 
         void AgentShoot()
         {
-            cc.BotNeedToReload();
+            if(cc.basicShoot.currentAmmo <= 0)
+            {
+                StartCoroutine(cc.basicShoot.Reload());
+            }
             if (canShoot)
             {
                 RaycastHit hit;
@@ -138,14 +139,14 @@ namespace Invector.CharacterController
                 this.target = target.GetComponent<vThirdPersonController>().animator.GetBoneTransform(HumanBodyBones.Spine).gameObject;
             }
         }
-        public void AgentViewConeTargetLost(GameObject target)
+        public void AgentViewConeTargetLost(GameObject attackTarget)
         {
             if (agent.enabled)
             {
                 if (target == this.target)
                 {
                     this.target = null;
-                    Debug.Log("Target lost");
+                    Debug.Log("target lost");
                 }
             }
         }
