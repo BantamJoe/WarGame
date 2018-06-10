@@ -80,6 +80,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4404029374844746}
+  - component: {fileID: 65020223445274130}
   m_Layer: 8
   m_Name: Bip001 L Foot
   m_TagString: Untagged
@@ -95,6 +96,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4426975854036042}
+  - component: {fileID: 65626424306847594}
   m_Layer: 8
   m_Name: Bip001 R Calf
   m_TagString: Untagged
@@ -125,6 +127,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4102777543442806}
+  - component: {fileID: 65032706127142310}
   m_Layer: 8
   m_Name: Bip001 L Calf
   m_TagString: Untagged
@@ -156,6 +159,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4281692406578906}
+  - component: {fileID: 65665195766942908}
   m_Layer: 8
   m_Name: Bip001 R Thigh
   m_TagString: Untagged
@@ -249,6 +253,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4498316112924524}
+  - component: {fileID: 65840970859802240}
   m_Layer: 8
   m_Name: Bip001 R UpperArm
   m_TagString: Untagged
@@ -264,6 +269,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4255604372323756}
+  - component: {fileID: 65466637126284300}
   m_Layer: 8
   m_Name: Bip001 R Forearm
   m_TagString: Untagged
@@ -315,6 +321,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4235557454496336}
+  - component: {fileID: 65749615556183658}
   m_Layer: 8
   m_Name: Bip001 L UpperArm
   m_TagString: Untagged
@@ -377,6 +384,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4842220836795954}
+  - component: {fileID: 65881779156525416}
   m_Layer: 8
   m_Name: Bip001 L Forearm
   m_TagString: Untagged
@@ -407,6 +415,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4892858768168712}
+  - component: {fileID: 65499394098496356}
   m_Layer: 8
   m_Name: Bip001 Head
   m_TagString: Untagged
@@ -485,6 +494,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4252579288880130}
+  - component: {fileID: 65226147868509788}
   m_Layer: 8
   m_Name: Bip001 L Thigh
   m_TagString: Untagged
@@ -523,6 +533,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4383064420817846}
+  - component: {fileID: 65745198244293840}
   m_Layer: 8
   m_Name: Bip001 Spine
   m_TagString: Untagged
@@ -569,6 +580,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4918875772441152}
+  - component: {fileID: 65734319929470120}
   m_Layer: 8
   m_Name: Bip001 R Foot
   m_TagString: Untagged
@@ -1018,8 +1030,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1766900553007356}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.53, y: 0, z: 3.94}
+  m_LocalRotation: {x: -0, y: -0.7775458, z: -0, w: 0.6288263}
+  m_LocalPosition: {x: 12.2, y: 0, z: 25.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4072747126199344}
@@ -1036,7 +1048,7 @@ Transform:
   - {fileID: 4927827730540402}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -102.073006, z: 0}
 --- !u!4 &4751887491107034
 Transform:
   m_ObjectHideFlags: 1
@@ -1340,6 +1352,150 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 0}
+--- !u!65 &65020223445274130
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1059021858609964}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: -0.33, y: 0.56, z: 0.29}
+  m_Center: {x: 0, y: 0.12, z: 0}
+--- !u!65 &65032706127142310
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1167005009414072}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: -0.33, y: 0.32, z: 0.29}
+  m_Center: {x: -0.07, y: 0, z: 0}
+--- !u!65 &65226147868509788
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749791676022264}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.54, y: 0.33, z: 0.36}
+  m_Center: {x: -0.29, y: 0, z: 0}
+--- !u!65 &65466637126284300
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1352068745634048}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.56, y: 0.26, z: 0.23}
+  m_Center: {x: -0.3, y: 0, z: 0}
+--- !u!65 &65499394098496356
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1671474692168348}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.49, y: 0.36, z: 0.47}
+  m_Center: {x: -0.16, y: 0, z: 0}
+--- !u!65 &65626424306847594
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1110394478819396}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: -0.33, y: 0.32, z: 0.29}
+  m_Center: {x: -0.07, y: 0, z: 0}
+--- !u!65 &65665195766942908
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1188412474482522}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.54, y: 0.33, z: 0.36}
+  m_Center: {x: -0.29, y: 0, z: 0}
+--- !u!65 &65734319929470120
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1865402312241520}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: -0.33, y: 0.56, z: 0.29}
+  m_Center: {x: 0, y: 0.12, z: 0}
+--- !u!65 &65745198244293840
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1789684994935748}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.97, y: 0.52, z: 0.79}
+  m_Center: {x: -0.23, y: 0, z: 0}
+--- !u!65 &65749615556183658
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1462072896157760}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.67, y: 0.31, z: 0.32}
+  m_Center: {x: -0.09, y: 0, z: 0}
+--- !u!65 &65840970859802240
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1299671215063694}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.67, y: 0.31, z: 0.32}
+  m_Center: {x: -0.09, y: 0, z: 0}
+--- !u!65 &65881779156525416
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1604890255121888}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.56, y: 0.26, z: 0.23}
+  m_Center: {x: -0.3, y: 0, z: 0}
 --- !u!95 &95457172131936804
 Animator:
   serializedVersion: 3
@@ -1997,6 +2153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canShoot: 1
   shootRange: 30
+  Offset: {x: 20, y: -40, z: 270}
   target: {fileID: 0}
 --- !u!114 &114994144602829546
 MonoBehaviour:
@@ -2018,10 +2175,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.32
-  m_Height: 2.12
+  m_Radius: 0.54
+  m_Height: 2.76
   m_Direction: 1
-  m_Center: {x: 0, y: 1.06, z: 0}
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!137 &137020224679216496
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

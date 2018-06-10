@@ -11,12 +11,16 @@ namespace Invector.CharacterController
         public bool canShoot = true;
         [Tooltip("Raycast length from gun when determing to shoot")]
         public float shootRange = 30f;
-        
+        public Vector3 Offset;
         public GameObject target;
         
         private NavMeshAgent agent;
         private GameObject originalTarget;
+        private Transform spine;
+
         private vThirdPersonController cc;
+        private BasicShoot bs;
+
         private bool isDead = false;
 
         // Use this for initialization
@@ -24,6 +28,7 @@ namespace Invector.CharacterController
         {
             agent = GetComponentInChildren<NavMeshAgent>();
             cc = GetComponent<vThirdPersonController>();
+            bs = cc.weapon.GetComponent<BasicShoot>();
 
             if (cc != null)
                 cc.Init();
@@ -32,11 +37,11 @@ namespace Invector.CharacterController
             if(target)
                 agent.SetDestination(target.transform.position);
 
+            spine = cc.animator.GetBoneTransform(HumanBodyBones.Spine);
             originalTarget = target;
         }
-
-        // Update is called once per frame
-        void Update()
+        
+        void LateUpdate()
         {
             //If the character controller is dead, kill the bot controller
             if(cc.isDead && !isDead)
@@ -57,9 +62,11 @@ namespace Invector.CharacterController
                 {
                     target = originalTarget;
                 }
+
                 AgentMoveToTarget();
                 //AgentRotate();
                 AgentShoot();
+                AgentAimAtTarget();
             }
         }
 
@@ -94,10 +101,18 @@ namespace Invector.CharacterController
             cc.UpdateAnimator();
             cc.UpdateMotor();
         }
+        void AgentAimAtTarget()
+        {
+            spine.LookAt(target.transform.position);
+            spine.rotation *= Quaternion.Euler(Offset);
 
+            bs.firespot.transform.LookAt(target.transform.position);
+            Debug.DrawRay(bs.firespot.transform.position, bs.firespot.transform.forward * 100f,Color.black);
+            
+        }
         void AgentRotate()
         {
-            cc.gameObject.transform.LookAt(target.transform);
+            cc.gameObject.transform.LookAt(target.transform );
         }
 
         void AgentShoot()
@@ -120,7 +135,7 @@ namespace Invector.CharacterController
         {
             if(agent.enabled)
             {
-                this.target = target;
+                this.target = target.GetComponent<vThirdPersonController>().animator.GetBoneTransform(HumanBodyBones.Spine).gameObject;
             }
         }
         public void AgentViewConeTargetLost(GameObject target)
