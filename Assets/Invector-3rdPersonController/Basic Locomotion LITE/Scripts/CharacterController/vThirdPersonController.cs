@@ -15,9 +15,11 @@ namespace Invector.CharacterController
         public GameObject weaponContainer;
         [HideInInspector]
         public GameObject weapon;
-        [HideInInspector]
+        //[HideInInspector]
         public BasicShoot basicShoot;
 
+        private int selectedWeapon;
+        private int previousWeapon = 0;
         private BasicDeath basicDeath;
 
         protected virtual void Start()
@@ -27,24 +29,73 @@ namespace Invector.CharacterController
             if (weaponContainer == null) Debug.LogError("Weapon container NOT FOUND on " + gameObject.name);
             if (weaponContainer.transform.childCount > 0)
             {
+                //Prepare weapons
+                ActivateWeapons();
+
+                selectedWeapon = 0;
                 weapon = weaponContainer.transform.GetChild(0).gameObject;
                 basicShoot = weapon.GetComponent<BasicShoot>();
                 if(basicShoot == null) Debug.LogError("WeaponContainer contained gameObject that did NOT have a BasicShoot script.");
             }
             else
+            {
+                selectedWeapon = -1;
                 Debug.LogWarning("Weapon container on " + gameObject.name + " is empty. Was this intentional?");
-
-
+            }
             //Prepare the death script
             basicDeath = GetComponent<BasicDeath>();
 
             //Prepare the spine
             spine = gameObject.transform.FindDeepChild("Bip001 Spine").gameObject;
             if (spine == null) Debug.LogError("Spine was not found for " + gameObject.name);
-                
+
+            
 #if !UNITY_EDITOR
                 Cursor.visible = false;
 #endif
+        }
+        public virtual void SelectWeapon(bool value)
+        {
+            previousWeapon = selectedWeapon;
+            if (value)
+            {
+                if (selectedWeapon >= weaponContainer.transform.childCount - 1)
+                    selectedWeapon = 0;
+                else
+                    selectedWeapon++;
+            }
+            else
+            {
+                if (selectedWeapon <= 0)
+                    selectedWeapon = weaponContainer.transform.childCount - 1;
+                else
+                    selectedWeapon--;
+            }
+            ActivateWeapons();
+        }
+        private void ActivateWeapons()
+        {
+            //Only reactivate weapons if new weapon selected and character has weapon
+            if (previousWeapon != selectedWeapon && selectedWeapon != -1)
+            {
+                int i = 0;
+                foreach (Transform weapon in weaponContainer.transform)
+                {
+                    if (i == selectedWeapon)
+                    {
+                        weapon.gameObject.SetActive(true);
+                        this.weapon = weapon.gameObject;
+                        weapon.gameObject.GetComponent<BasicShoot>().firespot = basicShoot.firespot;
+                        this.basicShoot = weapon.GetComponent<BasicShoot>();
+                        
+                        animator.SetInteger("WeaponType", basicShoot.weaponType);
+                        animator.SetTrigger("IsDrawingWeapon");
+                    }
+                    else
+                        weapon.gameObject.SetActive(false);
+                    i++;
+                }
+            }
         }
         public virtual void Prone(bool value)
         {
@@ -84,14 +135,14 @@ namespace Invector.CharacterController
         }
         public virtual void Shoot()
         {
-            if (!isSprinting && !isReloading)
+            if (!isSprinting && !isReloading && weapon.activeSelf)
             {
                 basicShoot.Shoot();
             }
         }
         public virtual void Reload()
         {
-            if (!isSprinting)
+            if (!isSprinting && weapon.activeSelf)
             {
                 StartCoroutine(basicShoot.Reload());
             }

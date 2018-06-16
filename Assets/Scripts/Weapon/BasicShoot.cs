@@ -15,6 +15,7 @@ namespace Invector.CharacterController
         public float reloadDelay = 1f;
         [Tooltip("Magazine capacity")]
         public int capacity = 5;
+        
         //[HideInInspector]
         public int currentAmmo;
 
@@ -32,6 +33,7 @@ namespace Invector.CharacterController
         void Start()
         {
             weaponAudio = this.gameObject.AddComponent<AudioSource>();
+            weaponAudio.playOnAwake = false;
             weaponAudio.clip = fire;
             weaponAudio.spatialBlend = 1f;
             weaponAudio.panStereo = 1f;

@@ -11,16 +11,24 @@ namespace Invector.CharacterController
         public bool canShoot = true;
         [Tooltip("Raycast length from gun when determing to shoot")]
         public float shootRange = 30f;
+        [Tooltip("How fast can the bot rotate when aiming at something?")]
+        public float rotationSpeed = 10f;
         public Vector3 Offset;
-        public GameObject target;
+
+        public GameObject moveTarget;
+        public GameObject attackTarget;
         
         private NavMeshAgent agent;
-        private GameObject originalTarget;
+
+        private GameObject originalMoveTarget;
+        
+        private Transform lastKnownMoveTarget;
         private Transform spine;
 
         private vThirdPersonController cc;
 
         private bool isDead = false;
+        private bool isShooting = false;
 
         // Use this for initialization
         void Start()
@@ -35,118 +43,133 @@ namespace Invector.CharacterController
             }
             if (agent == null)
                 Debug.LogError("Navmesh agent missing on bot");
-            if(target)
-                agent.SetDestination(target.transform.position);
+            if(moveTarget)
+                agent.SetDestination(moveTarget.transform.position);
 
-            if(target != null)
+            if(moveTarget != null)
             {
-                originalTarget = target;
+                originalMoveTarget = moveTarget;
+                lastKnownMoveTarget = moveTarget.transform;
             }
         }
         
         void LateUpdate()
         {
             //If the character controller is dead, kill the bot controller
-            if(cc.isDead && !isDead)
+            if (cc.isDead && !isDead)
             {
                 isDead = true;
-                cc.input.y = 0f;
-                cc.Walk(false);   
-
+                AgentWalk(false);   
                 agent.enabled = false;
-                
+
                 //Look into removing the capsule a better way.
                 cc._capsuleCollider.enabled = false;
             }
-            if (!isDead && agent.enabled && target)
+            //Bot is alive and functioning
+            if (!isDead && agent.enabled)
             {
-                //Get rid of this loop immediately
-                if(target.GetComponent<vThirdPersonController>() != null && target.GetComponent<vThirdPersonController>().isDead)
+                if (moveTarget != null)
                 {
-                    target = originalTarget;
+                    AgentMoveToTarget();
                 }
-
-                AgentMoveToTarget();
-                //AgentRotate();
-                AgentShoot();
-                AgentAimAtTarget();
+                if (attackTarget != null)
+                {
+                    AgentAimAtAttackTarget();
+                    AgentShootAttackTarget();
+                }
             }
+            Debug.DrawRay(cc.basicShoot.firespot.transform.position, cc.basicShoot.firespot.transform.forward * 100f, Color.black);
         }
 
+        void AgentWalk(bool value)
+        {
+            agent.isStopped = !value;
+            cc.Walk(value);
+            cc.input.y = value ? 1f : 0f;
+        }
         void AgentMoveToTarget()
         {
-            //If we have a target
-            if(target != null)
+            //If we have a move target
+            if(moveTarget != null)
             {
-                //Attempt to navigate to it
-                agent.SetDestination(target.transform.position);
+                //if movetarget has moved since last known pos, navigate to it
+                if (moveTarget.transform.position != lastKnownMoveTarget.position)
+                    agent.SetDestination(moveTarget.transform.position);
                 
                 //We are not at target, so perform walking
-                if(!IsAgentAtDestination())
+                if(!IsAgentAtDestination() && !isShooting)
                 {
-                    cc.Walk(true);
-                    cc.input.y = 1f;
+                    AgentWalk(true);
                 }
                 //If we are at the target, stop walking
                 else
                 {
-                    cc.Walk(false);
-                    cc.input.y = 0f;
+                    AgentWalk(false);
                 }
             }
             //If there is no target, also stop walking
-            if(target == null)
+            if(moveTarget == null)
             {
-                cc.Walk(false);
-                cc.input.y = 0f;
+                AgentWalk(false);
             }
 
             cc.UpdateAnimator();
             cc.UpdateMotor();
         }
-        void AgentAimAtTarget()
+        void AgentAimAtAttackTarget()
         {
-            spine.LookAt(target.transform.position);
+            spine.LookAt(attackTarget.transform.position);
             spine.rotation *= Quaternion.Euler(Offset);
 
-            cc.basicShoot.firespot.transform.LookAt(target.transform.position);
-            Debug.DrawRay(cc.basicShoot.firespot.transform.position, cc.basicShoot.firespot.transform.forward * 100f, Color.black);
+            //var targetRotation = Quaternion.LookRotation(attackTarget.transform.position - spine.transform.position) * Quaternion.Euler(Offset);
+            //spine.rotation = Quaternion.Slerp(spine.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            //spine.rotation *= Quaternion.Euler(Offset);
+
+            cc.basicShoot.firespot.transform.LookAt(attackTarget.transform.position);
         }
 
-        void AgentShoot()
+        void AgentShootAttackTarget()
         {
             if(cc.basicShoot.currentAmmo <= 0)
             {
+                Debug.Log(cc.gameObject.name + " Reloading");
                 StartCoroutine(cc.basicShoot.Reload());
+                isShooting = false;
             }
-            if (canShoot)
+            else if (canShoot && !cc.isReloading)
             {
                 RaycastHit hit;
-                if (Physics.Raycast(cc.weapon.transform.GetChild(0).transform.position, cc.weapon.transform.GetChild(0).transform.forward, out hit, shootRange))
+                if (Physics.Raycast(cc.basicShoot.firespot.transform.position, cc.basicShoot.firespot.transform.forward, out hit, shootRange))
                 {
                     vThirdPersonController ccHit = hit.transform.gameObject.GetComponentInParent<vThirdPersonController>();
                     if (ccHit != null && !ccHit.isDead && ccHit.Team != cc.Team)
                     {
+                        isShooting = true;
                         cc.Shoot();
+                    }
+                    else if(ccHit != null && ccHit.isDead && ccHit.Team != cc.Team)
+                    {
+                        isShooting = false;
+                        attackTarget = null;
                     }
                 }
             }
         }
-        public void AgentViewConeTarget(GameObject target)
+        public void AgentViewConeTarget(GameObject attackTarget)
         {
             if(agent.enabled)
             {
-                this.target = target.GetComponent<vThirdPersonController>().animator.GetBoneTransform(HumanBodyBones.Spine).gameObject;
+                this.attackTarget = attackTarget.GetComponent<vThirdPersonController>().animator.GetBoneTransform(HumanBodyBones.Spine).gameObject;
             }
         }
         public void AgentViewConeTargetLost(GameObject attackTarget)
         {
             if (agent.enabled)
             {
-                if (target == this.target)
+                if (attackTarget == this.attackTarget)
                 {
-                    this.target = null;
-                    Debug.Log("target lost");
+                    this.attackTarget = null;
+                    Debug.Log("Target lost");
                 }
             }
         }

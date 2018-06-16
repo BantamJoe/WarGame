@@ -105,17 +105,26 @@ namespace Invector.CharacterController
                 CrouchInput();
                 ProneInput();
                 JumpInput();
+                SelectWeaponInput();
                 AimInput();
                 ShootInput();
                 ReloadInput();
-
-                //DEBUGGING ONLY. REMOVE ASAP
-                cc.animator.SetInteger("WeaponType", cc.weapon.GetComponent<BasicShoot>().weaponType);
             }
 
         }
 
-        #region Basic Locomotion Inputs      
+        #region Basic Locomotion Inputs
+        protected virtual void SelectWeaponInput()
+        {
+            if(Input.GetAxis("Mouse ScrollWheel") > 0f) //scroll down
+            {
+                cc.SelectWeapon(true);
+            }
+            else if(Input.GetAxis("Mouse ScrollWheel") < 0f) //scroll up
+            {
+                cc.SelectWeapon(false);
+            }
+        }
         protected virtual void AimInput()
         {
             if(Input.GetKeyDown(aimInput) && !cc.isAiming)
