@@ -18,8 +18,8 @@ namespace Invector.CharacterController
         //[HideInInspector]
         public BasicShoot basicShoot;
 
-        private int selectedWeapon;
-        private int previousWeapon = 0;
+        private int selectedWeapon = 0;
+        private int previousWeapon;
         private BasicDeath basicDeath;
 
         protected virtual void Start()
@@ -29,19 +29,14 @@ namespace Invector.CharacterController
             if (weaponContainer == null) Debug.LogError("Weapon container NOT FOUND on " + gameObject.name);
             if (weaponContainer.transform.childCount > 0)
             {
-                //Prepare weapons
-                ActivateWeapons();
-
-                selectedWeapon = 0;
-                weapon = weaponContainer.transform.GetChild(0).gameObject;
-                basicShoot = weapon.GetComponent<BasicShoot>();
-                if(basicShoot == null) Debug.LogError("WeaponContainer contained gameObject that did NOT have a BasicShoot script.");
+                InitializeWeapons();
             }
             else
             {
                 selectedWeapon = -1;
                 Debug.LogWarning("Weapon container on " + gameObject.name + " is empty. Was this intentional?");
             }
+
             //Prepare the death script
             basicDeath = GetComponent<BasicDeath>();
 
@@ -95,6 +90,22 @@ namespace Invector.CharacterController
                         weapon.gameObject.SetActive(false);
                     i++;
                 }
+            }
+        }
+        private void InitializeWeapons()
+        {
+            int i = 0;
+            foreach (Transform weapon in weaponContainer.transform)
+            {
+                if(i == 0)
+                {
+                    this.weapon = weapon.gameObject;
+                    basicShoot = weapon.GetComponent<BasicShoot>();
+                    if (basicShoot == null) Debug.LogError("WeaponContainer contained gameObject that did NOT have a BasicShoot script.");
+                }
+                else
+                    weapon.gameObject.SetActive(false);
+                i++;
             }
         }
         public virtual void Prone(bool value)

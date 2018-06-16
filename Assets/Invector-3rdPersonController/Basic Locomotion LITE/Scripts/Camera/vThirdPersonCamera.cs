@@ -35,12 +35,14 @@ public class vThirdPersonCamera : MonoBehaviour
     public LayerMask cullingLayer = 1 << 0;                
     [Tooltip("Debug purposes, lock the camera behind the character for better align the states")]
     public bool lockCamera;
-    
+
+    public float crouchPercentage = 0.75f;
+    public float pronePercentage = 0.65f;
     public float rightOffset = 0f;
-    public float defaultDistance = 2.5f;
-    public float height = 1.4f;
-    public float distanceAimed = 2f;
     public float rightOffsetAimed = 0.2f;
+    public float defaultDistance = 2.5f;
+    public float distanceAimed = 2f;
+    public float height = 1.4f;
     public float heightAimed = 2.3f;
     public float cameraFovAimed = 50f;
     public float smoothFollow = 10f;
@@ -48,6 +50,7 @@ public class vThirdPersonCamera : MonoBehaviour
     public float yMouseSensitivity = 3f;
     public float yMinLimit = -40f;
     public float yMaxLimit = 80f;
+
 
     #endregion
 
@@ -86,6 +89,8 @@ public class vThirdPersonCamera : MonoBehaviour
     private float distanceOriginal;
     private float heightOriginal;
     private float cameraFovOriginal;
+    private float crouchHeight;
+    private float proneHeight;
 
     #endregion
 
@@ -118,6 +123,9 @@ public class vThirdPersonCamera : MonoBehaviour
         heightOriginal = height;
         distanceOriginal = distance;
         cameraFovOriginal = _camera.fieldOfView;
+
+        crouchHeight = height * crouchPercentage;
+        proneHeight = height * pronePercentage;
         
     }
 
@@ -307,6 +315,17 @@ public class vThirdPersonCamera : MonoBehaviour
             rightOffset = Mathf.Lerp(rightOffset, rightOffsetOriginal, 0.5f);
             distance = Mathf.Lerp(distance, distanceOriginal, 0.5f);
             _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, cameraFovOriginal, 0.5f);
+        }
+
+        if(crouch)
+        {
+            height = Mathf.Lerp(height, crouchHeight, 0.5f);
+            rightOffset = Mathf.Lerp(rightOffset, rightOffsetAimed, 0.5f);
+        }
+        if(prone)
+        {
+            height = Mathf.Lerp(height, proneHeight, 0.5f);
+            rightOffset = Mathf.Lerp(rightOffset, rightOffsetAimed, 0.5f);
         }
     }
 

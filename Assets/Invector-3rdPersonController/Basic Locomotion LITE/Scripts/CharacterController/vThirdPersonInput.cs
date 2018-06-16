@@ -80,7 +80,7 @@ namespace Invector.CharacterController
             {
                 cc.AirControl();
             }
-            //CameraInput();
+            
         }
 
         protected virtual void Update()
@@ -95,7 +95,6 @@ namespace Invector.CharacterController
         protected virtual void InputHandle()
         {
             CameraInput();
-
             if (!cc.lockMovement && !cc.isDead)
             {
                 MoveCharacter();
