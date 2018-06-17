@@ -13,6 +13,8 @@ namespace Invector.CharacterController
         public float shootRange = 30f;
         [Tooltip("How fast can the bot rotate when aiming at something?")]
         public float rotationSpeed = 10f;
+        [Tooltip("Radius of enemy detection")]
+        public float detectRadius = 20f;
         public Vector3 Offset;
 
         public GameObject moveTarget;
@@ -29,6 +31,7 @@ namespace Invector.CharacterController
 
         private bool isDead = false;
         private bool isShooting = false;
+        private int playerLayerIndex = 1 << 8;
 
         // Use this for initialization
         void Start()
@@ -68,6 +71,10 @@ namespace Invector.CharacterController
             //Bot is alive and functioning
             if (!isDead && agent.enabled)
             {
+                if(attackTarget == null)
+                {
+                    AgentCheckForAttackTarget();
+                }
                 if (moveTarget != null)
                 {
                     AgentMoveToTarget();
@@ -79,6 +86,19 @@ namespace Invector.CharacterController
                 }
             }
             Debug.DrawRay(cc.basicShoot.firespot.transform.position, cc.basicShoot.firespot.transform.forward * 100f, Color.black);
+        }
+        void AgentCheckForAttackTarget()
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, detectRadius, playerLayerIndex);
+            foreach (Collider nearbyObject in colliders)
+            {
+                vThirdPersonController targetcc = nearbyObject.gameObject.GetComponentInParent<vThirdPersonController>();
+                if (cc.Team != targetcc.Team && !targetcc.isDead)
+                {
+                    this.attackTarget = targetcc.animator.GetBoneTransform(HumanBodyBones.Spine).gameObject;
+                    return;
+                }
+            }
         }
 
         void AgentWalk(bool value)
@@ -152,24 +172,6 @@ namespace Invector.CharacterController
                         isShooting = false;
                         attackTarget = null;
                     }
-                }
-            }
-        }
-        public void AgentViewConeTarget(GameObject attackTarget)
-        {
-            if(agent.enabled)
-            {
-                this.attackTarget = attackTarget.GetComponent<vThirdPersonController>().animator.GetBoneTransform(HumanBodyBones.Spine).gameObject;
-            }
-        }
-        public void AgentViewConeTargetLost(GameObject attackTarget)
-        {
-            if (agent.enabled)
-            {
-                if (attackTarget == this.attackTarget)
-                {
-                    this.attackTarget = null;
-                    Debug.Log("Target lost");
                 }
             }
         }
