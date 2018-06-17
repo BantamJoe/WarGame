@@ -5,6 +5,7 @@ namespace Invector.CharacterController
 {
     public class vThirdPersonController : vThirdPersonAnimator
     {
+        public float grenadeThrowForce = 50f;
         public float health = 100f;
         public string Team;
         public GameObject bloodEffect;
@@ -15,6 +16,7 @@ namespace Invector.CharacterController
         public GameObject weaponContainer;
         [HideInInspector]
         public GameObject weapon;
+        public GameObject grenadePrefab;
         //[HideInInspector]
         public BasicShoot basicShoot;
 
@@ -217,6 +219,13 @@ namespace Invector.CharacterController
                 animator.CrossFadeInFixedTime("Jump", 0.1f);
             else
                 animator.CrossFadeInFixedTime("JumpMove", 0.2f);
+        }
+        public virtual void ThrowGrenade()
+        {
+            animator.SetTrigger("IsThrowingGrenade");
+            GameObject grenade = Instantiate(grenadePrefab, transform.position + transform.forward + transform.up * (_capsuleCollider.height), transform.rotation);
+            Rigidbody grb = grenade.GetComponent<Rigidbody>();
+            grb.AddForce(transform.forward * grenadeThrowForce, ForceMode.Impulse);
         }
 
         public virtual void RotateWithAnotherTransform(Transform referenceTransform)

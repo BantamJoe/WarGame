@@ -91,6 +91,8 @@ public class vThirdPersonCamera : MonoBehaviour
     private float cameraFovOriginal;
     private float crouchHeight;
     private float proneHeight;
+    private float crouchDistance;
+    private float proneDistance;
 
     #endregion
 
@@ -126,7 +128,10 @@ public class vThirdPersonCamera : MonoBehaviour
 
         crouchHeight = height * crouchPercentage;
         proneHeight = height * pronePercentage;
-        
+
+        crouchDistance = distance * crouchPercentage;
+        proneDistance = distance * pronePercentage;
+
     }
 
     void FixedUpdate()
@@ -321,11 +326,13 @@ public class vThirdPersonCamera : MonoBehaviour
         {
             height = Mathf.Lerp(height, crouchHeight, 0.5f);
             rightOffset = Mathf.Lerp(rightOffset, rightOffsetAimed, 0.5f);
+            distance = Mathf.Lerp(distance, crouchDistance, 0.5f);
         }
         if(prone)
         {
             height = Mathf.Lerp(height, proneHeight, 0.5f);
             rightOffset = Mathf.Lerp(rightOffset, rightOffsetAimed, 0.5f);
+            distance = Mathf.Lerp(distance, proneDistance, 0.5f);
         }
     }
 

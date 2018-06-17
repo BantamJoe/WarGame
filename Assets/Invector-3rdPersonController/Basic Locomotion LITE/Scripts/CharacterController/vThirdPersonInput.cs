@@ -22,6 +22,7 @@ namespace Invector.CharacterController
         public KeyCode crouchInput = KeyCode.C;
         public KeyCode proneInput = KeyCode.Z;
         public KeyCode reloadInput = KeyCode.R;
+        public KeyCode throwGrenadeInput = KeyCode.G;
 
         [Header("Camera Settings")]
         public string rotateCameraXInput = "Mouse X";
@@ -108,11 +109,19 @@ namespace Invector.CharacterController
                 AimInput();
                 ShootInput();
                 ReloadInput();
+                ThrowGrenadeInput();
             }
 
         }
 
         #region Basic Locomotion Inputs
+        protected virtual void ThrowGrenadeInput()
+        {
+            if(Input.GetKeyDown(throwGrenadeInput))
+            {
+                cc.ThrowGrenade();
+            }
+        }
         protected virtual void SelectWeaponInput()
         {
             if(Input.GetAxis("Mouse ScrollWheel") > 0f) //scroll down

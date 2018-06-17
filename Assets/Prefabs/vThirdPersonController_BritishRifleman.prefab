@@ -1495,6 +1495,7 @@ MonoBehaviour:
   crouchInput: 99
   proneInput: 122
   reloadInput: 114
+  throwGrenadeInput: 103
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   customCameraState: 
@@ -1646,12 +1647,15 @@ MonoBehaviour:
   direction: 0
   verticalVelocity: 0
   velocity: 0
+  grenadeThrowForce: 40
   health: 100
   Team: Allied
   bloodEffect: {fileID: 166404, guid: 78e1c8c5b281b8b439229473779ac9aa, type: 2}
   spine: {fileID: 1738585774378048}
   weaponContainer: {fileID: 0}
   weapon: {fileID: 1901531181753100}
+  grenadePrefab: {fileID: 1160399887901452, guid: 14001c823686cdc4392a2f8b21963be8,
+    type: 2}
   basicShoot: {fileID: 0}
 --- !u!114 &114961485168796110
 MonoBehaviour:
