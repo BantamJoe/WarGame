@@ -1839,8 +1839,8 @@ Transform:
   - {fileID: 1710256359}
   - {fileID: 1193635730}
   - {fileID: 1531821596}
-  - {fileID: 413083994}
   - {fileID: 534962854}
+  - {fileID: 413083994}
   - {fileID: 394823357}
   - {fileID: 1232948404}
   - {fileID: 784369383}
@@ -3381,7 +3381,7 @@ Transform:
   m_Children:
   - {fileID: 2067029851}
   m_Father: {fileID: 253471212}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: -164.501, z: 0}
 --- !u!64 &534962855
 MeshCollider:

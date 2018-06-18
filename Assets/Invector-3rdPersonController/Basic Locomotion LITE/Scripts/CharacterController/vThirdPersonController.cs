@@ -5,24 +5,35 @@ namespace Invector.CharacterController
 {
     public class vThirdPersonController : vThirdPersonAnimator
     {
-        public float grenadeThrowForce = 50f;
-        public float health = 100f;
+        //General variables
+        [Tooltip("Team the character is on, used for identifying enemies")]
         public string Team;
+        [Tooltip("Health points the character has before dying")]
+        public float health = 100f;
+        [Tooltip("Blood effect particle played when damage taken")]
         public GameObject bloodEffect;
+        [Tooltip("Force grenade is thrown with towards the target vector")]
+        public float grenadeThrowForce = 50f;
 
+        //Script references
+        [HideInInspector]
+        public BasicDeath basicDeath;
+        [HideInInspector]
+        public BasicShoot basicShoot;
+
+        //Containers and game object references
         [HideInInspector]
         public GameObject spine;
         [HideInInspector]
         public GameObject weaponContainer;
         [HideInInspector]
         public GameObject weapon;
+        [Tooltip("Grenade prefab that is thrown")]
         public GameObject grenadePrefab;
-        //[HideInInspector]
-        public BasicShoot basicShoot;
-
+        
+        //Private vars used for weapon selection
         private int selectedWeapon = 0;
         private int previousWeapon;
-        private BasicDeath basicDeath;
 
         protected virtual void Start()
         {
@@ -220,12 +231,31 @@ namespace Invector.CharacterController
             else
                 animator.CrossFadeInFixedTime("JumpMove", 0.2f);
         }
-        public virtual void ThrowGrenade()
+        public virtual IEnumerator ThrowGrenadeTowardCamera(Vector3 throwDirection)
         {
-            animator.SetTrigger("IsThrowingGrenade");
-            GameObject grenade = Instantiate(grenadePrefab, transform.position + transform.forward + transform.up * (_capsuleCollider.height), transform.rotation);
-            Rigidbody grb = grenade.GetComponent<Rigidbody>();
-            grb.AddForce(transform.forward * grenadeThrowForce, ForceMode.Impulse);
+            if(!isReloading && !isSprinting)
+            {
+                animator.SetTrigger("IsThrowingGrenade");
+
+                yield return new WaitForSeconds(0.6f);
+
+                GameObject grenade = Instantiate(grenadePrefab, transform.position + transform.forward + transform.up * (_capsuleCollider.height), transform.rotation);
+                Rigidbody grb = grenade.GetComponent<Rigidbody>();
+                grb.AddForce(throwDirection * grenadeThrowForce, ForceMode.VelocityChange);
+            }
+        }
+        public virtual IEnumerator ThrowGrenadeForward()
+        {
+            if (!isReloading && !isSprinting)
+            {
+                animator.SetTrigger("IsThrowingGrenade");
+
+                yield return new WaitForSeconds(0.6f);
+
+                GameObject grenade = Instantiate(grenadePrefab, transform.position + transform.forward + transform.up * (_capsuleCollider.height), transform.rotation);
+                Rigidbody grb = grenade.GetComponent<Rigidbody>();
+                grb.AddForce(transform.forward * grenadeThrowForce, ForceMode.VelocityChange);
+            }
         }
 
         public virtual void RotateWithAnotherTransform(Transform referenceTransform)
