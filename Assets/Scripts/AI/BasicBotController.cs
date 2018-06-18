@@ -152,7 +152,6 @@ namespace Invector.CharacterController
         {
             if(cc.basicShoot.currentAmmo <= 0)
             {
-                Debug.Log(cc.gameObject.name + " Reloading");
                 StartCoroutine(cc.basicShoot.Reload());
                 isShooting = false;
             }

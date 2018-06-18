@@ -36,7 +36,7 @@ namespace Invector.CharacterController
         }
         void Explode()
         {
-            Destroy(Instantiate(explosionEffect, transform.position, transform.rotation), 10f);
+            Destroy(Instantiate(explosionEffect, transform.position, Quaternion.LookRotation(Vector3.up)), 10f);
 
             Collider[] colliders = Physics.OverlapSphere(transform.position, radius, playerLayerIndex);
             foreach (Collider nearbyObject in colliders)

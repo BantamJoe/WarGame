@@ -1331,6 +1331,10 @@ Prefab:
       propertyPath: firespot
       value: 
       objectReference: {fileID: 991791223}
+    - target: {fileID: 4928184688310462, guid: 1cc8536ba5556354cb170254b8d67841, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1cc8536ba5556354cb170254b8d67841, type: 2}
   m_IsPrefabParent: 0

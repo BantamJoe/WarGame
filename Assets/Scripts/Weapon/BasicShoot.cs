@@ -13,7 +13,7 @@ namespace Invector.CharacterController
         [Tooltip("Damage per shot/pellet")]
         public float damage = 10f;
         [Tooltip("How much a shot deviates. The smaller, the more accurate the weapon")]
-        public float spreadFactor = 0.2f;
+        public float spreadFactor = 0f;
         [Tooltip("Number of bullets/pellets fired from the gun per shot")]
         public float fireIterations = 1f;
         [Tooltip("Magazine capacity")]
