@@ -10,20 +10,33 @@ namespace Invector.CharacterController
         public int weaponType = 1;
         [Tooltip("1/firerate in seconds is delay between shots")]
         public float fireRate = 1f;
+        [Tooltip("Damage per shot/pellet")]
         public float damage = 10f;
-        public float range = 5000f;
-        public float reloadDelay = 1f;
+        [Tooltip("How much a shot deviates. The smaller, the more accurate the weapon")]
+        public float spreadFactor = 0.2f;
+        [Tooltip("Number of bullets/pellets fired from the gun per shot")]
+        public float fireIterations = 1f;
         [Tooltip("Magazine capacity")]
         public int capacity = 5;
-        
-        //[HideInInspector]
+        [Tooltip("How long a reload takes")]
+        public float reloadDelay = 1f;
+        [Tooltip("Maximum range the weapon's raycast will extend")]
+        public float range = 5000f;
+
+        [HideInInspector]
         public int currentAmmo;
 
+        [Tooltip("SFX when gun fires (including cycling)")]
         public AudioClip fire;
+        [Tooltip("Object that projects ideal shot raycast")]
         public GameObject firespot;
+        [Tooltip("Object that projects actual shot raycast")]
         public GameObject muzzlespot;
-        public GameObject impactEffect;
+        [Tooltip("Muzzleflash effect")]
         public GameObject muzzleFlash;
+        [Tooltip("Bullet impact effect")]
+        public GameObject impactEffect;
+       
 
         private AudioSource weaponAudio;
         private Animator anim;
@@ -68,26 +81,35 @@ namespace Invector.CharacterController
                 //Fire a ray from the camera. This is the ideal hit position
                 if (Physics.Raycast(firespot.transform.position, firespot.transform.forward, out firespotHit, range))
                 {
-                    //Point the gun's muzzle ray at where the cameras crosshair is
-                    muzzlespot.transform.LookAt(firespotHit.point);
-
-                    //Fire a ray from the guns muzzle to the cameras crosshair
-                    if (Physics.Raycast(muzzlespot.transform.position, muzzlespot.transform.forward, out muzzlespotHit, range))
+                    //Iterate over the number of fireIterations (Useful for shotguns)
+                    for(int i = 0; i < fireIterations; i++)
                     {
-                        //Look towards this sort of solution to remove cc dependency
-                        //muzzlespotHit.transform.gameObject.SendMessageUpwards("TakeDamage",damage);
-                        
-                        Component ccComponent = muzzlespotHit.transform.gameObject.GetComponentInParent(typeof(vThirdPersonController));
+                        //Point the gun's muzzle ray at where the cameras crosshair is
+                        muzzlespot.transform.LookAt(firespotHit.point);
 
-                        if (ccComponent != null)
+                        //Deviate shot based on spreadFactor (accuracy simulation)
+                        Vector3 directionOfShot = muzzlespot.transform.forward;
+                        directionOfShot.x += Random.Range(-spreadFactor, spreadFactor);
+                        directionOfShot.y += Random.Range(-spreadFactor, spreadFactor);
+                        directionOfShot.z += Random.Range(-spreadFactor, spreadFactor);
+
+                        //Fire a ray from the guns muzzle to the cameras crosshair
+                        if (Physics.Raycast(muzzlespot.transform.position, directionOfShot, out muzzlespotHit, range))
                         {
-                            vThirdPersonController cc = ccComponent.GetComponent<vThirdPersonController>();
-                            cc.TakeDamage(damage);
-                            Destroy(Instantiate(cc.bloodEffect, muzzlespotHit.point, Quaternion.LookRotation(muzzlespotHit.normal)),1f);
-                        }
-                        Destroy(Instantiate(impactEffect, muzzlespotHit.point, Quaternion.LookRotation(muzzlespotHit.normal)),1f);
-                    }
+                            //Look towards this sort of solution to remove cc dependency
+                            //muzzlespotHit.transform.gameObject.SendMessageUpwards("TakeDamage",damage);
 
+                            Component ccComponent = muzzlespotHit.transform.gameObject.GetComponentInParent(typeof(vThirdPersonController));
+
+                            if (ccComponent != null)
+                            {
+                                vThirdPersonController cc = ccComponent.GetComponent<vThirdPersonController>();
+                                cc.TakeDamage(damage);
+                                Destroy(Instantiate(cc.bloodEffect, muzzlespotHit.point, Quaternion.LookRotation(muzzlespotHit.normal)), 1f);
+                            }
+                            Destroy(Instantiate(impactEffect, muzzlespotHit.point, Quaternion.LookRotation(muzzlespotHit.normal)), 1f);
+                        }
+                    }
                     //Restore muzzlespots original orientation
                     muzzlespot.transform.SetPositionAndRotation(originalMuzzlespotTransform.position, originalMuzzlespotTransform.rotation);
                 }
@@ -95,8 +117,10 @@ namespace Invector.CharacterController
                 //Play sound and effects regardless of hit
                 weaponAudio.Play();
 
+                //Decrement Ammo
                 currentAmmo -= 1;
 
+                //Instantiate particles like muzzleflash
                 GameObject _muzzleflash = Instantiate(muzzleFlash, muzzlespot.transform.position, Quaternion.Euler(muzzlespot.transform.forward));
                 _muzzleflash.transform.parent = muzzlespot.transform;
                 Destroy(_muzzleflash, 1f);

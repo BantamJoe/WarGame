@@ -758,16 +758,18 @@ MonoBehaviour:
   weaponType: 2
   fireRate: 7
   damage: 22
-  range: 5000
-  reloadDelay: 4
+  spreadFactor: 0.2
+  fireIterations: 1
   capacity: 20
+  reloadDelay: 4
+  range: 5000
   currentAmmo: 20
   fire: {fileID: 8300000, guid: 51b725db740a08d49b57c827b0d0a971, type: 3}
   firespot: {fileID: 1064959222}
   muzzlespot: {fileID: 1064959222}
-  impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
-    type: 2}
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4,
+    type: 2}
+  impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
     type: 2}
 --- !u!1001 &201492746
 Prefab:
@@ -1309,6 +1311,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114601798356754708, guid: 1cc8536ba5556354cb170254b8d67841,
+        type: 2}
+      propertyPath: firespot
+      value: 
+      objectReference: {fileID: 991791223}
     - target: {fileID: 114584377263849236, guid: 1cc8536ba5556354cb170254b8d67841,
         type: 2}
       propertyPath: firespot
@@ -1324,10 +1331,6 @@ Prefab:
       propertyPath: firespot
       value: 
       objectReference: {fileID: 991791223}
-    - target: {fileID: 1213686127166576, guid: 1cc8536ba5556354cb170254b8d67841, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1cc8536ba5556354cb170254b8d67841, type: 2}
   m_IsPrefabParent: 0
@@ -5259,15 +5262,16 @@ MonoBehaviour:
   direction: 0
   verticalVelocity: 0
   velocity: 0
-  grenadeThrowForce: 40
-  health: 100
   Team: Axis
+  health: 100
   bloodEffect: {fileID: 166404, guid: 78e1c8c5b281b8b439229473779ac9aa, type: 2}
+  grenadeThrowForce: 40
+  basicDeath: {fileID: 0}
+  basicShoot: {fileID: 0}
   spine: {fileID: 1133954880}
   weaponContainer: {fileID: 0}
   weapon: {fileID: 0}
   grenadePrefab: {fileID: 0}
-  basicShoot: {fileID: 0}
 --- !u!95 &1750417729
 Animator:
   serializedVersion: 3

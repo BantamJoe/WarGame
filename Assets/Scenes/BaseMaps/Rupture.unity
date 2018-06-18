@@ -3304,6 +3304,21 @@ Prefab:
       propertyPath: damage
       value: 43
       objectReference: {fileID: 0}
+    - target: {fileID: 114291583625295592, guid: 1cc8536ba5556354cb170254b8d67841,
+        type: 2}
+      propertyPath: spreadFactor
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 114584377263849236, guid: 1cc8536ba5556354cb170254b8d67841,
+        type: 2}
+      propertyPath: spreadFactor
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 114712896268304550, guid: 1cc8536ba5556354cb170254b8d67841,
+        type: 2}
+      propertyPath: spreadFactor
+      value: 0.03
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1cc8536ba5556354cb170254b8d67841, type: 2}
   m_IsPrefabParent: 0
