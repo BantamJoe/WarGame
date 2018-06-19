@@ -1192,28 +1192,28 @@ GameObject:
   - component: {fileID: 161986452}
   - component: {fileID: 161986451}
   - component: {fileID: 161986450}
+  - component: {fileID: 161986453}
   - component: {fileID: 161986449}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &161986449
-MeshCollider:
+--- !u!114 &161986449
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 161986448}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1677b2e00f40854496b1642e2257b08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterSplashEffect: {fileID: 1941052008799212, guid: 99e758af330618c49b02d1e99f19db50,
+    type: 2}
 --- !u!23 &161986450
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1269,6 +1269,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &161986453
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 161986448}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 2.220446e-16, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &177999089
 Prefab:
   m_ObjectHideFlags: 0
