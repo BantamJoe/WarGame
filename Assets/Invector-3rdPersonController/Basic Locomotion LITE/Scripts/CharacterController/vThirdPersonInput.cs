@@ -119,7 +119,7 @@ namespace Invector.CharacterController
         {
             if(Input.GetKeyDown(throwGrenadeInput))
             {
-                StartCoroutine(cc.ThrowGrenadeTowardCamera(tpCamera.transform.forward));
+                StartCoroutine(cc.ThrowGrenadeTowardCamera(tpCamera.gameObject));
             }
         }
         protected virtual void SelectWeaponInput()

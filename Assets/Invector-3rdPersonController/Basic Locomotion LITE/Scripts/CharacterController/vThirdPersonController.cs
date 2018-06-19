@@ -232,7 +232,7 @@ namespace Invector.CharacterController
             else
                 animator.CrossFadeInFixedTime("JumpMove", 0.2f);
         }
-        public virtual IEnumerator ThrowGrenadeTowardCamera(Vector3 throwDirection)
+        public virtual IEnumerator ThrowGrenadeTowardCamera(GameObject camera)
         {
             if(!isReloading && !isSprinting)
             {
@@ -242,7 +242,7 @@ namespace Invector.CharacterController
 
                 GameObject grenade = Instantiate(grenadePrefab, transform.position + transform.forward + transform.up * (_capsuleCollider.height), transform.rotation);
                 Rigidbody grb = grenade.GetComponent<Rigidbody>();
-                grb.AddForce(throwDirection * grenadeThrowForce, ForceMode.VelocityChange);
+                grb.AddForce(camera.transform.forward * grenadeThrowForce, ForceMode.VelocityChange);
             }
         }
         public virtual IEnumerator ThrowGrenadeForward()

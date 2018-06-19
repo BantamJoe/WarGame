@@ -2288,12 +2288,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 135352936034780710, guid: 14001c823686cdc4392a2f8b21963be8,
+    - target: {fileID: 114995134708910192, guid: 14001c823686cdc4392a2f8b21963be8,
         type: 2}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: 2d1b92c8292f3234baa92e29f307a81d,
-        type: 2}
+      propertyPath: damage
+      value: 120
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14001c823686cdc4392a2f8b21963be8, type: 2}
   m_IsPrefabParent: 0

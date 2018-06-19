@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 60
-  radius: 5
+  radius: 10
   delay: 4
   rb: {fileID: 0}
   explosionEffect: {fileID: 1645431724647618, guid: 6255b97287421804bb65da63333d7f30,
@@ -270,7 +270,7 @@ SphereCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1160399887901452}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 2d1b92c8292f3234baa92e29f307a81d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

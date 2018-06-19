@@ -42,7 +42,14 @@ namespace Invector.CharacterController
             foreach (Collider nearbyObject in colliders)
             {
                 vThirdPersonController targetcc = nearbyObject.gameObject.GetComponentInParent<vThirdPersonController>();
-                targetcc.TakeDamage(damage);
+
+                float targetDistance = Mathf.Abs(Vector3.Distance(transform.position,nearbyObject.gameObject.transform.position));
+
+                if(targetDistance <= radius)
+                {
+                    Debug.Log("Damage: " + ((radius - targetDistance) / radius) * damage + " at " + targetDistance);
+                    targetcc.TakeDamage(((radius - targetDistance) / radius) * damage);
+                }
             }
 
             Destroy(gameObject);

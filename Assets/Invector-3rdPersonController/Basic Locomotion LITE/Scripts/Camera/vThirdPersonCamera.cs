@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Invector;
+using System;
 
 public class vThirdPersonCamera : MonoBehaviour
 {
@@ -141,7 +142,6 @@ public class vThirdPersonCamera : MonoBehaviour
 
         CameraMovement();
     }
-
 
     /// <summary>
     /// Set the target for the camera
