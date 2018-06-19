@@ -75,7 +75,7 @@ namespace Invector.CharacterController
         [Tooltip("Percentage change of capsule collider when crouched")]
         public float capsuleCrouchPercentage = 0.75f;
         [Tooltip("Percentage change of capsule collider when proned")]
-        public float capsulePronePercentage = 0.75f;
+        public float capsulePronePercentage = 0.5f;
         [Tooltip("ADJUST IN PLAY MODE - Offset height limit for sters - GREY Raycast in front of the legs")]
         public float stepOffsetEnd = 0.45f;
         [Tooltip("ADJUST IN PLAY MODE - Offset height origin for sters, make sure to keep slight above the floor - GREY Raycast in front of the legs")]
@@ -257,15 +257,18 @@ namespace Invector.CharacterController
             {
                 _capsuleCollider.direction = 1;
                 _capsuleCollider.center = new Vector3(_capsuleCollider.center.x, (_capsuleCollider.height * capsuleCrouchPercentage) / 2f, _capsuleCollider.center.z);
-                _capsuleCollider.height *= capsuleCrouchPercentage;
+                _capsuleCollider.radius = originalCapsuleRadius;
+                _capsuleCollider.height = originalCapsuleHeight * capsuleCrouchPercentage;
             }
-            else if(isProning)
+            else if(isProning || isDead)
             {
                 _capsuleCollider.direction = 2;
-                _capsuleCollider.center = new Vector3(originalCapsuleCenter.x,originalCapsuleCenter.y - originalCapsuleRadius * capsuleCrouchPercentage, originalCapsuleCenter.z);
+                _capsuleCollider.radius = originalCapsuleRadius * capsulePronePercentage;
+                _capsuleCollider.center = new Vector3(originalCapsuleCenter.x, originalCapsuleCenter.y - _capsuleCollider.radius, originalCapsuleCenter.z);
                 _capsuleCollider.height = originalCapsuleHeight;
+                _capsuleCollider.material = maxFrictionPhysics;
             }
-            else // Must be standing or dead
+            else // Must be standing
             {
                 _capsuleCollider.direction = 1;
                 _capsuleCollider.center = originalCapsuleCenter;

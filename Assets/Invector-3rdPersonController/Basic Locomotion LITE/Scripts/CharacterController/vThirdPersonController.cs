@@ -197,6 +197,7 @@ namespace Invector.CharacterController
             input.y = 0f;
             speed = 0f;
 
+            AdjustCapsule();
             basicDeath.Die();
         }
         public virtual void TakeDamage(float damage)
