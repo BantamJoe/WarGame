@@ -50,6 +50,7 @@ public class vThirdPersonCamera : MonoBehaviour
     public float yMouseSensitivity = 3f;
     public float yMinLimit = -40f;
     public float yMaxLimit = 80f;
+    public float positionChangeSpeed = 0.1f;
 
 
     #endregion
@@ -307,33 +308,47 @@ public class vThirdPersonCamera : MonoBehaviour
 
     public void ChangeCameraMode(bool zoom, bool crouch, bool prone)
     {
-        if (zoom)
+        if (zoom && crouch)
         {
-            height = Mathf.Lerp(height, heightAimed, 0.5f);
-            rightOffset = Mathf.Lerp(rightOffset, rightOffsetAimed, 0.5f);
-            distance = Mathf.Lerp(distance, distanceAimed, 0.5f);
+            height = Mathf.MoveTowards(height, heightAimed * crouchPercentage, positionChangeSpeed * 2f);
+            rightOffset = Mathf.MoveTowards(rightOffset, rightOffsetAimed + 0.2f, positionChangeSpeed * 0.2f);
+            distance = Mathf.MoveTowards(distance, distanceAimed * crouchPercentage, positionChangeSpeed * 2f);
             _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, cameraFovAimed, 0.5f);
+        }
+        else if(zoom && prone)
+        {
+            height = Mathf.MoveTowards(height, heightAimed * pronePercentage, positionChangeSpeed * 2f);
+            rightOffset = Mathf.MoveTowards(rightOffset, rightOffsetAimed + 0.2f, positionChangeSpeed * 0.2f);
+            distance = Mathf.MoveTowards(distance, distanceAimed * pronePercentage, positionChangeSpeed * 2f);
+            _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, cameraFovAimed, 0.5f);
+        }
+        else if (zoom)
+        {
+            height = Mathf.MoveTowards(height, heightAimed, positionChangeSpeed * 2f);
+            rightOffset = Mathf.MoveTowards(rightOffset, rightOffsetAimed, positionChangeSpeed * 0.2f);
+            distance = Mathf.MoveTowards(distance, distanceAimed, positionChangeSpeed * 2f);
+            _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, cameraFovAimed, 0.5f);
+        }
+        else if(crouch)
+        {
+            height = Mathf.MoveTowards(height, crouchHeight, positionChangeSpeed);
+            rightOffset = Mathf.MoveTowards(rightOffset, rightOffsetAimed, positionChangeSpeed * 0.1f);
+            distance = Mathf.MoveTowards(distance, crouchDistance, positionChangeSpeed);
+        }
+        else if(prone)
+        {
+            height = Mathf.MoveTowards(height, proneHeight, positionChangeSpeed);
+            rightOffset = Mathf.MoveTowards(rightOffset, rightOffsetAimed, positionChangeSpeed * 0.1f);
+            distance = Mathf.MoveTowards(distance, proneDistance, positionChangeSpeed);
         }
         else
         {
-            height = Mathf.Lerp(height, heightOriginal, 0.5f);
-            rightOffset = Mathf.Lerp(rightOffset, rightOffsetOriginal, 0.5f);
-            distance = Mathf.Lerp(distance, distanceOriginal, 0.5f);
+            height = Mathf.MoveTowards(height, heightOriginal, positionChangeSpeed);
+            rightOffset = Mathf.MoveTowards(rightOffset, rightOffsetOriginal, positionChangeSpeed * 0.1f);
+            distance = Mathf.MoveTowards(distance, distanceOriginal, positionChangeSpeed);
             _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, cameraFovOriginal, 0.5f);
         }
 
-        if(crouch)
-        {
-            height = Mathf.Lerp(height, crouchHeight, 0.5f);
-            rightOffset = Mathf.Lerp(rightOffset, rightOffsetAimed, 0.5f);
-            distance = Mathf.Lerp(distance, crouchDistance, 0.5f);
-        }
-        if(prone)
-        {
-            height = Mathf.Lerp(height, proneHeight, 0.5f);
-            rightOffset = Mathf.Lerp(rightOffset, rightOffsetAimed, 0.5f);
-            distance = Mathf.Lerp(distance, proneDistance, 0.5f);
-        }
     }
 
     public void CrosshairActive(bool value)

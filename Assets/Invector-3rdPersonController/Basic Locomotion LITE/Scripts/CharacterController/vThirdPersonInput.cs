@@ -151,14 +151,21 @@ namespace Invector.CharacterController
             if (Input.GetKeyDown(crouchInput) && !cc.isCrouching && !cc.isSprinting)
                 cc.Crouch(true);
             else if (Input.GetKeyDown(crouchInput) && cc.isCrouching)
+            {
                 cc.Crouch(false);
+            }
         }
         protected virtual void ProneInput()
         {
             if (Input.GetKeyDown(proneInput) && !cc.isProning && !cc.isSprinting)
                 cc.Prone(true);
             else if (Input.GetKeyDown(proneInput) && cc.isProning)
+            {
                 cc.Prone(false);
+                cc.Aim(false);
+                cc.Walk(false);
+            }
+                
         }
         protected virtual void ShootInput()
         {
