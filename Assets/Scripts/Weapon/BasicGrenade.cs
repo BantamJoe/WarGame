@@ -22,6 +22,7 @@ namespace Invector.CharacterController
         {
             countdown = delay;
             rb = GetComponent<Rigidbody>() == null ? this.gameObject.AddComponent<Rigidbody>() : GetComponent<Rigidbody>();
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         }
 
         // Update is called once per frame
