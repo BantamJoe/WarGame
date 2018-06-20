@@ -112,11 +112,18 @@ namespace Invector.CharacterController
             agent.isStopped = !value;
             cc.Walk(value);
 
-            cc.input.y = agent.desiredVelocity.z;
-            cc.input.x = agent.desiredVelocity.x;
-
-            if (agent.desiredVelocity.y > 0.25f)
-                cc.Jump();
+            if(value)
+            {
+                cc.input.y = agent.desiredVelocity.z;
+                cc.input.x = agent.desiredVelocity.x;
+                if (agent.desiredVelocity.y > 0.25f)
+                    cc.Jump();
+            }
+            else
+            {
+                cc.input.y = 0f;
+                cc.input.x = 0f;
+            }
         }
         void AgentMoveToTarget()
         {
