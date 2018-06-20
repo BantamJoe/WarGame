@@ -36,6 +36,9 @@ namespace Invector.CharacterController
         public GameObject muzzleFlash;
         [Tooltip("Bullet impact effect")]
         public GameObject impactEffect;
+
+        [HideInInspector]
+        public Vector3 muzzleForward;
        
 
         private AudioSource weaponAudio;
@@ -52,6 +55,7 @@ namespace Invector.CharacterController
             weaponAudio.panStereo = 1f;
             anim = transform.GetComponentInParent<Animator>();  //TODO: remove the root dependency
             currentAmmo = capacity;
+            muzzleForward = muzzlespot.transform.localRotation.eulerAngles;
         }
 
         public IEnumerator Reload()

@@ -18,7 +18,7 @@ namespace Invector.CharacterController
         //Script references
         [HideInInspector]
         public BasicDeath basicDeath;
-        [HideInInspector]
+        //[HideInInspector]
         public BasicShoot basicShoot;
 
         //Containers and game object references

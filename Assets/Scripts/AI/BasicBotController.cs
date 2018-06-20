@@ -15,6 +15,7 @@ namespace Invector.CharacterController
         public float rotationSpeed = 10f;
         [Tooltip("Radius of enemy detection")]
         public float detectRadius = 20f;
+        [Tooltip("Spine offset for aiming. Adjust in playmode and then copy values over")]
         public Vector3 Offset;
 
         public GameObject moveTarget;
@@ -24,7 +25,8 @@ namespace Invector.CharacterController
 
         private GameObject originalMoveTarget;
         
-        private Transform lastKnownMoveTarget;
+        private Vector3 lastKnownMoveTargetPosition;
+
         private Transform spine;
 
         private vThirdPersonController cc;
@@ -46,16 +48,16 @@ namespace Invector.CharacterController
             }
             if (agent == null)
                 Debug.LogError("Navmesh agent missing on bot");
-            if(moveTarget)
+            if(moveTarget != null)
                 agent.SetDestination(moveTarget.transform.position);
 
             if(moveTarget != null)
             {
                 originalMoveTarget = moveTarget;
-                lastKnownMoveTarget = moveTarget.transform;
+                lastKnownMoveTargetPosition = moveTarget.transform.position;
             }
         }
-        
+
         void LateUpdate()
         {
             //If the character controller is dead, kill the bot controller
@@ -85,7 +87,11 @@ namespace Invector.CharacterController
                     AgentShootAttackTarget();
                 }
             }
-            Debug.DrawRay(cc.basicShoot.firespot.transform.position, cc.basicShoot.firespot.transform.forward * 100f, Color.black);
+            cc.UpdateAnimator();
+            cc.UpdateMotor();
+            Debug.DrawRay(cc.basicShoot.firespot.transform.position, cc.basicShoot.firespot.transform.forward * shootRange, Color.black);
+
+            //Debug.Log("MoveTarget = " + moveTarget.transform.position + " : Last Known Target: " + lastKnownMoveTarget.transform.position);
         }
         void AgentCheckForAttackTarget()
         {
@@ -95,7 +101,7 @@ namespace Invector.CharacterController
                 vThirdPersonController targetcc = nearbyObject.gameObject.GetComponentInParent<vThirdPersonController>();
                 if (cc.Team != targetcc.Team && !targetcc.isDead)
                 {
-                    this.attackTarget = targetcc.animator.GetBoneTransform(HumanBodyBones.Spine).gameObject;
+                    this.attackTarget = targetcc.animator.GetBoneTransform(HumanBodyBones.Head).gameObject;
                     return;
                 }
             }
@@ -105,7 +111,12 @@ namespace Invector.CharacterController
         {
             agent.isStopped = !value;
             cc.Walk(value);
-            cc.input.y = value ? 1f : 0f;
+
+            cc.input.y = agent.desiredVelocity.z;
+            cc.input.x = agent.desiredVelocity.x;
+
+            if (agent.desiredVelocity.y > 0.25f)
+                cc.Jump();
         }
         void AgentMoveToTarget()
         {
@@ -113,8 +124,11 @@ namespace Invector.CharacterController
             if(moveTarget != null)
             {
                 //if movetarget has moved since last known pos, navigate to it
-                if (moveTarget.transform.position != lastKnownMoveTarget.position)
+                if (moveTarget.transform.position != lastKnownMoveTargetPosition)
+                {
                     agent.SetDestination(moveTarget.transform.position);
+                    lastKnownMoveTargetPosition = moveTarget.transform.position;
+                }
                 
                 //We are not at target, so perform walking
                 if(!IsAgentAtDestination() && !isShooting)
@@ -132,9 +146,6 @@ namespace Invector.CharacterController
             {
                 AgentWalk(false);
             }
-
-            cc.UpdateAnimator();
-            cc.UpdateMotor();
         }
         void AgentAimAtAttackTarget()
         {
@@ -146,6 +157,13 @@ namespace Invector.CharacterController
             //spine.rotation *= Quaternion.Euler(Offset);
 
             cc.basicShoot.firespot.transform.LookAt(attackTarget.transform.position);
+
+            Vector3 vectorDifference = attackTarget.transform.position - transform.position;
+            float angleBetween = Vector3.Angle(transform.forward, vectorDifference);
+            if (angleBetween > 30f)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(vectorDifference), rotationSpeed * Time.deltaTime);
+            }
         }
 
         void AgentShootAttackTarget()
@@ -158,6 +176,9 @@ namespace Invector.CharacterController
             else if (canShoot && !cc.isReloading)
             {
                 RaycastHit hit;
+
+                //if (Physics.CapsuleCast(transform.position, transform.forward * shootRange, detectRadius, transform.forward, out hit, shootRange, playerLayerIndex, QueryTriggerInteraction.UseGlobal))
+
                 if (Physics.Raycast(cc.basicShoot.firespot.transform.position, cc.basicShoot.firespot.transform.forward, out hit, shootRange))
                 {
                     vThirdPersonController ccHit = hit.transform.gameObject.GetComponentInParent<vThirdPersonController>();
@@ -172,6 +193,7 @@ namespace Invector.CharacterController
                         attackTarget = null;
                     }
                 }
+                cc.basicShoot.muzzlespot.transform.localRotation = Quaternion.Euler(cc.basicShoot.muzzleForward);
             }
         }
         bool IsAgentAtDestination()
