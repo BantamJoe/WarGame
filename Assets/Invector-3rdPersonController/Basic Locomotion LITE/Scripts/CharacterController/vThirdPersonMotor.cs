@@ -264,7 +264,7 @@ namespace Invector.CharacterController
             {
                 _capsuleCollider.direction = 2;
                 _capsuleCollider.radius = originalCapsuleRadius * capsulePronePercentage;
-                _capsuleCollider.center = new Vector3(originalCapsuleCenter.x, originalCapsuleCenter.y - _capsuleCollider.radius, originalCapsuleCenter.z);
+                _capsuleCollider.center = new Vector3(originalCapsuleCenter.x, _capsuleCollider.radius, originalCapsuleCenter.z);
                 _capsuleCollider.height = originalCapsuleHeight;
                 _capsuleCollider.material = maxFrictionPhysics;
             }
