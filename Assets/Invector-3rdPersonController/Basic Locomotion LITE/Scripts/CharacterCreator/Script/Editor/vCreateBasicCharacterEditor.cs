@@ -126,7 +126,8 @@ public class vCreateBasicCharacterEditor : EditorWindow
 
         _ThirdPersonController.name = "vThirdPersonController";        
         _ThirdPersonController.AddComponent<vThirdPersonController>();
-        _ThirdPersonController.AddComponent<vThirdPersonInput>();       
+        _ThirdPersonController.AddComponent<vThirdPersonInput>();
+        _ThirdPersonController.AddComponent<BasicDeath>();
 
         var rigidbody = _ThirdPersonController.AddComponent<Rigidbody>();
         var collider = _ThirdPersonController.AddComponent<CapsuleCollider>();

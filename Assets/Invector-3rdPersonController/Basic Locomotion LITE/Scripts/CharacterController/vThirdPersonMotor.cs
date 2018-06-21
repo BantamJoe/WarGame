@@ -72,7 +72,10 @@ namespace Invector.CharacterController
         public float strafeSprintSpeed = 4f;
 
         [Header("--- Grounded Setup ---")]
-
+        [Tooltip("Percentage change of capsule collider when crouched")]
+        public float capsuleCrouchPercentage = 0.75f;
+        [Tooltip("Percentage change of capsule collider when proned")]
+        public float capsulePronePercentage = 0.5f;
         [Tooltip("ADJUST IN PLAY MODE - Offset height limit for sters - GREY Raycast in front of the legs")]
         public float stepOffsetEnd = 0.45f;
         [Tooltip("ADJUST IN PLAY MODE - Offset height origin for sters, make sure to keep slight above the floor - GREY Raycast in front of the legs")]
@@ -98,12 +101,19 @@ namespace Invector.CharacterController
             isGrounded,
             isStrafing,
             isSprinting,
-            isSliding;
+            isWalking,
+            isSliding,
+            isCrouching,
+            isProning;
 
         // action bools
         [HideInInspector]
         public bool
-            isJumping;
+            isBot,
+            isJumping,
+            isAiming,
+            isReloading,
+            isDead;
 
         protected void RemoveComponents()
         {
@@ -140,6 +150,12 @@ namespace Invector.CharacterController
         public PhysicMaterial maxFrictionPhysics, frictionPhysics, slippyPhysics;       // create PhysicMaterial for the Rigidbody
         [HideInInspector]
         public CapsuleCollider _capsuleCollider;                    // access CapsuleCollider information
+        [HideInInspector]
+        public Vector3 originalCapsuleCenter;
+        [HideInInspector]
+        public float originalCapsuleHeight;
+        [HideInInspector]
+        public float originalCapsuleRadius;
 
         #endregion
 
@@ -190,7 +206,10 @@ namespace Invector.CharacterController
             _rigidbody = GetComponent<Rigidbody>();
 
             // capsule collider info
-            _capsuleCollider = GetComponent<CapsuleCollider>();
+            _capsuleCollider = GetComponentInChildren<CapsuleCollider>();
+            originalCapsuleCenter = _capsuleCollider.center;
+            originalCapsuleHeight = _capsuleCollider.height;
+            originalCapsuleRadius = _capsuleCollider.radius;
         }
 
         public virtual void UpdateMotor()
@@ -225,8 +244,37 @@ namespace Invector.CharacterController
             var _direction = Mathf.Clamp(input.x, -1f, 1f);
             speed = _speed;
             direction = _direction;
+            
             if (isSprinting) speed += 0.5f;
-            if (direction >= 0.7 || direction <= -0.7 || speed <= 0.1) isSprinting = false;
+            if (isWalking) speed -= 0.5f;
+            if (speed <= 0.1f || speed > 0.51f) isWalking = false;
+            if (direction >= 0.7f || direction <= -0.7f || speed <= 0.1f) isSprinting = false;
+        }
+
+        public virtual void AdjustCapsule()
+        {
+            if(isCrouching)
+            {
+                _capsuleCollider.direction = 1;
+                _capsuleCollider.center = new Vector3(_capsuleCollider.center.x, (_capsuleCollider.height * capsuleCrouchPercentage) / 2f, _capsuleCollider.center.z);
+                _capsuleCollider.radius = originalCapsuleRadius;
+                _capsuleCollider.height = originalCapsuleHeight * capsuleCrouchPercentage;
+            }
+            else if(isProning || isDead)
+            {
+                _capsuleCollider.direction = 2;
+                _capsuleCollider.radius = originalCapsuleRadius * capsulePronePercentage;
+                _capsuleCollider.center = new Vector3(originalCapsuleCenter.x, _capsuleCollider.radius, originalCapsuleCenter.z);
+                _capsuleCollider.height = originalCapsuleHeight;
+                _capsuleCollider.material = maxFrictionPhysics;
+            }
+            else // Must be standing
+            {
+                _capsuleCollider.direction = 1;
+                _capsuleCollider.center = originalCapsuleCenter;
+                _capsuleCollider.height = originalCapsuleHeight;
+                _capsuleCollider.radius = originalCapsuleRadius;
+            }
         }
 
         public virtual void FreeMovement()
@@ -514,8 +562,81 @@ namespace Invector.CharacterController
             else
                 targetDirection = keepDirection ? targetDirection : new Vector3(input.x, 0, input.y);
         }
+        /// <summary>
+        /// Check the area above the capsule to see if character can move from crouching to standing
+        /// </summary>
+        public virtual bool CanStandFromCrouch()
+        {
+            RaycastHit rayHit;
+            float distance = _capsuleCollider.height / 2f + (originalCapsuleHeight - _capsuleCollider.height);
 
+            Debug.DrawRay(transform.TransformPoint(_capsuleCollider.center), _capsuleCollider.transform.up * distance, Color.red, 3f, false);
+            if(Physics.Raycast(transform.TransformPoint(_capsuleCollider.center), _capsuleCollider.transform.up, out rayHit, distance))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        /// <summary>
+        /// Check the area above the capsule to see if character can jump from crouching
+        /// </summary>
+        public virtual bool CanJumpFromCrouch()
+        {
+            RaycastHit rayHit;
+            float distance = _capsuleCollider.height + (originalCapsuleHeight - _capsuleCollider.height);
+
+            Debug.DrawRay(transform.TransformPoint(_capsuleCollider.center), _capsuleCollider.transform.up * distance, Color.red, 3f, false);
+            if (Physics.Raycast(transform.TransformPoint(_capsuleCollider.center), _capsuleCollider.transform.up, out rayHit, distance))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        /// <summary>
+        /// Check the area above the capsule to see if character can move from proning to crouching
+        /// </summary>
+        public virtual bool CanCrouchFromProne()
+        {
+            RaycastHit rayHit;
+            float distance = originalCapsuleHeight * capsuleCrouchPercentage;
+
+            Debug.DrawRay(transform.TransformPoint(_capsuleCollider.center + (Vector3.down * _capsuleCollider.radius)), _capsuleCollider.transform.up * distance, Color.red, 3f, false);
+
+            if (Physics.Raycast(transform.TransformPoint(_capsuleCollider.center + (Vector3.down * _capsuleCollider.radius * 0.99f)), _capsuleCollider.transform.up, out rayHit, distance))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Check the area above the capsule to see if character can move from proning to crouching
+        /// </summary>
+        public virtual bool CanStandFromProne()
+        {
+            RaycastHit rayHit;
+            float distance = originalCapsuleHeight;
+
+            Debug.DrawRay(transform.TransformPoint(_capsuleCollider.center + (Vector3.down * _capsuleCollider.radius)), _capsuleCollider.transform.up * distance, Color.red, 3f, false);
+
+            if (Physics.Raycast(transform.TransformPoint(_capsuleCollider.center + (Vector3.down * _capsuleCollider.radius * 0.99f)), _capsuleCollider.transform.up, out rayHit, distance))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         #endregion
-
     }
 }
