@@ -47,6 +47,9 @@ public class NetworkManager : MonoBehaviour
         SpawnAPlayer();
     }
 
+    /// <summary>
+    /// Method to spawn in a player through the network.
+    /// </summary>
     public void SpawnAPlayer()
     {
         //disables world camera
