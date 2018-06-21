@@ -50,7 +50,7 @@ public class NetworkManager : MonoBehaviour
     public void SpawnAPlayer()
     {
         //disables world camera
-        worldCamera.enabled = false;
+        worldCamera.gameObject.SetActive(false);
         //prefabs must be in a resource folder
         PhotonNetwork.Instantiate("BritishRifleman", Vector3.zero, Quaternion.identity, 0);
 
