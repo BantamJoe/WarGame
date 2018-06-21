@@ -17,6 +17,10 @@ namespace Invector.CharacterController
         public float detectRadius = 20f;
         [Tooltip("Spine offset for aiming. Adjust in playmode and then copy values over")]
         public Vector3 Offset;
+        [Tooltip("Bots aiming accuracy prior to shooting. Lower means MORE accurate. This is seperate to weapon accuracy, which is applied during the shot.")]
+        public float aimAccuracy = 0.02f;
+        [Tooltip("Distance bot will try to throw grenade")]
+        public float grenadeRange = 20f;
 
         public GameObject moveTarget;
         public GameObject attackTarget;
@@ -84,6 +88,7 @@ namespace Invector.CharacterController
                 if (attackTarget != null)
                 {
                     AgentAimAtAttackTarget();
+                    //AgentGrenadeAttackTarget();
                     AgentShootAttackTarget();
                 }
             }
@@ -123,6 +128,15 @@ namespace Invector.CharacterController
             {
                 cc.input.y = 0f;
                 cc.input.x = 0f;
+            }
+        }
+        void AgentGrenadeAttackTarget()
+        {
+            if(Mathf.Abs(Vector3.Distance(attackTarget.transform.position, transform.position)) <= grenadeRange)
+            {
+                Debug.Log("Attempting to nade");
+                cc.Walk(false);
+                StartCoroutine(cc.ThrowGrenadeForward());
             }
         }
         void AgentMoveToTarget()
@@ -165,6 +179,7 @@ namespace Invector.CharacterController
 
             cc.basicShoot.firespot.transform.LookAt(attackTarget.transform.position);
 
+            //Rotate whole body if spine twists too much
             Vector3 vectorDifference = attackTarget.transform.position - transform.position;
             float angleBetween = Vector3.Angle(transform.forward, vectorDifference);
             if (angleBetween > 30f)
@@ -191,6 +206,13 @@ namespace Invector.CharacterController
                     vThirdPersonController ccHit = hit.transform.gameObject.GetComponentInParent<vThirdPersonController>();
                     if (ccHit != null && !ccHit.isDead && ccHit.Team != cc.Team)
                     {
+                        Vector3 directionOfShot = cc.basicShoot.firespot.transform.transform.forward;
+                        directionOfShot.x += Random.Range(-aimAccuracy, aimAccuracy);
+                        directionOfShot.y += Random.Range(-aimAccuracy, aimAccuracy);
+                        directionOfShot.z += Random.Range(-aimAccuracy, aimAccuracy);
+
+                        cc.basicShoot.firespot.transform.forward = directionOfShot;
+
                         isShooting = true;
                         cc.Shoot();
                     }
