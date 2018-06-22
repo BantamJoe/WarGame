@@ -559,6 +559,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1760428075549918
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4946915677716304}
+  m_Layer: 0
+  m_Name: muzzlespot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1786250976788436
 GameObject:
   m_ObjectHideFlags: 1
@@ -1161,7 +1176,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.000000007450578, z: 0.000000003725289, w: 1}
   m_LocalPosition: {x: -0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4946915677716304}
   m_Father: {fileID: 4469017529108284}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1379,6 +1395,19 @@ Transform:
   m_Father: {fileID: 4469017529108284}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4946915677716304
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1760428075549918}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.0000009907108, y: -0.4710003, z: 0.00002881885}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4660166044523616}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &4947248446404240
 Transform:
   m_ObjectHideFlags: 1
@@ -1724,7 +1753,7 @@ MonoBehaviour:
   bayonet: 0
   weaponType: 5
   fireRate: 1
-  damage: 10
+  damage: 100
   spreadFactor: 0
   fireIterations: 1
   capacity: 5
@@ -1732,8 +1761,8 @@ MonoBehaviour:
   range: 5000
   currentAmmo: 0
   fire: {fileID: 8300000, guid: 72166633b9a33df49b1c7dd46a212eb4, type: 3}
-  firespot: {fileID: 0}
-  muzzlespot: {fileID: 0}
+  firespot: {fileID: 1760428075549918}
+  muzzlespot: {fileID: 1760428075549918}
   muzzleFlash: {fileID: 0}
   impactEffect: {fileID: 0}
   muzzleForward: {x: 0, y: 0, z: 0}

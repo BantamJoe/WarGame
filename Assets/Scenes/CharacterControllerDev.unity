@@ -1348,6 +1348,11 @@ Prefab:
       propertyPath: muzzlespot
       value: 
       objectReference: {fileID: 647777210}
+    - target: {fileID: 114386839253791654, guid: 1cc8536ba5556354cb170254b8d67841,
+        type: 2}
+      propertyPath: damage
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1cc8536ba5556354cb170254b8d67841, type: 2}
   m_IsPrefabParent: 0
