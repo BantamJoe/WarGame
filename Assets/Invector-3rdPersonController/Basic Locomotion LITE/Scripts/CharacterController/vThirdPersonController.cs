@@ -35,6 +35,10 @@ namespace Invector.CharacterController
         private int selectedWeapon = 0;
         private int previousWeapon;
 
+        //Time before weapons are actually swapped, always draw animation time to occur
+        private float weaponDrawDelay = 0.15f;
+        private bool weaponSwapCRRunning = false;
+
         protected virtual void Start()
         {
             //Prepare the weapon and weapon container
@@ -79,11 +83,18 @@ namespace Invector.CharacterController
                 else
                     selectedWeapon--;
             }
-            ActivateWeapons();
+            if(weaponSwapCRRunning)
+            {
+                StopCoroutine(ActivateWeapons());
+            }
+            StartCoroutine(ActivateWeapons());
         }
-        private void ActivateWeapons()
+        private IEnumerator ActivateWeapons()
         {
+            weaponSwapCRRunning = true;
             //Only reactivate weapons if new weapon selected and character has weapon
+            yield return new WaitForSeconds(weaponDrawDelay);
+
             if (previousWeapon != selectedWeapon && selectedWeapon != -1)
             {
                 int i = 0;
@@ -104,6 +115,7 @@ namespace Invector.CharacterController
                     i++;
                 }
             }
+            weaponSwapCRRunning = false;
         }
         private void InitializeWeapons()
         {
@@ -119,6 +131,13 @@ namespace Invector.CharacterController
                 else
                     weapon.gameObject.SetActive(false);
                 i++;
+            }
+        }
+        public virtual void BayonetAttack()
+        {
+            if(basicShoot.bayonet && !isProning && !isSprinting && !isReloading)
+            {
+                StartCoroutine(basicShoot.BayonetAttack());
             }
         }
         public virtual void Prone(bool value)

@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Invector.CharacterController
 {
     public class BasicShoot : MonoBehaviour
     {
-        [Tooltip("1 = bolt rifle, 2 = semi rifle, 3 = shotgun, 4 = handgun")]
+        [Tooltip("Enables bayonet attack")]
+        public bool bayonet = false;
+        [Tooltip("1 = bolt rifle, 2 = semi rifle, 3 = shotgun, 4 = handgun, 5 = knife")]
         public int weaponType = 1;
         [Tooltip("1/firerate in seconds is delay between shots")]
         public float fireRate = 1f;
@@ -75,6 +78,13 @@ namespace Invector.CharacterController
 
         public void Shoot()
         {
+            //If weapon is knife, don't shoot
+            if(weaponType == 5)
+            {
+                KnifeAttack();
+                return;
+            }
+
             //If next time to fire has been reached and animator is reset
             if (Time.time >= timeToNextFire && currentAmmo != 0 && !reloading)// && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
             {
@@ -149,6 +159,29 @@ namespace Invector.CharacterController
                         break;
                 }
             }
+        }
+        public IEnumerator BayonetAttack()
+        {
+            anim.SetTrigger("IsBayonetting");
+
+            yield return new WaitForSeconds(0.3f);
+
+            RaycastHit bayonetHit;
+            if (Physics.Raycast(muzzlespot.transform.position, muzzlespot.transform.forward, out bayonetHit, 5f))
+            {
+                Component ccComponent = bayonetHit.transform.gameObject.GetComponentInParent(typeof(vThirdPersonController));
+
+                if (ccComponent != null)
+                {
+                    vThirdPersonController cc = ccComponent.GetComponent<vThirdPersonController>();
+                    cc.TakeDamage(100f);
+                    Destroy(Instantiate(cc.bloodEffect, bayonetHit.point, Quaternion.LookRotation(bayonetHit.normal)), 1f);
+                }
+            }
+        }
+        public void KnifeAttack()
+        {
+            anim.SetTrigger("IsKnifing");
         }
     }
 }
