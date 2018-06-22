@@ -81,7 +81,7 @@ namespace Invector.CharacterController
             //If weapon is knife, don't shoot
             if(weaponType == 5)
             {
-                KnifeAttack();
+                StartCoroutine(KnifeAttack());
                 return;
             }
 
@@ -167,7 +167,7 @@ namespace Invector.CharacterController
             yield return new WaitForSeconds(0.3f);
 
             RaycastHit bayonetHit;
-            if (Physics.Raycast(muzzlespot.transform.position, muzzlespot.transform.forward, out bayonetHit, 5f))
+            if (Physics.Raycast(muzzlespot.transform.position, muzzlespot.transform.forward, out bayonetHit, 7f))
             {
                 Component ccComponent = bayonetHit.transform.gameObject.GetComponentInParent(typeof(vThirdPersonController));
 
@@ -179,9 +179,24 @@ namespace Invector.CharacterController
                 }
             }
         }
-        public void KnifeAttack()
+        public IEnumerator KnifeAttack()
         {
             anim.SetTrigger("IsKnifing");
+
+            yield return new WaitForSeconds(0.2f);
+
+            RaycastHit knifeHit;
+            if (Physics.Raycast(muzzlespot.transform.position, muzzlespot.transform.forward, out knifeHit, 2f))
+            {
+                Component ccComponent = knifeHit.transform.gameObject.GetComponentInParent(typeof(vThirdPersonController));
+
+                if (ccComponent != null)
+                {
+                    vThirdPersonController cc = ccComponent.GetComponent<vThirdPersonController>();
+                    cc.TakeDamage(damage);
+                    Destroy(Instantiate(cc.bloodEffect, knifeHit.point, Quaternion.LookRotation(knifeHit.normal)), 1f);
+                }
+            }
         }
     }
 }
