@@ -178,9 +178,13 @@ namespace Invector.CharacterController
         }
         public virtual void Shoot()
         {
-            if (!isSprinting && !isReloading && weapon.activeSelf)
+            if (!isSprinting && !isReloading && weapon.activeSelf && basicShoot.weaponType < 5)
             {
                 basicShoot.Shoot();
+            }
+            if(!isReloading && weapon.activeSelf && basicShoot.weaponType == 5)
+            {
+                StartCoroutine(basicShoot.KnifeAttack());
             }
         }
         public virtual void Reload()
