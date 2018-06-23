@@ -255,7 +255,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4022274398755502}
-  - component: {fileID: 114524952601979218}
+  - component: {fileID: 114748147179568866}
   m_Layer: 0
   m_Name: BritishRifleman
   m_TagString: Untagged
@@ -808,6 +808,8 @@ GameObject:
   - component: {fileID: 54204597335817860}
   - component: {fileID: 136626772146127446}
   - component: {fileID: 114410049893157340}
+  - component: {fileID: 114415772090790032}
+  - component: {fileID: 114367395375880328}
   m_Layer: 8
   m_Name: vThirdPersonController_BritishRifleman
   m_TagString: Player
@@ -1509,7 +1511,7 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1577849606924244}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -1728,7 +1730,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1577849606924244}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!92 &92605973757768986
 Behaviour:
   m_ObjectHideFlags: 1
@@ -1743,7 +1745,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1933990351284020}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: beb471716407de54fb5df4a955a4bbed, type: 3}
   m_Controller: {fileID: 9100000, guid: 4eb84d25b3cf1104fa6406bdcdc62fb5, type: 2}
   m_CullingMode: 1
@@ -1765,6 +1767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e235a05445e5542aae61ca9737298a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bayonet: 0
   weaponType: 3
   fireRate: 1
   damage: 25
@@ -1793,6 +1796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e235a05445e5542aae61ca9737298a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bayonet: 0
   weaponType: 2
   fireRate: 7
   damage: 22
@@ -1821,6 +1825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e235a05445e5542aae61ca9737298a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bayonet: 0
   weaponType: 4
   fireRate: 4
   damage: 45
@@ -1865,13 +1870,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1577849606924244}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a1bfe72fbc87d04e885296b53e91c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   crosshair: {fileID: 224463989447284584}
-  target: {fileID: 0}
+  target: {fileID: 4363897170484968}
   smoothCameraRotation: 12
   cullingLayer:
     serializedVersion: 2
@@ -1904,7 +1909,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1933990351284020}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73fbf3aa05f6be24780438449f505aa3, type: 3}
   m_Name: 
@@ -1978,7 +1983,7 @@ MonoBehaviour:
   weapon: {fileID: 1615856228215788}
   grenadePrefab: {fileID: 1160399887901452, guid: 14001c823686cdc4392a2f8b21963be8,
     type: 2}
---- !u!114 &114410049893157340
+--- !u!114 &114367395375880328
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1986,15 +1991,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1933990351284020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c01e33867e3dfdf4c8f1b5520477f0c1, type: 3}
+  m_Script: {fileID: 11500000, guid: b4c974459d71c6e4ebe32320fe63c0b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114524952601979218
+--- !u!114 &114410049893157340
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1322781641966428}
+  m_GameObject: {fileID: 1933990351284020}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c01e33867e3dfdf4c8f1b5520477f0c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114415772090790032
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1933990351284020}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
@@ -2004,12 +2020,12 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 0
+  synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 114367395375880328}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -2021,7 +2037,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1933990351284020}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5deb9ff5611cb9d4596d397ac57ee8c7, type: 3}
   m_Name: 
@@ -2039,6 +2055,7 @@ MonoBehaviour:
   proneInput: 122
   reloadInput: 114
   throwGrenadeInput: 103
+  bayonetInput: 102
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   customCameraState: 
@@ -2073,6 +2090,32 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114748147179568866
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1322781641966428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &114820302346437940
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2100,6 +2143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e235a05445e5542aae61ca9737298a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bayonet: 0
   weaponType: 1
   fireRate: 1
   damage: 75

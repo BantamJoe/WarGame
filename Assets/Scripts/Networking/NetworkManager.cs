@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Invector.CharacterController;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -63,7 +64,13 @@ public class NetworkManager : MonoBehaviour
         //disables world camera
         worldCamera.gameObject.SetActive(false);
         //prefabs must be in a resource folder
-        PhotonNetwork.Instantiate("BritishRifleman", aSpawn.transform.position, aSpawn.transform.rotation, (byte)aSpawn.team); //wrong maybe?
-
+        GameObject myPlayer = PhotonNetwork.Instantiate("BritishRifleman", aSpawn.transform.position, aSpawn.transform.rotation, (byte)aSpawn.team); //wrong maybe?
+        myPlayer.GetComponentInChildren<Camera>().enabled = true;
+        myPlayer.GetComponentInChildren<AudioListener>().enabled = true;
+        myPlayer.GetComponentInChildren<Animator>().enabled = true;
+        myPlayer.GetComponentInChildren<vThirdPersonInput>().enabled = true;
+        myPlayer.GetComponentInChildren<vThirdPersonController>().enabled = true;
+        myPlayer.GetComponentInChildren<vThirdPersonCamera>().enabled = true;
+        myPlayer.GetComponentInChildren<BasicDeath>().enabled = true;
     }
 }

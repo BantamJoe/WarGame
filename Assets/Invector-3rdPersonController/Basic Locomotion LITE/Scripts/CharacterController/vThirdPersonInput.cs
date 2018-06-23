@@ -169,6 +169,7 @@ namespace Invector.CharacterController
                     cc.Aim(false);
                     cc.Walk(false);
                 }
+                isHoldingAim = 0;
             }
         }
         protected virtual void CrouchInput()
@@ -296,7 +297,7 @@ namespace Invector.CharacterController
             // CAMERA STATE - you can change the CameraState here, the bool means if you want lerp of not, make sure to use the same CameraState String that you named on TPCameraListData
             if (tpCamera == null)
             {
-                tpCamera = FindObjectOfType<vThirdPersonCamera>();
+                tpCamera = this.transform.parent.GetComponentInChildren<vThirdPersonCamera>();//FindObjectOfType<vThirdPersonCamera>();
                 if (tpCamera == null)
                     return;
                 if (tpCamera)
