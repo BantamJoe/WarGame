@@ -41,7 +41,10 @@ namespace Invector.CharacterController
         [HideInInspector]
         public bool keepDirection;                          // keep the current direction in case you change the cameraState
 
-        protected vThirdPersonController cc;                // access the ThirdPersonController component                
+        protected vThirdPersonController cc;                // access the ThirdPersonController component    
+
+        protected float isHoldingAim = 0;
+        protected float holdAimThreshold = 1.5f; //held for a second and a half
 
         #endregion
 
@@ -148,11 +151,24 @@ namespace Invector.CharacterController
             {
                 cc.Aim(true);
                 cc.Walk(true);
+                isHoldingAim = 0;
             }
             else if(Input.GetKeyDown(aimInput) && cc.isAiming)
             {
                 cc.Aim(false);
                 cc.Walk(false);
+            }
+            else if (Input.GetKey(aimInput) && cc.isAiming)
+            {
+                isHoldingAim += Time.deltaTime;
+            }
+            else if(Input.GetKeyUp(aimInput) && cc.isAiming)
+            {
+                if(isHoldingAim > holdAimThreshold)
+                {
+                    cc.Aim(false);
+                    cc.Walk(false);
+                }
             }
         }
         protected virtual void CrouchInput()
