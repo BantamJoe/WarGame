@@ -231,6 +231,12 @@ namespace Invector.CharacterController
 
                         isShooting = true;
                         cc.Shoot();
+
+                        if(ccHit.health < 0)
+                        {
+                            attackTarget = null;
+                            isShooting = false;
+                        }
                     }
                     else if(ccHit != null && ccHit.isDead && ccHit.Team != cc.Team)
                     {
