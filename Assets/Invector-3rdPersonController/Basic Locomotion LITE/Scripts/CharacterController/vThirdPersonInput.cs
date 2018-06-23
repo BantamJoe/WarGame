@@ -23,6 +23,7 @@ namespace Invector.CharacterController
         public KeyCode proneInput = KeyCode.Z;
         public KeyCode reloadInput = KeyCode.R;
         public KeyCode throwGrenadeInput = KeyCode.G;
+        public KeyCode bayonetInput = KeyCode.F;
 
         [Header("Camera Settings")]
         public string rotateCameraXInput = "Mouse X";
@@ -110,11 +111,19 @@ namespace Invector.CharacterController
                 ShootInput();
                 ReloadInput();
                 ThrowGrenadeInput();
+                BayonetInput();
             }
 
         }
 
         #region Basic Locomotion Inputs
+        protected virtual void BayonetInput()
+        {
+            if(Input.GetKeyDown(bayonetInput))
+            {
+                cc.BayonetAttack();
+            }
+        }
         protected virtual void ThrowGrenadeInput()
         {
             if(Input.GetKeyDown(throwGrenadeInput))

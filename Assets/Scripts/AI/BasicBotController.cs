@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace Invector.CharacterController
 {
@@ -87,9 +89,16 @@ namespace Invector.CharacterController
                 }
                 if (attackTarget != null)
                 {
-                    AgentAimAtAttackTarget();
-                    //AgentGrenadeAttackTarget();
-                    AgentShootAttackTarget();
+                    if (Mathf.Abs(Vector3.Distance(attackTarget.transform.position, transform.position)) > 4f)
+                    {
+                        AgentAimAtAttackTarget();
+                        //AgentGrenadeAttackTarget();
+                        AgentShootAttackTarget();
+                    }
+                    else
+                    {
+                        AgentBayonetAttackTarget();
+                    }
                 }
             }
             cc.UpdateAnimator();
@@ -98,6 +107,13 @@ namespace Invector.CharacterController
 
             //Debug.Log("MoveTarget = " + moveTarget.transform.position + " : Last Known Target: " + lastKnownMoveTarget.transform.position);
         }
+
+        void AgentBayonetAttackTarget()
+        {
+            Debug.Log("Bayonet");
+            cc.BayonetAttack();
+        }
+
         void AgentCheckForAttackTarget()
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, detectRadius, playerLayerIndex);
