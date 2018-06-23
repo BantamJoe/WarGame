@@ -216,7 +216,15 @@ namespace Invector.CharacterController
         protected virtual void JumpInput()
         {
             if (Input.GetKeyDown(jumpInput) && !cc.isProning && cc.CanJumpFromCrouch())
+            {
                 cc.Jump();
+            }
+            else if(Input.GetKeyDown(jumpInput) && cc.isProning)
+            {
+                cc.Prone(false);
+                cc.Aim(false);
+                cc.Walk(false);
+            }
         }
 
         protected virtual void WalkInput()

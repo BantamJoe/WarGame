@@ -7,9 +7,11 @@ public class NetworkManager : MonoBehaviour
     public static string gameVersion = "0.0.5";
     public Camera worldCamera;
 
+    private SpawnSpotScript[] spawns;
     // Use this for initialization
     void Start()
     {
+        spawns = FindObjectsOfType<SpawnSpotScript>();
         Connect();
     }
 
@@ -52,10 +54,16 @@ public class NetworkManager : MonoBehaviour
     /// </summary>
     public void SpawnAPlayer()
     {
+        if(spawns == null)
+        {
+            Debug.LogError("Spawns array empty.");
+            return;
+        }
+        SpawnSpotScript aSpawn = spawns[Random.Range(0, spawns.Length)];
         //disables world camera
         worldCamera.gameObject.SetActive(false);
         //prefabs must be in a resource folder
-        PhotonNetwork.Instantiate("BritishRifleman", Vector3.zero, Quaternion.identity, 0);
+        PhotonNetwork.Instantiate("BritishRifleman", aSpawn.transform.position, aSpawn.transform.rotation, (byte)aSpawn.team); //wrong maybe?
 
     }
 }
