@@ -23,6 +23,7 @@ namespace Invector.CharacterController
             col = GetComponent<BoxCollider>() == null ? this.gameObject.AddComponent<BoxCollider>() : GetComponent<BoxCollider>();
 
             col.isTrigger = true;
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         }
         void Explode()
         {

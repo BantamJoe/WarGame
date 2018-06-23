@@ -30,6 +30,8 @@ namespace Invector.CharacterController
         public GameObject weapon;
         [Tooltip("Grenade prefab that is thrown")]
         public GameObject grenadePrefab;
+        [Tooltip("Artillery prefab for officer class")]
+        public GameObject artilleryPrefab;
         
         //Private vars used for weapon selection
         private int selectedWeapon = 0;
@@ -131,6 +133,22 @@ namespace Invector.CharacterController
                 else
                     weapon.gameObject.SetActive(false);
                 i++;
+            }
+        }
+        public virtual void SpecialAbility(GameObject camera)
+        {
+            StartCoroutine(ArtilleryStrike(camera));
+        }
+        private IEnumerator ArtilleryStrike(GameObject camera)
+        {
+            RaycastHit strikeHit;
+
+            if (Physics.Raycast(camera.transform.position, camera.transform.forward, out strikeHit))
+            {
+                Debug.DrawRay(camera.transform.position, camera.transform.forward * Mathf.Abs(Vector3.Distance(camera.transform.position, strikeHit.point)), Color.red, 15f);
+                animator.SetTrigger("IsThrowingGrenade");
+                yield return new WaitForSeconds(10f);
+                Destroy(Instantiate(artilleryPrefab, strikeHit.point + (Vector3.up * 20f), Quaternion.LookRotation(Vector3.up)), 45f);
             }
         }
         public virtual void BayonetAttack()

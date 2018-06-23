@@ -24,6 +24,7 @@ namespace Invector.CharacterController
         public KeyCode reloadInput = KeyCode.R;
         public KeyCode throwGrenadeInput = KeyCode.G;
         public KeyCode bayonetInput = KeyCode.F;
+        public KeyCode specialAbilityInput = KeyCode.Q;
 
         [Header("Camera Settings")]
         public string rotateCameraXInput = "Mouse X";
@@ -58,11 +59,13 @@ namespace Invector.CharacterController
             if (cc != null)
                 cc.Init();
 
-            tpCamera = this.gameObject.GetComponentInChildren<vThirdPersonCamera>();
+            tpCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<vThirdPersonCamera>();
             if (tpCamera) tpCamera.SetMainTarget(this.transform);
 
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+
+            Debug.Log("Name of tpCamera = " + tpCamera.gameObject.name);
         }
 
         protected virtual void LateUpdate()
@@ -112,11 +115,19 @@ namespace Invector.CharacterController
                 ReloadInput();
                 ThrowGrenadeInput();
                 BayonetInput();
+                SpecialAbilityInput();
             }
 
         }
 
         #region Basic Locomotion Inputs
+        protected virtual void SpecialAbilityInput()
+        {
+            if(Input.GetKeyDown(specialAbilityInput))
+            {
+                cc.SpecialAbility(tpCamera.transform.GetChild(0).gameObject);
+            }
+        }
         protected virtual void BayonetInput()
         {
             if(Input.GetKeyDown(bayonetInput))
