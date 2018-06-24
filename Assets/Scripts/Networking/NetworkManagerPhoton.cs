@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkManager : MonoBehaviour
+public class NetworkManagerPhoton : MonoBehaviour
 {
     public static string gameVersion = "0.0.5";
     public Camera worldCamera;
+    public bool offlineMode = false;
 
     private SpawnSpotScript[] spawns;
     // Use this for initialization
@@ -22,7 +23,15 @@ public class NetworkManager : MonoBehaviour
     /// </summary>
     private void Connect()
     {
-        PhotonNetwork.ConnectUsingSettings("v" + gameVersion);
+        if (offlineMode)
+        {
+            PhotonNetwork.offlineMode = offlineMode;
+            OnJoinedLobby();
+        }
+        else
+        {
+            PhotonNetwork.ConnectUsingSettings("v" + gameVersion);
+        }
     }
 
     private void OnGUI()
@@ -55,7 +64,7 @@ public class NetworkManager : MonoBehaviour
     /// </summary>
     public void SpawnAPlayer()
     {
-        if(spawns == null)
+        if (spawns == null)
         {
             Debug.LogError("Spawns array empty.");
             return;

@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-#if UNITY_5_3_OR_NEWER
 using UnityEngine.SceneManagement;
-#endif
+using UnityEngine.Networking;
 
 namespace Invector.CharacterController
 {
-    public class vThirdPersonInput : MonoBehaviour
+    public class vThirdPersonInput : NetworkBehaviour
     {
         #region variables
 
@@ -62,7 +61,19 @@ namespace Invector.CharacterController
                 cc.Init();
 
             tpCamera = this.gameObject.GetComponentInChildren<vThirdPersonCamera>();
-            if (tpCamera) tpCamera.SetMainTarget(this.transform);
+            if (tpCamera)
+            {
+                if (isLocalPlayer)
+                {
+                    tpCamera.SetMainTarget(this.transform);
+                }
+                else
+                {
+                    tpCamera.gameObject.GetComponentInChildren<Camera>().enabled = false;
+                    tpCamera.gameObject.GetComponentInChildren<AudioListener>().enabled = false;
+                    tpCamera.enabled = false;
+                }
+            }
 
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -70,6 +81,11 @@ namespace Invector.CharacterController
 
         protected virtual void LateUpdate()
         {
+            //if this is another client connected, just return
+            if (!isLocalPlayer)
+            {
+                return;
+            }
             if (cc == null) return;             // returns if didn't find the controller
             if(!cc.isDead)
             {
@@ -81,7 +97,12 @@ namespace Invector.CharacterController
 
         protected virtual void FixedUpdate()
         {
-            if(!cc.isDead)
+            //if this is another client connected, just return
+            if (!isLocalPlayer)
+            {
+                return;
+            }
+            if (!cc.isDead)
             {
                 cc.AirControl();
             }
@@ -90,7 +111,12 @@ namespace Invector.CharacterController
 
         protected virtual void Update()
         {
-            if(!cc.isDead)
+            //if this is another client connected, just return
+            if (!isLocalPlayer)
+            {
+                return;
+            }
+            if (!cc.isDead)
             {
                 cc.UpdateMotor();                   // call ThirdPersonMotor methods               
                 cc.UpdateAnimator();                // call ThirdPersonAnimator methods	
@@ -316,5 +342,11 @@ namespace Invector.CharacterController
             }
         }
         #endregion     
+
+        public override void OnStartLocalPlayer()
+        {
+            base.OnStartLocalPlayer();
+            Debug.Log("Local player has started.");
+        }
     }
 }
