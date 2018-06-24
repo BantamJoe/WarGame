@@ -8568,10 +8568,10 @@ AnimatorStateMachine:
     m_Position: {x: 1632, y: 72, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102531443931419452}
-    m_Position: {x: 840, y: 372, z: 0}
+    m_Position: {x: 828, y: 372, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102420636101092846}
-    m_Position: {x: 876, y: 540, z: 0}
+    m_Position: {x: 828, y: 552, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102804179024842472}
     m_Position: {x: 1920, y: 432, z: 0}

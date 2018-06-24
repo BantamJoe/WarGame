@@ -23,6 +23,8 @@ namespace Invector.CharacterController
         public float aimAccuracy = 0.02f;
         [Tooltip("Distance bot will try to throw grenade")]
         public float grenadeRange = 20f;
+        [Tooltip("Time before bot gives up on target when cannot see")]
+        public float targetLossDelay = 1f;
 
         public GameObject moveTarget;
         public GameObject attackTarget;
@@ -39,7 +41,9 @@ namespace Invector.CharacterController
 
         private bool isDead = false;
         private bool isShooting = false;
+
         private int playerLayerIndex = 1 << 8;
+        private float timeToTargetLoss;
 
         // Use this for initialization
         void Start()
@@ -92,7 +96,6 @@ namespace Invector.CharacterController
                     if (Mathf.Abs(Vector3.Distance(attackTarget.transform.position, transform.position)) > 4f)
                     {
                         AgentAimAtAttackTarget();
-                        //AgentGrenadeAttackTarget();
                         AgentShootAttackTarget();
                     }
                     else
@@ -123,6 +126,7 @@ namespace Invector.CharacterController
                 if (cc.Team != targetcc.Team && !targetcc.isDead)
                 {
                     this.attackTarget = targetcc.animator.GetBoneTransform(HumanBodyBones.Head).gameObject;
+                    timeToTargetLoss = Time.time + targetLossDelay;
                     return;
                 }
             }
@@ -135,9 +139,9 @@ namespace Invector.CharacterController
 
             if(value)
             {
-                cc.input.y = agent.desiredVelocity.z;
-                cc.input.x = agent.desiredVelocity.x;
-                if (agent.desiredVelocity.y > 0.25f)
+                cc.input.y = agent.velocity.z;
+                cc.input.x = agent.velocity.x;
+                if (agent.velocity.y > 0.25f)
                     cc.Jump();
             }
             else
@@ -157,29 +161,20 @@ namespace Invector.CharacterController
         }
         void AgentMoveToTarget()
         {
-            //If we have a move target
-            if(moveTarget != null)
+            //if movetarget has moved since last known pos, navigate to it
+            if (moveTarget.transform.position != lastKnownMoveTargetPosition)
             {
-                //if movetarget has moved since last known pos, navigate to it
-                if (moveTarget.transform.position != lastKnownMoveTargetPosition)
-                {
-                    agent.SetDestination(moveTarget.transform.position);
-                    lastKnownMoveTargetPosition = moveTarget.transform.position;
-                }
-                
-                //We are not at target, so perform walking
-                if(!IsAgentAtDestination() && !isShooting)
-                {
-                    AgentWalk(true);
-                }
-                //If we are at the target, stop walking
-                else
-                {
-                    AgentWalk(false);
-                }
+                agent.SetDestination(moveTarget.transform.position);
+                lastKnownMoveTargetPosition = moveTarget.transform.position;
             }
-            //If there is no target, also stop walking
-            if(moveTarget == null)
+                
+            //We are not at target, so perform walking
+            if(!IsAgentAtDestination() && !isShooting)
+            {
+                AgentWalk(true);
+            }
+            //If we are at the target, stop walking
+            else
             {
                 AgentWalk(false);
             }
@@ -188,10 +183,6 @@ namespace Invector.CharacterController
         {
             spine.LookAt(attackTarget.transform.position);
             spine.rotation *= Quaternion.Euler(Offset);
-
-            //var targetRotation = Quaternion.LookRotation(attackTarget.transform.position - spine.transform.position) * Quaternion.Euler(Offset);
-            //spine.rotation = Quaternion.Slerp(spine.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            //spine.rotation *= Quaternion.Euler(Offset);
 
             cc.basicShoot.firespot.transform.LookAt(attackTarget.transform.position);
 
@@ -244,7 +235,19 @@ namespace Invector.CharacterController
                         attackTarget = null;
                     }
                 }
+                else
+                {
+                    AgentTargetLoss();
+                }
                 cc.basicShoot.muzzlespot.transform.localRotation = Quaternion.Euler(cc.basicShoot.muzzleForward);
+            }
+        }
+        void AgentTargetLoss()
+        {
+            if(Time.time > timeToTargetLoss)
+            {
+                attackTarget = null;
+                isShooting = false;
             }
         }
         bool IsAgentAtDestination()
