@@ -32,7 +32,7 @@ namespace Invector.CharacterController
             foreach (Collider nearbyObject in colliders)
             {
                 vThirdPersonController targetcc = nearbyObject.gameObject.GetComponentInParent<vThirdPersonController>();
-                targetcc.TakeDamage(damage);
+                targetcc.RpcTakeDamage(damage);
             }
 
             Destroy(gameObject);

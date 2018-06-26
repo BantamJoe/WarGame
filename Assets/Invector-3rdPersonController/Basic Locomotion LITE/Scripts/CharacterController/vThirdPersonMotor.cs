@@ -4,10 +4,11 @@ using System;
 using System.Collections;
 using Invector;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 
 namespace Invector.CharacterController
 {
-    public abstract class vThirdPersonMotor : MonoBehaviour
+    public abstract class vThirdPersonMotor : NetworkBehaviour
     {
         #region Variables        
 

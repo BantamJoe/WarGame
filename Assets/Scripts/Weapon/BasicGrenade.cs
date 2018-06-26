@@ -49,7 +49,7 @@ namespace Invector.CharacterController
                 if(targetDistance <= radius)
                 {
                     Debug.Log("Damage: " + ((radius - targetDistance) / radius) * damage + " at " + targetDistance);
-                    targetcc.TakeDamage(((radius - targetDistance) / radius) * damage);
+                    targetcc.RpcTakeDamage(((radius - targetDistance) / radius) * damage);
                 }
             }
 

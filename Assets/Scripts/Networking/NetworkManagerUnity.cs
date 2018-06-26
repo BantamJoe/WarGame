@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
+using Invector.CharacterController;
 
 public class NetworkManagerUnity : NetworkManager
 {
     public GameObject worldCamera;
 
     private SpawnSpotScript[] spawns;
+    private static Dictionary<string, vThirdPersonController> players = new Dictionary<string, vThirdPersonController>();
 
     // Use this for initialization
     private void Start()
@@ -22,6 +24,20 @@ public class NetworkManagerUnity : NetworkManager
         globalConfig.ThreadAwakeTimeout = 1;*/
         spawns = FindObjectsOfType<SpawnSpotScript>(); //might need to change this so when the scene loads for the map, the spawns are grabbed
     }
+
+
+    public static void RegisterPlayer(string _netID, vThirdPersonController player)
+    {
+        string _playerID = "Player " + _netID;
+        players.Add(_playerID, player);
+        player.gameObject.name = _playerID;
+    }
+
+    public static void UnregisterPlayer(string playerID)
+    {
+        players.Remove(playerID);
+    }
+
 
     #region Server Callbacks
     public override void OnServerConnect(NetworkConnection conn)
@@ -109,6 +125,7 @@ public class NetworkManagerUnity : NetworkManager
             }
         }
         Debug.Log("Client disconnected from server: " + conn);
+        //NetworkManagerUnity.UnregisterPlayer()
     }
 
     public override void OnClientError(NetworkConnection conn, int errorCode)

@@ -651,6 +651,7 @@ GameObject:
   - component: {fileID: 114522905720726606}
   - component: {fileID: 114913697164549824}
   - component: {fileID: 114874904645606430}
+  - component: {fileID: 114684819958906244}
   m_Layer: 8
   m_Name: vThirdPersonController_BritishRifleman
   m_TagString: Player
@@ -1816,6 +1817,7 @@ MonoBehaviour:
   capacity: 6
   reloadDelay: 3
   range: 5000
+  timeToNextFire: 0
   currentAmmo: 0
   fire: {fileID: 8300000, guid: a05640d14d03800449d82b075dc55457, type: 3}
   firespot: {fileID: 0}
@@ -1825,6 +1827,7 @@ MonoBehaviour:
   impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
     type: 2}
   muzzleForward: {x: 0, y: 0, z: 0}
+  reloading: 0
 --- !u!114 &114373533895528238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1845,6 +1848,7 @@ MonoBehaviour:
   capacity: 5
   reloadDelay: 3
   range: 5000
+  timeToNextFire: 0
   currentAmmo: 0
   fire: {fileID: 8300000, guid: a05640d14d03800449d82b075dc55457, type: 3}
   firespot: {fileID: 1744125185096082}
@@ -1854,6 +1858,7 @@ MonoBehaviour:
   impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
     type: 2}
   muzzleForward: {x: 0, y: 0, z: 0}
+  reloading: 0
 --- !u!114 &114500754909546250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1912,6 +1917,7 @@ MonoBehaviour:
   capacity: 5
   reloadDelay: 4
   range: 5000
+  timeToNextFire: 0
   currentAmmo: 0
   fire: {fileID: 8300000, guid: 19edbbd20fa8a85448e88049f892b65e, type: 3}
   firespot: {fileID: 0}
@@ -1921,6 +1927,7 @@ MonoBehaviour:
   impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
     type: 2}
   muzzleForward: {x: 0, y: 0, z: 0}
+  reloading: 0
 --- !u!114 &114592795420652222
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2021,6 +2028,7 @@ MonoBehaviour:
   capacity: 20
   reloadDelay: 4
   range: 5000
+  timeToNextFire: 0
   currentAmmo: 20
   fire: {fileID: 8300000, guid: 51b725db740a08d49b57c827b0d0a971, type: 3}
   firespot: {fileID: 0}
@@ -2030,6 +2038,18 @@ MonoBehaviour:
   impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
     type: 2}
   muzzleForward: {x: 0, y: 0, z: 0}
+  reloading: 0
+--- !u!114 &114684819958906244
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1874690751949228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d52da39ff3d9f5438659bf5c043544e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114865337686151780
 MonoBehaviour:
   m_ObjectHideFlags: 1

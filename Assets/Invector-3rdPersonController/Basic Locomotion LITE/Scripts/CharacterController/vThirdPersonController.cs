@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 namespace Invector.CharacterController
 {
@@ -9,6 +10,7 @@ namespace Invector.CharacterController
         [Tooltip("Team the character is on, used for identifying enemies")]
         public string Team;
         [Tooltip("Health points the character has before dying")]
+        [SyncVar]
         public float health = 100f;
         [Tooltip("Blood effect particle played when damage taken")]
         public GameObject bloodEffect;
@@ -180,7 +182,7 @@ namespace Invector.CharacterController
         {
             if (!isSprinting && !isReloading && weapon.activeSelf)
             {
-                basicShoot.Shoot();
+                basicShoot.CmdShoot();
             }
         }
         public virtual void Reload()
@@ -219,8 +221,11 @@ namespace Invector.CharacterController
             AdjustCapsule();
             basicDeath.Die();
         }
-        public virtual void TakeDamage(float damage)
+
+        [ClientRpc]
+        public virtual void RpcTakeDamage(float damage)
         {
+            Debug.Log("I took damage");
             health -= damage;
             if(health <= 0)
             {
