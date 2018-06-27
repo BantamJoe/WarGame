@@ -103,7 +103,7 @@ namespace Invector.CharacterController
             }
             cc.UpdateAnimator();
             cc.UpdateMotor();
-            Debug.DrawRay(cc.basicShoot.firespot.transform.position, cc.basicShoot.firespot.transform.forward * shootRange, Color.black);
+            Debug.DrawRay(cc.shooting.CurrentWeapon.firespot.transform.position, cc.shooting.CurrentWeapon.firespot.transform.forward * shootRange, Color.black);
 
             //Debug.Log("MoveTarget = " + moveTarget.transform.position + " : Last Known Target: " + lastKnownMoveTarget.transform.position);
         }
@@ -193,7 +193,7 @@ namespace Invector.CharacterController
             //spine.rotation = Quaternion.Slerp(spine.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             //spine.rotation *= Quaternion.Euler(Offset);
 
-            cc.basicShoot.firespot.transform.LookAt(attackTarget.transform.position);
+            cc.shooting.CurrentWeapon.firespot.transform.LookAt(attackTarget.transform.position);
 
             //Rotate whole body if spine twists too much
             Vector3 vectorDifference = attackTarget.transform.position - transform.position;
@@ -206,9 +206,9 @@ namespace Invector.CharacterController
 
         void AgentShootAttackTarget()
         {
-            if(cc.basicShoot.currentAmmo <= 0)
+            if(cc.shooting.CurrentWeapon.currentAmmo <= 0)
             {
-                StartCoroutine(cc.basicShoot.Reload());
+                StartCoroutine(cc.shooting.Reload());
                 isShooting = false;
             }
             else if (canShoot && !cc.isReloading)
@@ -217,17 +217,17 @@ namespace Invector.CharacterController
 
                 //if (Physics.CapsuleCast(transform.position, transform.forward * shootRange, detectRadius, transform.forward, out hit, shootRange, playerLayerIndex, QueryTriggerInteraction.UseGlobal))
 
-                if (Physics.Raycast(cc.basicShoot.firespot.transform.position, cc.basicShoot.firespot.transform.forward, out hit, shootRange))
+                if (Physics.Raycast(cc.shooting.CurrentWeapon.firespot.transform.position, cc.shooting.CurrentWeapon.firespot.transform.forward, out hit, shootRange))
                 {
                     vThirdPersonController ccHit = hit.transform.gameObject.GetComponentInParent<vThirdPersonController>();
                     if (ccHit != null && !ccHit.isDead && ccHit.Team != cc.Team)
                     {
-                        Vector3 directionOfShot = cc.basicShoot.firespot.transform.transform.forward;
+                        Vector3 directionOfShot = cc.shooting.CurrentWeapon.firespot.transform.transform.forward;
                         directionOfShot.x += Random.Range(-aimAccuracy, aimAccuracy);
                         directionOfShot.y += Random.Range(-aimAccuracy, aimAccuracy);
                         directionOfShot.z += Random.Range(-aimAccuracy, aimAccuracy);
 
-                        cc.basicShoot.firespot.transform.forward = directionOfShot;
+                        cc.shooting.CurrentWeapon.firespot.transform.forward = directionOfShot;
 
                         isShooting = true;
                         cc.Shoot();
@@ -238,7 +238,7 @@ namespace Invector.CharacterController
                         attackTarget = null;
                     }
                 }
-                cc.basicShoot.muzzlespot.transform.localRotation = Quaternion.Euler(cc.basicShoot.muzzleForward);
+                cc.shooting.CurrentWeapon.muzzlespot.transform.localRotation = Quaternion.Euler(cc.shooting.CurrentWeapon.muzzleForward);
             }
         }
         bool IsAgentAtDestination()

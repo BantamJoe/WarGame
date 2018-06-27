@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 33466019282870282}
   - component: {fileID: 23800491993192848}
   - component: {fileID: 114561877925229224}
+  - component: {fileID: 114503656084824980}
   m_Layer: 0
   m_Name: weapon_shotgun
   m_TagString: Untagged
@@ -592,6 +593,7 @@ GameObject:
   - component: {fileID: 33347077408488940}
   - component: {fileID: 23735435497202418}
   - component: {fileID: 114324678110309660}
+  - component: {fileID: 114981874584719214}
   m_Layer: 0
   m_Name: weapon_webley
   m_TagString: Untagged
@@ -652,8 +654,9 @@ GameObject:
   - component: {fileID: 114913697164549824}
   - component: {fileID: 114874904645606430}
   - component: {fileID: 114684819958906244}
+  - component: {fileID: 114422253451057162}
   m_Layer: 8
-  m_Name: vThirdPersonController_BritishRifleman
+  m_Name: BritishRiflemanNetwork
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -686,6 +689,7 @@ GameObject:
   - component: {fileID: 33423255012727210}
   - component: {fileID: 23681326030154784}
   - component: {fileID: 114373533895528238}
+  - component: {fileID: 114207378171749460}
   m_Layer: 8
   m_Name: weapon_springfield
   m_TagString: Untagged
@@ -750,6 +754,7 @@ GameObject:
   - component: {fileID: 33190005845232754}
   - component: {fileID: 23259239486383342}
   - component: {fileID: 114626068759968370}
+  - component: {fileID: 114953436356978484}
   m_Layer: 0
   m_Name: weapon_bar
   m_TagString: Untagged
@@ -1765,6 +1770,36 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114207378171749460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920951294070716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98bb1d3c8b7c3541a2cf1ccdf71d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bayonet: 0
+  weaponType: 1
+  fireRate: 1
+  damage: 75
+  spreadFactor: 0
+  fireIterations: 1
+  capacity: 5
+  reloadDelay: 3
+  range: 5000
+  timeToNextFire: 0
+  currentAmmo: 0
+  fire: {fileID: 8300000, guid: a05640d14d03800449d82b075dc55457, type: 3}
+  firespot: {fileID: 1744125185096082}
+  muzzlespot: {fileID: 1691502212269936}
+  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4,
+    type: 2}
+  impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
+    type: 2}
+  muzzleForward: {x: 0, y: 0, z: 0}
 --- !u!114 &114270226181188456
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1803,7 +1838,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1786507909645434}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e235a05445e5542aae61ca9737298a, type: 3}
   m_Name: 
@@ -1834,7 +1869,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920951294070716}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e235a05445e5542aae61ca9737298a, type: 3}
   m_Name: 
@@ -1859,6 +1894,20 @@ MonoBehaviour:
     type: 2}
   muzzleForward: {x: 0, y: 0, z: 0}
   reloading: 0
+--- !u!114 &114422253451057162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1874690751949228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12bb9003241bacf408ddb37cf18e48c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reloading: 0
+  weaponContainer: {fileID: 0}
+  weaponObj: {fileID: 0}
 --- !u!114 &114500754909546250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1886,6 +1935,36 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114503656084824980
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1352834252349358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98bb1d3c8b7c3541a2cf1ccdf71d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bayonet: 0
+  weaponType: 3
+  fireRate: 1
+  damage: 25
+  spreadFactor: 0.05
+  fireIterations: 5
+  capacity: 5
+  reloadDelay: 4
+  range: 5000
+  timeToNextFire: 0
+  currentAmmo: 0
+  fire: {fileID: 8300000, guid: 19edbbd20fa8a85448e88049f892b65e, type: 3}
+  firespot: {fileID: 0}
+  muzzlespot: {fileID: 1005251197399838}
+  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4,
+    type: 2}
+  impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
+    type: 2}
+  muzzleForward: {x: 0, y: 0, z: 0}
 --- !u!114 &114522905720726606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1903,7 +1982,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1352834252349358}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e235a05445e5542aae61ca9737298a, type: 3}
   m_Name: 
@@ -2000,21 +2079,19 @@ MonoBehaviour:
   Team: Allied
   health: 100
   bloodEffect: {fileID: 166404, guid: 78e1c8c5b281b8b439229473779ac9aa, type: 2}
-  grenadeThrowForce: 40
-  basicDeath: {fileID: 0}
-  basicShoot: {fileID: 0}
-  spine: {fileID: 1311654266937490}
-  weaponContainer: {fileID: 0}
-  weapon: {fileID: 1786507909645434}
   grenadePrefab: {fileID: 1160399887901452, guid: 14001c823686cdc4392a2f8b21963be8,
     type: 2}
+  grenadeThrowForce: 40
+  basicDeath: {fileID: 0}
+  spine: {fileID: 1311654266937490}
+  shooting: {fileID: 0}
 --- !u!114 &114626068759968370
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1949914654952862}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e235a05445e5542aae61ca9737298a, type: 3}
   m_Name: 
@@ -2153,6 +2230,66 @@ MonoBehaviour:
     i15: 112
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114953436356978484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1949914654952862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98bb1d3c8b7c3541a2cf1ccdf71d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bayonet: 0
+  weaponType: 2
+  fireRate: 7
+  damage: 22
+  spreadFactor: 0.03
+  fireIterations: 1
+  capacity: 20
+  reloadDelay: 4
+  range: 5000
+  timeToNextFire: 0
+  currentAmmo: 0
+  fire: {fileID: 8300000, guid: 51b725db740a08d49b57c827b0d0a971, type: 3}
+  firespot: {fileID: 1744125185096082}
+  muzzlespot: {fileID: 1684524546166508}
+  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4,
+    type: 2}
+  impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
+    type: 2}
+  muzzleForward: {x: 0, y: 0, z: 0}
+--- !u!114 &114981874584719214
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1786507909645434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98bb1d3c8b7c3541a2cf1ccdf71d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bayonet: 0
+  weaponType: 4
+  fireRate: 4
+  damage: 45
+  spreadFactor: 0.05
+  fireIterations: 1
+  capacity: 6
+  reloadDelay: 3
+  range: 5000
+  timeToNextFire: 0
+  currentAmmo: 0
+  fire: {fileID: 8300000, guid: a05640d14d03800449d82b075dc55457, type: 3}
+  firespot: {fileID: 0}
+  muzzlespot: {fileID: 1022499475506618}
+  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4,
+    type: 2}
+  impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
+    type: 2}
+  muzzleForward: {x: 0, y: 0, z: 0}
 --- !u!124 &124236966053712572
 Behaviour:
   m_ObjectHideFlags: 1

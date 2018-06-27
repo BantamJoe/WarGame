@@ -293,6 +293,8 @@ GameObject:
   - component: {fileID: 114625827331846766}
   - component: {fileID: 195861624488525752}
   - component: {fileID: 114769512291088208}
+  - component: {fileID: 114520104364070712}
+  - component: {fileID: 114467651039761450}
   m_Layer: 8
   m_Name: Bot_German
   m_TagString: Player
@@ -466,6 +468,7 @@ GameObject:
   - component: {fileID: 33374679119129830}
   - component: {fileID: 23263740445090486}
   - component: {fileID: 114629088060856190}
+  - component: {fileID: 114708479881585832}
   m_Layer: 8
   m_Name: weapon_98k
   m_TagString: Untagged
@@ -1187,7 +1190,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1438590699489472}
   m_LocalRotation: {x: -0, y: 0.8093006, z: -0, w: -0.58739465}
-  m_LocalPosition: {x: 11.588, y: 0, z: 30.792}
+  m_LocalPosition: {x: -12.508759, y: -0.6, z: 56.14865}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4190802957866346}
@@ -1492,13 +1495,60 @@ MonoBehaviour:
   direction: 0
   verticalVelocity: 0
   velocity: 0
-  health: 100
   Team: Axis
+  health: 100
   bloodEffect: {fileID: 166404, guid: 78e1c8c5b281b8b439229473779ac9aa, type: 2}
+  grenadePrefab: {fileID: 0}
+  grenadeThrowForce: 50
+  basicDeath: {fileID: 0}
   spine: {fileID: 1780998434186034}
+  shooting: {fileID: 0}
+--- !u!114 &114467651039761450
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1438590699489472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 137
+    i1: 211
+    i2: 67
+    i3: 73
+    i4: 120
+    i5: 215
+    i6: 7
+    i7: 20
+    i8: 11
+    i9: 170
+    i10: 227
+    i11: 19
+    i12: 236
+    i13: 199
+    i14: 38
+    i15: 85
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114520104364070712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1438590699489472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12bb9003241bacf408ddb37cf18e48c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reloading: 0
   weaponContainer: {fileID: 0}
-  weapon: {fileID: 1724474223816674}
-  basicShoot: {fileID: 0}
+  weaponObj: {fileID: 0}
 --- !u!114 &114625827331846766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1515,6 +1565,8 @@ MonoBehaviour:
   rotationSpeed: 10
   detectRadius: 20
   Offset: {x: 20, y: -40, z: 270}
+  aimAccuracy: 0.02
+  grenadeRange: 20
   moveTarget: {fileID: 0}
   attackTarget: {fileID: 0}
 --- !u!114 &114629088060856190
@@ -1523,25 +1575,61 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1724474223816674}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e235a05445e5542aae61ca9737298a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bayonet: 0
   weaponType: 1
   fireRate: 1
   damage: 10
-  range: 5000
-  reloadDelay: 1
+  spreadFactor: 0
+  fireIterations: 1
   capacity: 5
+  reloadDelay: 1
+  range: 5000
+  timeToNextFire: 0
   currentAmmo: 0
   fire: {fileID: 8300000, guid: a05640d14d03800449d82b075dc55457, type: 3}
   firespot: {fileID: 1738294218450720}
   muzzlespot: {fileID: 1738294218450720}
-  impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
-    type: 2}
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4,
     type: 2}
+  impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
+    type: 2}
+  muzzleForward: {x: 0, y: 0, z: 0}
+  reloading: 0
+--- !u!114 &114708479881585832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1724474223816674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98bb1d3c8b7c3541a2cf1ccdf71d274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bayonet: 0
+  weaponType: 1
+  fireRate: 1
+  damage: 10
+  spreadFactor: 0.02
+  fireIterations: 1
+  capacity: 5
+  reloadDelay: 1
+  range: 5000
+  timeToNextFire: 0
+  currentAmmo: 0
+  fire: {fileID: 8300000, guid: a05640d14d03800449d82b075dc55457, type: 3}
+  firespot: {fileID: 1738294218450720}
+  muzzlespot: {fileID: 1738294218450720}
+  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4,
+    type: 2}
+  impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
+    type: 2}
+  muzzleForward: {x: 0, y: 0, z: 0}
 --- !u!114 &114769512291088208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1576,6 +1664,8 @@ MonoBehaviour:
   crouchInput: 99
   proneInput: 122
   reloadInput: 114
+  throwGrenadeInput: 103
+  bayonetInput: 102
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   customCameraState: 

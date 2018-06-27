@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 
 namespace Invector.CharacterController
 {
+    [RequireComponent(typeof(ShootingScript))]
     public class vThirdPersonController : vThirdPersonAnimator
     {
         //General variables
@@ -14,47 +15,25 @@ namespace Invector.CharacterController
         public float health = 100f;
         [Tooltip("Blood effect particle played when damage taken")]
         public GameObject bloodEffect;
+        [Tooltip("Grenade prefab that is thrown")]
+        public GameObject grenadePrefab;
         [Tooltip("Force grenade is thrown with towards the target vector")]
         public float grenadeThrowForce = 50f;
 
         //Script references
         [HideInInspector]
         public BasicDeath basicDeath;
-        //[HideInInspector]
-        public BasicShoot basicShoot;
+
 
         //Containers and game object references
         [HideInInspector]
         public GameObject spine;
         [HideInInspector]
-        public GameObject weaponContainer;
-        [HideInInspector]
-        public GameObject weapon;
-        [Tooltip("Grenade prefab that is thrown")]
-        public GameObject grenadePrefab;
-        
-        //Private vars used for weapon selection
-        private int selectedWeapon = 0;
-        private int previousWeapon;
-
-        //Time before weapons are actually swapped, always draw animation time to occur
-        private float weaponDrawDelay = 0.15f;
-        private bool weaponSwapCRRunning = false;
+        public ShootingScript shooting;
 
         protected virtual void Start()
         {
-            //Prepare the weapon and weapon container
-            weaponContainer = gameObject.transform.FindDeepChild("WeaponContainer").gameObject;
-            if (weaponContainer == null) Debug.LogError("Weapon container NOT FOUND on " + gameObject.name);
-            if (weaponContainer.transform.childCount > 0)
-            {
-                InitializeWeapons();
-            }
-            else
-            {
-                selectedWeapon = -1;
-                Debug.LogWarning("Weapon container on " + gameObject.name + " is empty. Was this intentional?");
-            }
+            shooting = GetComponent<ShootingScript>();
 
             //Prepare the death script
             basicDeath = GetComponent<BasicDeath>();
@@ -70,76 +49,15 @@ namespace Invector.CharacterController
         }
         public virtual void SelectWeapon(bool value)
         {
-            previousWeapon = selectedWeapon;
-            if (value)
-            {
-                if (selectedWeapon >= weaponContainer.transform.childCount - 1)
-                    selectedWeapon = 0;
-                else
-                    selectedWeapon++;
-            }
-            else
-            {
-                if (selectedWeapon <= 0)
-                    selectedWeapon = weaponContainer.transform.childCount - 1;
-                else
-                    selectedWeapon--;
-            }
-            if(weaponSwapCRRunning)
-            {
-                StopCoroutine(ActivateWeapons());
-            }
-            StartCoroutine(ActivateWeapons());
+            shooting.SelectWeapon(value);
         }
-        private IEnumerator ActivateWeapons()
-        {
-            weaponSwapCRRunning = true;
-            //Only reactivate weapons if new weapon selected and character has weapon
-            yield return new WaitForSeconds(weaponDrawDelay);
+        
 
-            if (previousWeapon != selectedWeapon && selectedWeapon != -1)
-            {
-                int i = 0;
-                foreach (Transform weapon in weaponContainer.transform)
-                {
-                    if (i == selectedWeapon)
-                    {
-                        weapon.gameObject.SetActive(true);
-                        this.weapon = weapon.gameObject;
-                        weapon.gameObject.GetComponent<BasicShoot>().firespot = basicShoot.firespot;
-                        this.basicShoot = weapon.GetComponent<BasicShoot>();
-                        
-                        animator.SetInteger("WeaponType", basicShoot.weaponType);
-                        animator.SetTrigger("IsDrawingWeapon");
-                    }
-                    else
-                        weapon.gameObject.SetActive(false);
-                    i++;
-                }
-            }
-            weaponSwapCRRunning = false;
-        }
-        private void InitializeWeapons()
-        {
-            int i = 0;
-            foreach (Transform weapon in weaponContainer.transform)
-            {
-                if(i == 0)
-                {
-                    this.weapon = weapon.gameObject;
-                    basicShoot = weapon.GetComponent<BasicShoot>();
-                    if (basicShoot == null) Debug.LogError("WeaponContainer contained gameObject that did NOT have a BasicShoot script.");
-                }
-                else
-                    weapon.gameObject.SetActive(false);
-                i++;
-            }
-        }
         public virtual void BayonetAttack()
         {
-            if(basicShoot.bayonet && !isProning && !isSprinting && !isReloading)
+            if(shooting.CurrentWeapon.bayonet && !isProning && !isSprinting && !isReloading)
             {
-                StartCoroutine(basicShoot.BayonetAttack());
+                StartCoroutine(shooting.BayonetAttack());
             }
         }
         public virtual void Prone(bool value)
@@ -180,16 +98,16 @@ namespace Invector.CharacterController
         }
         public virtual void Shoot()
         {
-            if (!isSprinting && !isReloading && weapon.activeSelf)
+            if (!isSprinting && !isReloading && shooting.weaponObj.activeSelf)
             {
-                basicShoot.CmdShoot();
+                shooting.CmdShoot();
             }
         }
         public virtual void Reload()
         {
-            if (!isSprinting && weapon.activeSelf)
+            if (!isSprinting && shooting.weaponObj.activeSelf)
             {
-                StartCoroutine(basicShoot.Reload());
+                StartCoroutine(shooting.Reload());
             }
         }
 
@@ -225,8 +143,9 @@ namespace Invector.CharacterController
         [ClientRpc]
         public virtual void RpcTakeDamage(float damage)
         {
-            Debug.Log("I took damage");
+            Debug.Log("I took damage " + gameObject.name);
             health -= damage;
+            Debug.Log("Now I have " + health + " health");
             if(health <= 0)
             {
                 Die();
