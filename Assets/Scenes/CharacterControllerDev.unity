@@ -1353,6 +1353,12 @@ Prefab:
       propertyPath: damage
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 114799885545887702, guid: 1cc8536ba5556354cb170254b8d67841,
+        type: 2}
+      propertyPath: artilleryPrefab
+      value: 
+      objectReference: {fileID: 1736076057596092, guid: b6c5a8bcba229c246adac12a0e0599bd,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1cc8536ba5556354cb170254b8d67841, type: 2}
   m_IsPrefabParent: 0
@@ -5237,6 +5243,7 @@ MonoBehaviour:
   reloadInput: 114
   throwGrenadeInput: 103
   bayonetInput: 102
+  specialAbilityInput: 113
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   customCameraState: 
@@ -5324,6 +5331,7 @@ MonoBehaviour:
   weaponContainer: {fileID: 0}
   weapon: {fileID: 0}
   grenadePrefab: {fileID: 0}
+  artilleryPrefab: {fileID: 0}
 --- !u!95 &1750417729
 Animator:
   serializedVersion: 3
