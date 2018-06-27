@@ -36,7 +36,7 @@ namespace Invector.CharacterController
             //currentWeapon = 
             manager = FindObjectOfType<NetworkManagerUnity>();
             anim = GetComponent<Animator>();
-            if(anim == null)
+            if (anim == null)
             {
                 Debug.LogError("Animator found to be null on " + this.gameObject.name);
             }
@@ -138,6 +138,21 @@ namespace Invector.CharacterController
             }
         }
 
+        public void Shoot()
+        {
+            //If next time to fire has been reached and animator is reset
+            if (Time.time >= CurrentWeapon.timeToNextFire && CurrentWeapon.currentAmmo != 0 && !reloading)// && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
+            {
+                //Play sound and effects regardless of hit
+                CurrentWeapon.GunFired();
+
+                //Decrement Ammo
+                CurrentWeapon.currentAmmo -= 1;
+            }
+
+            CmdShoot();
+        }
+
         [Command]
         public void CmdShoot()
         {
@@ -190,11 +205,6 @@ namespace Invector.CharacterController
                     //Restore muzzlespots original orientation
                     CurrentWeapon.muzzlespot.transform.SetPositionAndRotation(originalMuzzlespotTransform.position, originalMuzzlespotTransform.rotation);
                 }
-                //Play sound and effects regardless of hit
-                CurrentWeapon.GunFired();
-
-                //Decrement Ammo
-                CurrentWeapon.currentAmmo -= 1;
             }
         }
 

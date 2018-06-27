@@ -100,7 +100,7 @@ namespace Invector.CharacterController
         {
             if (!isSprinting && !isReloading && shooting.weaponObj.activeSelf)
             {
-                shooting.CmdShoot();
+                shooting.Shoot();
             }
         }
         public virtual void Reload()
