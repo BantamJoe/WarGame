@@ -144,13 +144,22 @@ namespace Invector.CharacterController
             if (Time.time >= CurrentWeapon.timeToNextFire && CurrentWeapon.currentAmmo != 0 && !reloading)// && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
             {
                 //Play sound and effects regardless of hit
-                CurrentWeapon.GunFired();
+                //CurrentWeapon.GunFired();
+
+                RpcGunFired();
 
                 //Decrement Ammo
-                CurrentWeapon.currentAmmo -= 1;
+                //CurrentWeapon.currentAmmo -= 1;
             }
 
             CmdShoot();
+        }
+
+        [ClientRpc]
+        public void RpcGunFired()
+        {
+            CurrentWeapon.GunFired();
+            CurrentWeapon.currentAmmo -= 1;
         }
 
         [Command]
@@ -197,15 +206,27 @@ namespace Invector.CharacterController
                                 vThirdPersonController cc = ccComponent.GetComponent<vThirdPersonController>();
                                 cc.RpcTakeDamage(CurrentWeapon.damage);
                                 //TODO: may want to make these effects not be coroutines
-                                StartCoroutine(CurrentWeapon.CreateBloodEffect(cc, muzzlespotHit));
+                                RpcCreateBloodEffect(cc, muzzlespotHit);
                             }
-                            StartCoroutine(CurrentWeapon.CreateImpactEffect(muzzlespotHit));
+                            RpcCreateImpactEffect(muzzlespotHit);
                         }
                     }
                     //Restore muzzlespots original orientation
                     CurrentWeapon.muzzlespot.transform.SetPositionAndRotation(originalMuzzlespotTransform.position, originalMuzzlespotTransform.rotation);
                 }
             }
+        }
+
+        [ClientRpc]
+        public void RpcCreateImpactEffect(RaycastHit impactPoint)
+        {
+            StartCoroutine(CurrentWeapon.CreateImpactEffect(impactPoint));
+        }
+
+        [ClientRpc]
+        public void RpcCreateBloodEffect(vThirdPersonController cc, RaycastHit impactPoint)
+        {
+            StartCoroutine(CurrentWeapon.CreateBloodEffect(cc, impactPoint));
         }
 
         public IEnumerator BayonetAttack()

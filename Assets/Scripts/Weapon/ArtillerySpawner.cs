@@ -26,7 +26,7 @@ public class ArtillerySpawner : MonoBehaviour {
             directionOfShot.x += Random.Range(-positionRandom, positionRandom);
             directionOfShot.z += Random.Range(-positionRandom, positionRandom);
 
-            Instantiate(artilleryShell, transform.position + directionOfShot, Quaternion.LookRotation(Vector3.down));
+            Instantiate(artilleryShell, transform.position + directionOfShot, Quaternion.LookRotation(Vector3.up));
         }
     }
 }

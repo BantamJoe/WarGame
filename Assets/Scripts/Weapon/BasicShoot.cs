@@ -85,12 +85,6 @@ namespace Invector.CharacterController
         [Command]
         public void CmdShoot()
         {
-            //If weapon is knife, don't shoot
-            if(weaponType == 5)
-            {
-                StartCoroutine(KnifeAttack());
-                return;
-            }
             //If next time to fire has been reached and animator is reset
             if (Time.time >= timeToNextFire && currentAmmo != 0 && !reloading)// && anim.GetCurrentAnimatorStateInfo(1).IsName("none"))
             {

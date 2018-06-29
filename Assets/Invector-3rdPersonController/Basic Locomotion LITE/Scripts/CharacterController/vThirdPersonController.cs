@@ -31,6 +31,10 @@ namespace Invector.CharacterController
         [HideInInspector]
         public ShootingScript shooting;
 
+        [Tooltip("Artillery prefab for officer class")]
+        public GameObject artilleryPrefab;
+        
+
         protected virtual void Start()
         {
             shooting = GetComponent<ShootingScript>();
@@ -52,6 +56,23 @@ namespace Invector.CharacterController
             shooting.SelectWeapon(value);
         }
         
+
+        public virtual void SpecialAbility(GameObject camera)
+        {
+            StartCoroutine(ArtilleryStrike(camera));
+        }
+        private IEnumerator ArtilleryStrike(GameObject camera)
+        {
+            RaycastHit strikeHit;
+
+            if (Physics.Raycast(camera.transform.position, camera.transform.forward, out strikeHit))
+            {
+                Debug.DrawRay(camera.transform.position, camera.transform.forward * Mathf.Abs(Vector3.Distance(camera.transform.position, strikeHit.point)), Color.red, 15f);
+                animator.SetTrigger("IsThrowingGrenade");
+                yield return new WaitForSeconds(10f);
+                Destroy(Instantiate(artilleryPrefab, strikeHit.point + (Vector3.up * 20f), Quaternion.LookRotation(Vector3.up)), 45f);
+            }
+        }
 
         public virtual void BayonetAttack()
         {
@@ -98,9 +119,13 @@ namespace Invector.CharacterController
         }
         public virtual void Shoot()
         {
-            if (!isSprinting && !isReloading && shooting.weaponObj.activeSelf)
+            if (!isSprinting && !isReloading && shooting.weaponObj.activeSelf && shooting.CurrentWeapon.weaponType < 5)
             {
                 shooting.Shoot();
+            }
+            if(!isReloading && shooting.weaponObj.activeSelf && shooting.CurrentWeapon.weaponType == 5)
+            {
+                StartCoroutine(shooting.KnifeAttack());
             }
         }
         public virtual void Reload()
