@@ -27,5 +27,6 @@ public class PlayerInfoScript : NetworkBehaviour
         string netId = GetComponent<NetworkIdentity>().netId.ToString();
         vThirdPersonController player = GetComponent<vThirdPersonController>();
         PlayerManagerScript.RegisterPlayer(netId, player);
+        player.Setup();
     }
 }

@@ -655,6 +655,8 @@ GameObject:
   - component: {fileID: 114874904645606430}
   - component: {fileID: 114684819958906244}
   - component: {fileID: 114422253451057162}
+  - component: {fileID: 114147821012771284}
+  - component: {fileID: 114412877199082322}
   m_Layer: 8
   m_Name: BritishRiflemanNetwork
   m_TagString: Player
@@ -1749,6 +1751,25 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114147821012771284
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1874690751949228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Target: {fileID: 4559701362400638}
+  m_ChildIndex: 0
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_MovementThreshold: 0.001
+  m_InterpolateRotation: 0.5
+  m_InterpolateMovement: 0.5
 --- !u!114 &114201648850698848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1825,6 +1846,7 @@ MonoBehaviour:
   reloadInput: 114
   throwGrenadeInput: 103
   bayonetInput: 102
+  specialAbilityInput: 113
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   customCameraState: 
@@ -1894,6 +1916,25 @@ MonoBehaviour:
     type: 2}
   muzzleForward: {x: 0, y: 0, z: 0}
   reloading: 0
+--- !u!114 &114412877199082322
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1874690751949228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 95310004753842642}
+  m_ParameterSendBits: 2097151
+  param0: 
+  param1: 
+  param2: 
+  param3: 
+  param4: 
+  param5: 
 --- !u!114 &114422253451057162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1906,8 +1947,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reloading: 0
-  weaponContainer: {fileID: 0}
   weaponObj: {fileID: 0}
+  weaponContainer: {fileID: 0}
 --- !u!114 &114500754909546250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2085,6 +2126,8 @@ MonoBehaviour:
   basicDeath: {fileID: 0}
   spine: {fileID: 1311654266937490}
   shooting: {fileID: 0}
+  artilleryPrefab: {fileID: 1736076057596092, guid: b6c5a8bcba229c246adac12a0e0599bd,
+    type: 2}
 --- !u!114 &114626068759968370
 MonoBehaviour:
   m_ObjectHideFlags: 1

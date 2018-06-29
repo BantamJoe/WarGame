@@ -107,6 +107,49 @@ namespace Invector
 
             return clipPlanePoints;
         }
+
+        /// <summary>
+        /// Same as NearClipPlanePoints, but everything is done without using a camera object. 
+        /// In practice relies off the obj that camera is tied to.
+        /// </summary>
+        /// <param name="spotTransform"></param>
+        /// <param name="fov"></param>
+        /// <param name="camAspect"></param>
+        /// <param name="camNearClipPlane"></param>
+        /// <param name="pos"></param>
+        /// <param name="clipPlaneMargin"></param>
+        /// <returns></returns>
+        public static ClipPlanePoints NearClipPlanePointsNoCam(this GameObject camObj, float fov, float camAspect, float camNearClipPlane, Vector3 pos, float clipPlaneMargin)
+        {
+            var clipPlanePoints = new ClipPlanePoints();
+
+            var transform = camObj.transform;
+            var halfFOV = (fov / 2) * Mathf.Deg2Rad;
+            var aspect = camAspect;
+            var distance = camNearClipPlane;
+            var height = distance * Mathf.Tan(halfFOV);
+            var width = height * aspect;
+            height *= 1 + clipPlaneMargin;
+            width *= 1 + clipPlaneMargin;
+            clipPlanePoints.LowerRight = pos + transform.right * width;
+            clipPlanePoints.LowerRight -= transform.up * height;
+            clipPlanePoints.LowerRight += transform.forward * distance;
+
+            clipPlanePoints.LowerLeft = pos - transform.right * width;
+            clipPlanePoints.LowerLeft -= transform.up * height;
+            clipPlanePoints.LowerLeft += transform.forward * distance;
+
+            clipPlanePoints.UpperRight = pos + transform.right * width;
+            clipPlanePoints.UpperRight += transform.up * height;
+            clipPlanePoints.UpperRight += transform.forward * distance;
+
+            clipPlanePoints.UpperLeft = pos - transform.right * width;
+            clipPlanePoints.UpperLeft += transform.up * height;
+            clipPlanePoints.UpperLeft += transform.forward * distance;
+
+            return clipPlanePoints;
+        }
+
         public static HitBarPoints GetBoundPoint(this BoxCollider boxCollider,Transform torso, LayerMask mask)
         {
             HitBarPoints bp = new HitBarPoints();

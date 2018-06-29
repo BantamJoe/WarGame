@@ -70,15 +70,15 @@ public class WeaponScript : MonoBehaviour
         currentAmmo = capacity;
     }
 
-    public IEnumerator CreateImpactEffect(RaycastHit hit)
+    public IEnumerator CreateImpactEffect(Vector3 impactPoint, Vector3 impactNormal)
     {
-        Destroy(Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal)), 1f);
+        Destroy(Instantiate(impactEffect, impactPoint, Quaternion.LookRotation(impactNormal)), 1f);
         yield return null;
     }
 
-    public IEnumerator CreateBloodEffect(vThirdPersonController ccHit, RaycastHit hit)
+    public IEnumerator CreateBloodEffect(vThirdPersonController ccHit, Vector3 impactPoint, Vector3 impactNormal)
     {
-        Destroy(Instantiate(ccHit.bloodEffect, hit.point, Quaternion.LookRotation(hit.normal)), 1f);
+        Destroy(Instantiate(ccHit.bloodEffect, impactPoint, Quaternion.LookRotation(impactNormal)), 1f);
         yield return null;
     }
 

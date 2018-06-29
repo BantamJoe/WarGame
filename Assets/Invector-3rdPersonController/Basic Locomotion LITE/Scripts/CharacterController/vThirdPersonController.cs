@@ -11,7 +11,6 @@ namespace Invector.CharacterController
         [Tooltip("Team the character is on, used for identifying enemies")]
         public string Team;
         [Tooltip("Health points the character has before dying")]
-        [SyncVar]
         public float health = 100f;
         [Tooltip("Blood effect particle played when damage taken")]
         public GameObject bloodEffect;
@@ -23,8 +22,6 @@ namespace Invector.CharacterController
         //Script references
         [HideInInspector]
         public BasicDeath basicDeath;
-
-
         //Containers and game object references
         [HideInInspector]
         public GameObject spine;
@@ -33,7 +30,9 @@ namespace Invector.CharacterController
 
         [Tooltip("Artillery prefab for officer class")]
         public GameObject artilleryPrefab;
-        
+
+        [SyncVar]
+        private float currentHealth;
 
         protected virtual void Start()
         {
@@ -46,11 +45,24 @@ namespace Invector.CharacterController
             spine = gameObject.transform.FindDeepChild("Bip001 Spine").gameObject;
             if (spine == null) Debug.LogError("Spine was not found for " + gameObject.name);
 
-            
+            currentHealth = health;
+            isDead = false;
+
 #if !UNITY_EDITOR
                 Cursor.visible = false;
 #endif
         }
+
+        public void Setup()
+        {
+        }
+
+        public void ResetValues()
+        {
+            currentHealth = health;
+            isDead = false;
+        }
+
         public virtual void SelectWeapon(bool value)
         {
             shooting.SelectWeapon(value);
@@ -117,6 +129,7 @@ namespace Invector.CharacterController
 
             AdjustCapsule();
         }
+
         public virtual void Shoot()
         {
             if (!isSprinting && !isReloading && shooting.weaponObj.activeSelf && shooting.CurrentWeapon.weaponType < 5)
@@ -128,6 +141,7 @@ namespace Invector.CharacterController
                 StartCoroutine(shooting.KnifeAttack());
             }
         }
+
         public virtual void Reload()
         {
             if (!isSprinting && shooting.weaponObj.activeSelf)
@@ -163,15 +177,33 @@ namespace Invector.CharacterController
 
             AdjustCapsule();
             basicDeath.Die();
+
+            //TEMPORARY RESPAWN METHOD THING
+            StartCoroutine(Respawn());
+        }
+
+        private IEnumerator Respawn()
+        {
+            yield return new WaitForSeconds(NetworkManagerUnity.instance.matchSettings.minimumRespawnTime); //going to let it be a button later
+
+            ResetValues();
+            Transform spawnPoint = NetworkManagerUnity.instance.GetASpawnPoint();
+            this.transform.position = spawnPoint.position;
+            this.transform.rotation = spawnPoint.rotation;
+            AdjustCapsule();
         }
 
         [ClientRpc]
         public virtual void RpcTakeDamage(float damage)
         {
+            if (isDead)
+            {
+                return;
+            }
             Debug.Log("I took damage " + gameObject.name);
-            health -= damage;
-            Debug.Log("Now I have " + health + " health");
-            if(health <= 0)
+            currentHealth -= damage;
+            Debug.Log("Now I have " + currentHealth + " health");
+            if(currentHealth <= 0)
             {
                 Die();
             }
@@ -180,6 +212,8 @@ namespace Invector.CharacterController
                 animator.SetTrigger("IsHurt");
             }
         }
+
+
         public virtual void Strafe()
         {
             if (locomotionType == LocomotionType.OnlyFree) return;

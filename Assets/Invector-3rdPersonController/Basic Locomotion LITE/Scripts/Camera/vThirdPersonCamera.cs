@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Invector;
+using Invector.CharacterController;
 using System;
 
 public class vThirdPersonCamera : MonoBehaviour
@@ -31,9 +32,9 @@ public class vThirdPersonCamera : MonoBehaviour
 
     public Transform target;
     [Tooltip("Lerp speed between Camera States")]
-    public float smoothCameraRotation = 12f;    
+    public float smoothCameraRotation = 12f;
     [Tooltip("What layer will be culled")]
-    public LayerMask cullingLayer = 1 << 0;                
+    public LayerMask cullingLayer = 1 << 0;
     [Tooltip("Debug purposes, lock the camera behind the character for better align the states")]
     public bool lockCamera;
 
@@ -53,7 +54,6 @@ public class vThirdPersonCamera : MonoBehaviour
     public float yMaxLimit = 80f;
     public float positionChangeSpeed = 0.1f;
 
-
     #endregion
 
     #region hide properties    
@@ -68,7 +68,7 @@ public class vThirdPersonCamera : MonoBehaviour
     public Transform currentTarget;
     [HideInInspector]
     public Vector2 movementSpeed;
-   
+
     private Transform targetLookAt;
     private Vector3 currentTargetPos;
     private Vector3 lookPoint;
@@ -95,27 +95,42 @@ public class vThirdPersonCamera : MonoBehaviour
     private float proneHeight;
     private float crouchDistance;
     private float proneDistance;
+    private float cameraAspectOriginal;
+    private float nearClipPlanOriginal;
+    private bool isLocalPlayer;
 
     #endregion
 
     void Start()
     {
+        isLocalPlayer = this.gameObject.GetComponentInParent<vThirdPersonController>().isLocalPlayer;
+
         Init();
+        if (!isLocalPlayer)
+        {
+            cameraFovOriginal = 60f;
+            cameraAspectOriginal = Screen.width / Screen.height;
+            nearClipPlanOriginal = 0.01f;
+        }
     }
 
     public void Init()
     {
         if (target == null)
             return;
-
-        _camera = GetComponent<Camera>();
+        if (isLocalPlayer)
+        {
+            _camera = GetComponentInChildren<Camera>();
+            cameraFovOriginal = _camera.fieldOfView;
+        }
+        
         currentTarget = target;
         currentTargetPos = new Vector3(currentTarget.position.x, currentTarget.position.y + offSetPlayerPivot, currentTarget.position.z);
 
         targetLookAt = new GameObject("targetLookAt").transform;
         targetLookAt.position = currentTarget.position;
         targetLookAt.hideFlags = HideFlags.HideInHierarchy;
-        targetLookAt.rotation = currentTarget.rotation;     
+        targetLookAt.rotation = currentTarget.rotation;
 
         mouseY = currentTarget.eulerAngles.x;
         mouseX = currentTarget.eulerAngles.y;
@@ -126,7 +141,6 @@ public class vThirdPersonCamera : MonoBehaviour
         rightOffsetOriginal = rightOffset;
         heightOriginal = height;
         distanceOriginal = distance;
-        cameraFovOriginal = _camera.fieldOfView;
 
         crouchHeight = height * crouchPercentage;
         proneHeight = height * pronePercentage;
@@ -138,9 +152,14 @@ public class vThirdPersonCamera : MonoBehaviour
 
     void FixedUpdate()
     {
+
         if (target == null || targetLookAt == null) return;
 
-        CameraMovement();
+        if (isLocalPlayer)
+        {
+            CameraMovement();
+        }
+
     }
 
     /// <summary>
@@ -196,6 +215,72 @@ public class vThirdPersonCamera : MonoBehaviour
         }
     }
 
+    private void CameraObjMovement()
+    {
+        if (currentTarget == null)
+            return;
+
+
+        distance = Mathf.Lerp(distance, defaultDistance, smoothFollow * Time.deltaTime);
+        //_camera.fieldOfView = fov;
+        cullingDistance = Mathf.Lerp(cullingDistance, distance, Time.deltaTime);
+        var camDir = (forward * targetLookAt.forward) + (rightOffset * targetLookAt.right);
+
+        camDir = camDir.normalized;
+
+        var targetPos = new Vector3(currentTarget.position.x, currentTarget.position.y + offSetPlayerPivot, currentTarget.position.z);
+        currentTargetPos = targetPos;
+        desired_cPos = targetPos + new Vector3(0, height, 0);
+        current_cPos = currentTargetPos + new Vector3(0, currentHeight, 0);
+        RaycastHit hitInfo;
+
+        ClipPlanePoints planePoints = gameObject.NearClipPlanePointsNoCam(cameraFovOriginal, cameraAspectOriginal, nearClipPlanOriginal, current_cPos + (camDir * (distance)), clipPlaneMargin);
+        ClipPlanePoints oldPoints = gameObject.NearClipPlanePointsNoCam(cameraFovOriginal, cameraAspectOriginal, nearClipPlanOriginal, desired_cPos + (camDir * distance), clipPlaneMargin);
+
+        //Check if Height is not blocked 
+        if (Physics.SphereCast(targetPos, checkHeightRadius, Vector3.up, out hitInfo, cullingHeight + 0.2f, cullingLayer))
+        {
+            var t = hitInfo.distance - 0.2f;
+            t -= height;
+            t /= (cullingHeight - height);
+            cullingHeight = Mathf.Lerp(height, cullingHeight, Mathf.Clamp(t, 0.0f, 1.0f));
+        }
+
+        //Check if desired target position is not blocked       
+        if (CullingRayCast(desired_cPos, oldPoints, out hitInfo, distance + 0.2f, cullingLayer, Color.blue))
+        {
+            distance = hitInfo.distance - 0.2f;
+            if (distance < defaultDistance)
+            {
+                var t = hitInfo.distance;
+                t -= cullingMinDist;
+                t /= cullingMinDist;
+                currentHeight = Mathf.Lerp(cullingHeight, height, Mathf.Clamp(t, 0.0f, 1.0f));
+                current_cPos = currentTargetPos + new Vector3(0, currentHeight, 0);
+            }
+        }
+        else
+        {
+            currentHeight = height;
+        }
+        //Check if target position with culling height applied is not blocked
+        if (CullingRayCast(current_cPos, planePoints, out hitInfo, distance, cullingLayer, Color.cyan)) distance = Mathf.Clamp(cullingDistance, 0.0f, defaultDistance);
+        var lookPoint = current_cPos + targetLookAt.forward * 2f;
+        lookPoint += (targetLookAt.right * Vector3.Dot(camDir * (distance), targetLookAt.right));
+        targetLookAt.position = current_cPos;
+
+        Quaternion newRot = Quaternion.Euler(mouseY, mouseX, 0);
+        targetLookAt.rotation = Quaternion.Slerp(targetLookAt.rotation, newRot, smoothCameraRotation * Time.deltaTime);
+        transform.position = current_cPos + (camDir * (distance));
+        var rotation = Quaternion.LookRotation((lookPoint) - transform.position);
+
+        //lookTargetOffSet = Vector3.Lerp(lookTargetOffSet, Vector3.zero, 1 * Time.fixedDeltaTime);
+
+        //rotation.eulerAngles += rotationOffSet + lookTargetOffSet;
+        transform.rotation = rotation;
+        movementSpeed = Vector2.zero;
+    }
+
     /// <summary>
     /// Camera behaviour
     /// </summary>    
@@ -204,7 +289,7 @@ public class vThirdPersonCamera : MonoBehaviour
         if (currentTarget == null)
             return;
 
-        
+
         distance = Mathf.Lerp(distance, defaultDistance, smoothFollow * Time.deltaTime);
         //_camera.fieldOfView = fov;
         cullingDistance = Mathf.Lerp(cullingDistance, distance, Time.deltaTime);
@@ -308,6 +393,11 @@ public class vThirdPersonCamera : MonoBehaviour
 
     public void ChangeCameraMode(bool zoom, bool crouch, bool prone)
     {
+        if(_camera == null)
+        {
+            Debug.Log("Camera is null");
+            return;
+        }
         if (zoom && crouch)
         {
             height = Mathf.MoveTowards(height, heightAimed * crouchPercentage, positionChangeSpeed * 2f);
@@ -315,7 +405,7 @@ public class vThirdPersonCamera : MonoBehaviour
             distance = Mathf.MoveTowards(distance, distanceAimed * crouchPercentage, positionChangeSpeed * 2f);
             _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, cameraFovAimed, 0.5f);
         }
-        else if(zoom && prone)
+        else if (zoom && prone)
         {
             height = Mathf.MoveTowards(height, heightAimed * pronePercentage, positionChangeSpeed * 2f);
             rightOffset = Mathf.MoveTowards(rightOffset, rightOffsetAimed + 0.2f, positionChangeSpeed * 0.2f);
@@ -329,13 +419,13 @@ public class vThirdPersonCamera : MonoBehaviour
             distance = Mathf.MoveTowards(distance, distanceAimed, positionChangeSpeed * 2f);
             _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, cameraFovAimed, 0.5f);
         }
-        else if(crouch)
+        else if (crouch)
         {
             height = Mathf.MoveTowards(height, crouchHeight, positionChangeSpeed);
             rightOffset = Mathf.MoveTowards(rightOffset, rightOffsetAimed, positionChangeSpeed * 0.1f);
             distance = Mathf.MoveTowards(distance, crouchDistance, positionChangeSpeed);
         }
-        else if(prone)
+        else if (prone)
         {
             height = Mathf.MoveTowards(height, proneHeight, positionChangeSpeed);
             rightOffset = Mathf.MoveTowards(rightOffset, rightOffsetAimed, positionChangeSpeed * 0.1f);

@@ -51,6 +51,7 @@ namespace Invector.CharacterController
         protected virtual void Start()
         {
             CharacterInit();
+
         }
 
         protected virtual void CharacterInit()
@@ -72,7 +73,6 @@ namespace Invector.CharacterController
                 {
                     tpCamera.gameObject.GetComponentInChildren<Camera>().enabled = false;
                     tpCamera.gameObject.GetComponentInChildren<AudioListener>().enabled = false;
-                    tpCamera.enabled = false;
                 }
             }
 

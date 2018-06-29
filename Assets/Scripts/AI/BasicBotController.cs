@@ -106,7 +106,7 @@ namespace Invector.CharacterController
             }
             cc.UpdateAnimator();
             cc.UpdateMotor();
-            Debug.DrawRay(cc.shooting.CurrentWeapon.firespot.transform.position, cc.shooting.CurrentWeapon.firespot.transform.forward * shootRange, Color.black);
+            if(cc.shooting.CurrentWeapon != null) Debug.DrawRay(cc.shooting.CurrentWeapon.firespot.transform.position, cc.shooting.CurrentWeapon.firespot.transform.forward * shootRange, Color.black);
 
             //Debug.Log("MoveTarget = " + moveTarget.transform.position + " : Last Known Target: " + lastKnownMoveTarget.transform.position);
         }

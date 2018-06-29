@@ -113,8 +113,10 @@ namespace Invector.CharacterController
             isBot,
             isJumping,
             isAiming,
-            isReloading,
-            isDead;
+            isReloading;
+        
+        [SyncVar]
+        public bool isDead; //may want to change this
 
         protected void RemoveComponents()
         {

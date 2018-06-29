@@ -7,10 +7,25 @@ using Invector.CharacterController;
 
 public class NetworkManagerUnity : NetworkManager
 {
-    public GameObject worldCamera;
+    public static NetworkManagerUnity instance;
 
-    private SpawnSpotScript[] spawns;
+    public GameObject worldCamera;
+    public MatchSettings matchSettings;
+
+    private static SpawnSpotScript[] spawns;
     private static Dictionary<string, vThirdPersonController> players = new Dictionary<string, vThirdPersonController>();
+
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            Debug.LogError("More than one NetworkManagerUnity in scene");
+        }
+        else
+        {
+            instance = this;
+        }
+    }
 
     // Use this for initialization
     private void Start()
@@ -38,6 +53,10 @@ public class NetworkManagerUnity : NetworkManager
         players.Remove(playerID);
     }
 
+    public Transform GetASpawnPoint()
+    {
+        return spawns[Random.Range(0, spawns.Length)].transform;
+    }
 
     #region Server Callbacks
     public override void OnServerConnect(NetworkConnection conn)
