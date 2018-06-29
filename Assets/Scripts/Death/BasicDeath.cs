@@ -42,4 +42,13 @@ public class BasicDeath : MonoBehaviour {
             anim.SetTrigger(dieHash);
         }
     }
+
+    public void Respawn()
+    {
+        if (dead)
+        {
+            dead = false;
+            anim.ResetTrigger(dieHash);
+        }
+    }
 }

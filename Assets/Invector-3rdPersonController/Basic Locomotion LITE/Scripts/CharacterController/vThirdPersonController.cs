@@ -191,6 +191,7 @@ namespace Invector.CharacterController
             this.transform.position = spawnPoint.position;
             this.transform.rotation = spawnPoint.rotation;
             AdjustCapsule();
+            basicDeath.Respawn();
         }
 
         [ClientRpc]
