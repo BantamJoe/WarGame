@@ -80,7 +80,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4404029374844746}
-  - component: {fileID: 65020223445274130}
   m_Layer: 8
   m_Name: Bip001 L Foot
   m_TagString: Untagged
@@ -97,6 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4426975854036042}
   - component: {fileID: 65626424306847594}
+  - component: {fileID: 136414972876256582}
   m_Layer: 8
   m_Name: Bip001 R Calf
   m_TagString: Untagged
@@ -128,6 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4102777543442806}
   - component: {fileID: 65032706127142310}
+  - component: {fileID: 136201275514189714}
   m_Layer: 8
   m_Name: Bip001 L Calf
   m_TagString: Untagged
@@ -160,6 +161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4281692406578906}
   - component: {fileID: 65665195766942908}
+  - component: {fileID: 136147450123567914}
   m_Layer: 8
   m_Name: Bip001 R Thigh
   m_TagString: Untagged
@@ -474,6 +476,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4252579288880130}
   - component: {fileID: 65226147868509788}
+  - component: {fileID: 136456247322905022}
   m_Layer: 8
   m_Name: Bip001 L Thigh
   m_TagString: Untagged
@@ -559,7 +562,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4918875772441152}
-  - component: {fileID: 65734319929470120}
   m_Layer: 8
   m_Name: Bip001 R Foot
   m_TagString: Untagged
@@ -1009,9 +1011,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1766900553007356}
-  m_LocalRotation: {x: -0, y: -0.7775458, z: -0, w: 0.6288263}
-  m_LocalPosition: {x: 12.2, y: 0, z: 25.44}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 0.9277663, z: -0, w: -0.37316176}
+  m_LocalPosition: {x: 207.8, y: 9.5, z: 355.2}
+  m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
   m_Children:
   - {fileID: 4072747126199344}
   - {fileID: 4345222691495576}
@@ -1026,7 +1028,7 @@ Transform:
   - {fileID: 4502323322689770}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -102.073006, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 223.821, z: 0}
 --- !u!4 &4751887491107034
 Transform:
   m_ObjectHideFlags: 1
@@ -1261,18 +1263,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!65 &65020223445274130
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1059021858609964}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.33, y: 0.55, z: 0.34}
-  m_Center: {x: 0.02, y: 0.09, z: -0.02}
 --- !u!65 &65032706127142310
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1281,7 +1271,7 @@ BoxCollider:
   m_GameObject: {fileID: 1167005009414072}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.48, y: 0.29, z: 0.3297574}
   m_Center: {x: -0.01, y: 0.03, z: -0.04251434}
@@ -1293,7 +1283,7 @@ BoxCollider:
   m_GameObject: {fileID: 1749791676022264}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.42, y: 0.39, z: 0.3}
   m_Center: {x: -0.19, y: 0, z: 0}
@@ -1329,7 +1319,7 @@ BoxCollider:
   m_GameObject: {fileID: 1110394478819396}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.48, y: 0.29, z: 0.3297574}
   m_Center: {x: -0.01, y: 0.03, z: -0.04251434}
@@ -1341,22 +1331,10 @@ BoxCollider:
   m_GameObject: {fileID: 1188412474482522}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.42, y: 0.39, z: 0.3}
   m_Center: {x: -0.19, y: 0, z: 0}
---- !u!65 &65734319929470120
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1865402312241520}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.33, y: 0.55, z: 0.34}
-  m_Center: {x: 0.02, y: 0.09, z: -0.02}
 --- !u!65 &65745198244293840
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1434,20 +1412,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e235a05445e5542aae61ca9737298a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bayonet: 0
   weaponType: 1
   fireRate: 1
-  damage: 80
-  range: 5000
-  reloadDelay: 3
+  damage: 75
+  spreadFactor: 0.02
+  fireIterations: 1
   capacity: 5
+  reloadDelay: 3
+  range: 5000
   currentAmmo: 0
   fire: {fileID: 8300000, guid: a05640d14d03800449d82b075dc55457, type: 3}
   firespot: {fileID: 1655432414597944}
   muzzlespot: {fileID: 1655432414597944}
-  impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
-    type: 2}
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4,
     type: 2}
+  impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
+    type: 2}
+  muzzleForward: {x: 0, y: 0, z: 0}
 --- !u!114 &114709293816456062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1517,13 +1499,17 @@ MonoBehaviour:
   direction: 0
   verticalVelocity: 0
   velocity: 0
-  health: 100
   Team: Allied
+  health: 100
   bloodEffect: {fileID: 166404, guid: 78e1c8c5b281b8b439229473779ac9aa, type: 2}
+  grenadeThrowForce: 50
+  basicDeath: {fileID: 0}
+  basicShoot: {fileID: 0}
   spine: {fileID: 0}
   weaponContainer: {fileID: 0}
   weapon: {fileID: 0}
-  basicShoot: {fileID: 0}
+  grenadePrefab: {fileID: 0}
+  artilleryPrefab: {fileID: 0}
 --- !u!114 &114714147595116404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1547,6 +1533,9 @@ MonoBehaviour:
   crouchInput: 99
   proneInput: 122
   reloadInput: 114
+  throwGrenadeInput: 103
+  bayonetInput: 102
+  specialAbilityInput: 113
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   customCameraState: 
@@ -1566,10 +1555,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canShoot: 1
-  shootRange: 30
+  shootRange: 100
   rotationSpeed: 10
-  detectRadius: 20
+  detectRadius: 100
   Offset: {x: 20, y: -40, z: 270}
+  aimAccuracy: 0.05
+  grenadeRange: 20
+  targetLossDelay: 5
   moveTarget: {fileID: 0}
   attackTarget: {fileID: 0}
 --- !u!114 &114994144602829546
@@ -1583,6 +1575,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01e33867e3dfdf4c8f1b5520477f0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &136147450123567914
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1188412474482522}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.17
+  m_Height: 0.64
+  m_Direction: 0
+  m_Center: {x: -0.21, y: 0, z: 0}
+--- !u!136 &136201275514189714
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1167005009414072}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.18
+  m_Height: 0.7
+  m_Direction: 0
+  m_Center: {x: -0.27, y: 0, z: 0}
+--- !u!136 &136414972876256582
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1110394478819396}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.18
+  m_Height: 0.7
+  m_Direction: 0
+  m_Center: {x: -0.27, y: 0, z: 0}
 --- !u!136 &136421903770561294
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1596,6 +1627,19 @@ CapsuleCollider:
   m_Height: 2.76
   m_Direction: 1
   m_Center: {x: 0, y: 1.2, z: 0}
+--- !u!136 &136456247322905022
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749791676022264}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.17
+  m_Height: 0.64
+  m_Direction: 0
+  m_Center: {x: -0.21, y: 0, z: 0}
 --- !u!137 &137020224679216496
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -2165,12 +2209,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 1766900553007356}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.7
-  m_Speed: 4
+  m_Radius: 0.5
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 10
+  m_AngularSpeed: 360
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
