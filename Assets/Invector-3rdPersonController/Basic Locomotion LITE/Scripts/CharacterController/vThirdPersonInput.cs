@@ -159,6 +159,7 @@ namespace Invector.CharacterController
             {
                 cc.Aim(true);
                 cc.Walk(true);
+
             }
             else if(Input.GetKeyDown(aimInput) && cc.isAiming)
             {
@@ -169,7 +170,9 @@ namespace Invector.CharacterController
         protected virtual void CrouchInput()
         {
             if (Input.GetKeyDown(crouchInput) && !cc.isCrouching && !cc.isSprinting)
+            {
                 cc.Crouch(true);
+            }
             else if (Input.GetKeyDown(crouchInput) && cc.isCrouching)
             {
                 cc.Crouch(false);
@@ -178,14 +181,15 @@ namespace Invector.CharacterController
         protected virtual void ProneInput()
         {
             if (Input.GetKeyDown(proneInput) && !cc.isProning && !cc.isSprinting)
+            {
                 cc.Prone(true);
+            }
             else if (Input.GetKeyDown(proneInput) && cc.isProning)
             {
                 cc.Prone(false);
                 cc.Aim(false);
                 cc.Walk(false);
             }
-                
         }
         protected virtual void ShootInput()
         {
@@ -274,8 +278,8 @@ namespace Invector.CharacterController
             
             if(!cc.isDead)
                 RotateWithCamera(tpCamera != null ? tpCamera.transform : null);
-
-            tpCamera.ChangeCameraMode(cc.isAiming, cc.isCrouching, cc.isProning);
+            
+            StartCoroutine(tpCamera.ChangeCameraMode(cc.isCrouching, cc.isProning, cc.isAiming));
         }
 
         protected virtual void UpdateCameraStates()

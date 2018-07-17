@@ -3148,16 +3148,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114108440914445724, guid: 850b83a929c8ee44ba10557bb66a0e40,
-        type: 2}
-      propertyPath: pronePercentage
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224393014419878378, guid: 850b83a929c8ee44ba10557bb66a0e40,
-        type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 850b83a929c8ee44ba10557bb66a0e40, type: 2}
   m_IsPrefabParent: 0
@@ -5185,6 +5175,7 @@ MonoBehaviour:
   Offset: {x: 20, y: -40, z: 270}
   aimAccuracy: 0.02
   grenadeRange: 20
+  targetLossDelay: 1
   moveTarget: {fileID: 0}
   attackTarget: {fileID: 1768026178}
 --- !u!136 &1750417725

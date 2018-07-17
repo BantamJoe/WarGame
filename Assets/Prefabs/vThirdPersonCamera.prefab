@@ -88,7 +88,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1063309509455000}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.872684, y: 0, z: 10.876604}
+  m_LocalPosition: {x: 24.872684, y: 0, z: 10.876598}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4890392752035240}
@@ -172,16 +172,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crosshair: {fileID: 224109085941647442}
   target: {fileID: 0}
-  smoothCameraRotation: 12
+  smoothCameraRotation: 20
   cullingLayer:
     serializedVersion: 2
     m_Bits: 1
   lockCamera: 0
+  crouchPercentage: 0.75
+  pronePercentage: 0.5
   rightOffset: 0.05
+  rightOffsetCrouch: 0.2
+  rightOffsetProne: 0.1
   defaultDistance: 2.5
-  height: 2.75
   distanceAimed: 2
-  rightOffsetAimed: 0.2
+  height: 2.75
   heightAimed: 2.3
   cameraFovAimed: 50
   smoothFollow: 0
@@ -189,6 +192,7 @@ MonoBehaviour:
   yMouseSensitivity: 3
   yMinLimit: -30
   yMaxLimit: 50
+  modeChangeTime: 0.1
   indexList: 0
   indexLookPoint: 0
   offSetPlayerPivot: 0
