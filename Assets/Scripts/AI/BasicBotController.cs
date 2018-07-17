@@ -86,6 +86,10 @@ namespace Invector.CharacterController
                 if(attackTarget == null)
                 {
                     AgentCheckForAttackTarget();
+                    if(attackTarget == null)
+                    {
+                        moveTarget = originalMoveTarget;
+                    }
                 }
                 if (moveTarget != null)
                 {
@@ -100,6 +104,7 @@ namespace Invector.CharacterController
                     }
                     else
                     {
+                        AgentAimAtAttackTarget();
                         AgentBayonetAttackTarget();
                     }
                 }
@@ -126,6 +131,9 @@ namespace Invector.CharacterController
                 {
                     this.attackTarget = targetcc.animator.GetBoneTransform(HumanBodyBones.Head).gameObject;
                     timeToTargetLoss = Time.time + targetLossDelay;
+
+                    moveTarget = attackTarget;
+
                     Debug.Log(gameObject.name + " targeted " + targetcc.name);
                     return;
                 }
@@ -134,8 +142,8 @@ namespace Invector.CharacterController
 
         void AgentWalk()
         {
-            cc.input.y = agent.desiredVelocity.z/agent.speed;
-            cc.input.x = agent.desiredVelocity.x/agent.speed;
+            cc.input.y = agent.velocity.z/agent.speed;
+            cc.input.x = agent.velocity.x/agent.speed;
 
             if (cc.input.y >= 1f)
                 cc.Walk(true);
